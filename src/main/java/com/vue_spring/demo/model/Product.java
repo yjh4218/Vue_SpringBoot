@@ -13,13 +13,13 @@ import org.hibernate.annotations.CreationTimestamp;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-@Entity
 @Data
 @NoArgsConstructor
+@Entity
 public class Product {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY) // auto_increment
-    private int sku_no;
+    private Long skuNo;
 
     @Column(nullable = false, length = 100)
     private String productName;
@@ -29,6 +29,15 @@ public class Product {
 
     @Column(nullable = false, length = 100)
     private String maker;
+
+    @Column(nullable = false, length = 100)
+    private String className;
+
+    @Column(nullable = false, length = 100)
+    private int makeDate;
+
+    @Column(nullable = false, length = 100)
+    private int expDate;
 
     @CreationTimestamp
     private Timestamp createDate;
