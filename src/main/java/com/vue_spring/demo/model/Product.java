@@ -19,7 +19,7 @@ import lombok.NoArgsConstructor;
 public class Product {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY) // auto_increment
-    private Long skuNo;
+    private String skuNo;
 
     @Column(nullable = false, length = 100)
     private String productName;
