@@ -14,4 +14,14 @@ public interface ProductService {
 
     public Optional<List<Product>> findProduct(String sku_no, String productName,
             String brandName, String maker, Set<String> tempSelectChk);
+
+    public Optional<Product> findSkuNo(String skuNo);
+
+    public Boolean insertProduct(Product product);
+
+    public Boolean updateProduct(Product product);
+
+    public Boolean deleteProduct(String skuNo);
+
+    public Boolean checkSkuNo(String skuNo);
 }
