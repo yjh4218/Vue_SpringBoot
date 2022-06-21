@@ -149,11 +149,23 @@ public class ProductController {
 
                 System.out.println("Controller 접근됨. /selectSkuNo");
                 System.out.println("skuNo : " + skuNo);
-                Optional<Product> product = productServicrImpl.findSkuNo(skuNo);
+                Product product = productServicrImpl.findSkuNo(skuNo);
+
                 System.out.println("Service 조회 완료");
                 // System.out.println(products);
-                return ProductDAO.<Product>builder()
-                        .data(product)
-                        .build();
+
+                if(product == null){
+                        return ProductDAO.<Product>builder()
+                                .data(Optional.ofNullable(product))
+                                .message("null")
+                                .build();
+
+                } else{
+                        return ProductDAO.<Product>builder()
+                                .data(Optional.ofNullable(product))
+                                .build();
+                }
+
+
         }
 }

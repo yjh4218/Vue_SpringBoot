@@ -41,8 +41,9 @@ public class ProductServicrImpl implements ProductService {
 
     // 상품 정보 수정
     public Boolean updateProduct(Product product){
-        System.out.println("상품 추가 서비스 : " + product);
+        System.out.println("상품 정보 수정 서비스 : " + product);
 
+        // 제품 조회 확인
         boolean check = checkSkuNo(product.getSkuNo());
 
         // 조회된 데이터 없을 경우
@@ -106,12 +107,23 @@ public class ProductServicrImpl implements ProductService {
     }
 
     // 1개 제품 조회
-    public Optional<Product> findSkuNo(String skuNo) {
+    public Product findSkuNo(String skuNo) {
 
         System.out.println("ProductServicrImpl");
         System.out.println("skuNo : " + skuNo );
 
-        return (Optional<Product>) productRepository.findBySkuNo(skuNo);
+        boolean check = true;
+        check = checkSkuNo(skuNo);
+
+        System.out.println("check : " + check );
+
+        if(check){
+            return productRepository.findBySkuNo(skuNo);
+        }
+        else{
+            return null;
+        }
+
     }
 
     // 제품 중복 확인

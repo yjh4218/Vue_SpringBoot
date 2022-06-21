@@ -31,7 +31,7 @@ public interface ProductRepository extends JpaRepository<Product, Long> {
         Optional<List<Product>> findBySkuNoContainingAndProductNameContainingAndBrandNameContainingAndMakerContainingIgnoreCase(String skuNo, String productName, String brandName, String maker);
 
         // sku-no로 조회
-        Optional<Product> findBySkuNo(String SkuNo);
+        Product findBySkuNo(String SkuNo);
 
         // sku-no로 삭제
         @Modifying
