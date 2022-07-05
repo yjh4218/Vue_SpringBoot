@@ -41,7 +41,7 @@ public class ProductController {
         @PutMapping("/updateProduct")
         public ResponseDto<Integer> updateProduct(@RequestBody Product product) {
                 System.out.println("Controller 접근됨. /updateProduct");
-                System.out.println(product);
+                System.out.println(product.getId());
 
                 boolean check = productServicrImpl.updateProduct(product);
 
@@ -55,11 +55,12 @@ public class ProductController {
 
         // 제품 삭제하기
         @DeleteMapping("/deleteProduct")
-        public ResponseDto<Integer> deleteProduct(@RequestParam(value = "skuNo", required = false, defaultValue = "") String skuNo) {
+        public ResponseDto<Integer> deleteProduct(@RequestParam(value = "id", required = false, defaultValue = "") long id,
+                                                  @RequestParam(value = "skuNo", required = false, defaultValue = "") String skuNo) {
                 System.out.println("Controller 접근됨. /deleteProduct");
                 System.out.println(skuNo);
 
-                boolean check = productServicrImpl.deleteProduct(skuNo);
+                boolean check = productServicrImpl.deleteProduct(id, skuNo);
 
                 System.out.println("check : " + check );
 
@@ -138,34 +139,5 @@ public class ProductController {
                 return ProductDAO.<List<Product>>builder()
                                 .data(products)
                                 .build();
-        }
-
-        // sku 1개 제품 조회
-        @GetMapping("/selectSkuNo")
-        public ProductDAO<Product> selectSkuNo(
-                @RequestParam(value = "skuNo", required = false, defaultValue = "") String skuNo) {
-
-                List<String> tempChk = new ArrayList<>();
-
-                System.out.println("Controller 접근됨. /selectSkuNo");
-                System.out.println("skuNo : " + skuNo);
-                Product product = productServicrImpl.findSkuNo(skuNo);
-
-                System.out.println("Service 조회 완료");
-                // System.out.println(products);
-
-                if(product == null){
-                        return ProductDAO.<Product>builder()
-                                .data(Optional.ofNullable(product))
-                                .message("null")
-                                .build();
-
-                } else{
-                        return ProductDAO.<Product>builder()
-                                .data(Optional.ofNullable(product))
-                                .build();
-                }
-
-
         }
 }

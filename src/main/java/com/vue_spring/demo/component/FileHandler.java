@@ -33,10 +33,13 @@ public class FileHandler {
 
             // 프로젝트 디렉터리 내의 저장을 위한 절대 경로 설정
             // 경로 구분자 File.separator 사용
-            String absolutePath = new File("").getAbsolutePath() + File.separator + File.separator;
+//            String absolutePath = new File("").getAbsolutePath() + File.separator + File.separator;
+            String absolutePath = new File("").getAbsolutePath() + File.separator;
+//            String absolutePath = new File("").getAbsolutePath() + "/";
 
             // 파일을 저장할 세부 경로 지정
-            String path = "images" + File.separator + current_date;
+//            String path = "vue_front/src/assets/images" + File.separator + current_date;
+            String path = "vue_front" + File.separator + "src" + File.separator + "assets" + File.separator + "images" + File.separator + current_date;
             File file = new File(path);
 
             // 디렉터리가 존재하지 않을 경우

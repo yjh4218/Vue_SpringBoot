@@ -13,6 +13,7 @@ import java.sql.Timestamp;
 import java.util.Optional;
 
 @Entity
+@Table(name = "inspect_image")
 @NoArgsConstructor
 @AllArgsConstructor
 public class InspectImage {
@@ -21,7 +22,7 @@ public class InspectImage {
     @GeneratedValue(strategy = GenerationType.IDENTITY) // auto_increment
     private Long id;
 
-    @ManyToOne(fetch = FetchType.EAGER)
+    @ManyToOne(fetch = FetchType.LAZY)
 //    @JsonManagedReference // 순환참조 방지
     @JsonIgnore
     @JoinColumn(name="InspectId")

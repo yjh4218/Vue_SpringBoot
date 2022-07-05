@@ -48,7 +48,6 @@ public class ProductServicrImpl implements ProductService {
 
         // 조회된 데이터 없을 경우
         if(!check){
-
             System.out.println("데이터 없음. 수정 불가");
             return false;
         }
@@ -60,10 +59,10 @@ public class ProductServicrImpl implements ProductService {
     }
 
     // 제품 삭제하기
-    public Boolean deleteProduct(String SkuNo){
-        System.out.println("제품 삭제 : " + SkuNo);
+    public Boolean deleteProduct(long id, String skuNo){
+        System.out.println("제품 삭제 : " + id);
 
-        boolean check = checkSkuNo(SkuNo);
+        boolean check = checkSkuNo(skuNo);
 
         // 조회된 데이터 없을 경우
         if(!check){
@@ -72,7 +71,7 @@ public class ProductServicrImpl implements ProductService {
         }
         else{
             System.out.println("데이터 있음. 삭제 진행.");
-            productRepository.deleteBySkuNo(SkuNo);
+            productRepository.deleteById(id);
             return true;
         }
     }
@@ -107,28 +106,32 @@ public class ProductServicrImpl implements ProductService {
     }
 
     // 1개 제품 조회
-    public Product findSkuNo(String skuNo) {
+    public Optional<Product> findProduct(long productId) {
 
         System.out.println("ProductServicrImpl");
-        System.out.println("skuNo : " + skuNo );
+        System.out.println("productId : " + productId );
 
-        boolean check = true;
-        check = checkSkuNo(skuNo);
+        boolean check = checkId(productId);
 
         System.out.println("check : " + check );
 
         if(check){
-            return productRepository.findBySkuNo(skuNo);
+            return productRepository.findById(productId);
         }
         else{
             return null;
         }
-
     }
 
     // 제품 중복 확인
     public Boolean checkSkuNo(String SkuNo){
         boolean check = productRepository.existsBySkuNo(SkuNo);
+        return check;
+    }
+
+    // 제품 중복 확인
+    public Boolean checkId(long productId){
+        boolean check = productRepository.existsById(productId);
         return check;
     }
 }
