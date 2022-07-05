@@ -1,27 +1,32 @@
 package com.vue_spring.demo.model;
 
 import java.sql.Timestamp;
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.List;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import javax.persistence.*;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
 import org.hibernate.annotations.CreationTimestamp;
 
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.springframework.format.annotation.DateTimeFormat;
 
+@AllArgsConstructor
 @NoArgsConstructor
 @Entity
-@Data
+@Table(name = "product")
 public class Product {
     // Sku 번호
     @Id
-//    @GeneratedValue(strategy = GenerationType.IDENTITY) // auto_increment
-//    private long id;
-//
+    @GeneratedValue(strategy = GenerationType.IDENTITY) // auto_increment
+
+    private long id;
+
     @Column(length = 12)
     private String skuNo;
 
@@ -43,19 +48,20 @@ public class Product {
 
     // 제품 초도생산 일자
     @Column(nullable = false, length = 100)
-    private String makeDate;
+    @DateTimeFormat(pattern = "yyyy-MM-dd")
+    private Date makeDate;
 
     // 제품 유통기한
     @Column(nullable = false, length = 100)
-    private int expDate;
+    private Integer expDate;
 
     // 제품 구매가격
     @Column(nullable = true, length = 100)
-    private int purchasePrice;
+    private Integer purchasePrice;
 
     // 제품 판매가격
     @Column(nullable = true, length = 100)
-    private int sellingPrice;
+    private Integer sellingPrice;
 
     // 제품 성상
     @Column(nullable = true, length = 300)
@@ -67,11 +73,11 @@ public class Product {
 
     // 제품 열량
     @Column(nullable = true, length = 100)
-    private double calorie;
+    private Float calorie;
 
     // 제품 나트륨
     @Column(nullable = true, length = 100)
-    private double sodium;
+    private Float sodium;
 
     // 제품 색상
     @Column(nullable = true, length = 300)
@@ -85,9 +91,21 @@ public class Product {
     @Column(nullable = true, length = 500)
     private String note;
 
+    @OneToMany (mappedBy = "product")
+    @JsonBackReference //순환참조 방지
+    private List<Inspect> insepct = new ArrayList<>();
+
     // 데이터 입력, 수정 시간
     @CreationTimestamp
     private Timestamp createDate;
+
+    public long getId() {
+        return id;
+    }
+
+    public void setId(long id) {
+        this.id = id;
+    }
 
     public String getSkuNo() {
         return skuNo;
@@ -129,35 +147,35 @@ public class Product {
         this.className = className;
     }
 
-    public String getMakeDate() {
+    public Date getMakeDate() {
         return makeDate;
     }
 
-    public void setMakeDate(String makeDate) {
+    public void setMakeDate(Date makeDate) {
         this.makeDate = makeDate;
     }
 
-    public int getExpDate() {
+    public Integer getExpDate() {
         return expDate;
     }
 
-    public void setExpDate(int expDate) {
+    public void setExpDate(Integer expDate) {
         this.expDate = expDate;
     }
 
-    public int getPurchasePrice() {
+    public Integer getPurchasePrice() {
         return purchasePrice;
     }
 
-    public void setPurchasePrice(int purchasePrice) {
+    public void setPurchasePrice(Integer purchasePrice) {
         this.purchasePrice = purchasePrice;
     }
 
-    public int getSellingPrice() {
+    public Integer getSellingPrice() {
         return sellingPrice;
     }
 
-    public void setSellingPrice(int sellingPrice) {
+    public void setSellingPrice(Integer sellingPrice) {
         this.sellingPrice = sellingPrice;
     }
 
@@ -177,19 +195,19 @@ public class Product {
         this.productStandard = productStandard;
     }
 
-    public double getCalorie() {
+    public Float getCalorie() {
         return calorie;
     }
 
-    public void setCalorie(double calorie) {
+    public void setCalorie(Float calorie) {
         this.calorie = calorie;
     }
 
-    public double getSodium() {
+    public Float getSodium() {
         return sodium;
     }
 
-    public void setSodium(double sodium) {
+    public void setSodium(Float sodium) {
         this.sodium = sodium;
     }
 
@@ -215,6 +233,14 @@ public class Product {
 
     public void setNote(String note) {
         this.note = note;
+    }
+
+    public List<Inspect> getInsepct() {
+        return insepct;
+    }
+
+    public void setInsepct(List<Inspect> insepct) {
+        this.insepct = insepct;
     }
 
     public Timestamp getCreateDate() {

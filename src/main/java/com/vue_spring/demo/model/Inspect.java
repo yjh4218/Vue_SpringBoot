@@ -1,52 +1,59 @@
 package com.vue_spring.demo.model;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonFormat;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.hibernate.annotations.CreationTimestamp;
+import org.springframework.format.annotation.DateTimeFormat;
 
 import javax.persistence.*;
+import javax.persistence.criteria.CriteriaBuilder;
 import java.sql.Timestamp;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
 @Entity
+@Table(name = "inspect")
+@Data
 public class Inspect {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY) // auto_increment
     private Long id;
 
     @ManyToOne(fetch = FetchType.EAGER)
-    @JoinColumn(name="skuNo")
+//    @JsonManagedReference // 순환참조 방지
+    @JoinColumn(name="productId")
+//    @JsonIgnore
     private Product product;
 
-//    @Column(nullable = false, length = 12)
-//    private String skuNo;
-
-    // 제품명
-    @Column(nullable = false, length = 100)
-    private String productName;
-
     // 검수날짜
-    @Column(nullable = false, length = 100)
-    private String inspectDate;
+    @Column(nullable = false)
+    @JsonFormat(shape= JsonFormat.Shape.STRING, pattern="yyyy-MM-dd")
+    @DateTimeFormat(pattern = "yyyy-MM-dd")
+    private Date inspectDate;
 
     // 유통기한
-    @Column(nullable = false, length = 100)
-    private String lotDate;
+    @Column(nullable = true)
+    @JsonFormat(shape= JsonFormat.Shape.STRING, pattern="yyyy-MM-dd")
+    @DateTimeFormat(pattern = "yyyy-MM-dd")
+    private Date lotDate;
 
     // 검수 결과
-    @Column(nullable = false, length = 100)
+    @Column(nullable = true, length = 100)
     private String decideResult;
 
     // 수분율율
-    @Column(nullable = false, length = 100)
-    private int moisture;
+    @Column(nullable = true, length = 100)
+    private Float moisture;
 
     // 검수 내용
     @Column(nullable = true, length = 300)
@@ -55,10 +62,6 @@ public class Inspect {
     // 특이사항
     @Column(nullable = true, length = 300)
     private String specialReport;
-
-    // 이미지 파일
-//    @Lob
-//    private List<MultipartFile> imgFiles;
 
 //     파일 원본명
     @OneToMany(
@@ -74,7 +77,6 @@ public class Inspect {
     @Column(nullable = true, length = 500)
     private String note;
 
-    
     // 데이터 입력, 수정 시간
     @CreationTimestamp
     private Timestamp createDate;
@@ -96,99 +98,4 @@ public class Inspect {
             inspectImage.setInspect(this);
     }
 
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
-    }
-
-    public Product getProduct() {
-        return product;
-    }
-
-    public void setProduct(Product product) {
-        this.product = product;
-    }
-
-    public String getProductName() {
-        return productName;
-    }
-
-    public void setProductName(String productName) {
-        this.productName = productName;
-    }
-
-    public String getInspectDate() {
-        return inspectDate;
-    }
-
-    public void setInspectDate(String inspectDate) {
-        this.inspectDate = inspectDate;
-    }
-
-    public String getLotDate() {
-        return lotDate;
-    }
-
-    public void setLotDate(String lotDate) {
-        this.lotDate = lotDate;
-    }
-
-    public String getDecideResult() {
-        return decideResult;
-    }
-
-    public void setDecideResult(String decideResult) {
-        this.decideResult = decideResult;
-    }
-
-    public int getMoisture() {
-        return moisture;
-    }
-
-    public void setMoisture(int moisture) {
-        this.moisture = moisture;
-    }
-
-    public String getInspectContent() {
-        return inspectContent;
-    }
-
-    public void setInspectContent(String inspectContent) {
-        this.inspectContent = inspectContent;
-    }
-
-    public String getSpecialReport() {
-        return specialReport;
-    }
-
-    public void setSpecialReport(String specialReport) {
-        this.specialReport = specialReport;
-    }
-
-    public List<InspectImage> getImageFile() {
-        return imageFile;
-    }
-
-    public void setImageFile(List<InspectImage> imageFile) {
-        this.imageFile = imageFile;
-    }
-
-    public String getNote() {
-        return note;
-    }
-
-    public void setNote(String note) {
-        this.note = note;
-    }
-
-    public Timestamp getCreateDate() {
-        return createDate;
-    }
-
-    public void setCreateDate(Timestamp createDate) {
-        this.createDate = createDate;
-    }
 }
