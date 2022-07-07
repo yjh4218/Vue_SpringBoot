@@ -28,7 +28,7 @@ public class InspectController {
         @Autowired
         private ProductServicrImpl productServicrImpl;
 
-        // 제품 추가하기
+        // 검수 추가하기
         @PostMapping(value = "/insertInspect", consumes = { MediaType.APPLICATION_JSON_VALUE, MediaType.MULTIPART_FORM_DATA_VALUE })
         public ResponseDto<Integer> insertProduct(@RequestPart("data") Inspect inspect,
                 @RequestPart("productId") long productId,
@@ -167,35 +167,34 @@ public class InspectController {
                                 e.printStackTrace();
                         }
                 }
-
-                System.out.println("tempChk : " + tempClass );
-
                 Set<String> tempClassName = new HashSet<>(tempClass);
+
                 System.out.println("tempSelectChk : " + tempClassName );
-                Optional<List<Inspect>> inspect = (Optional<List<Inspect>>) inspectServicrImpl.findInspect(skuNo,
-                                productName,
-                                brandName, maker, tempClassName, beforeDate, afterDate);
+
+                System.out.println("조건에 맞춰서 제품 조회");
+                // 조건에 맞춰서 제품 조회
+                Optional<List<Product>> products = (Optional<List<Product>>) productServicrImpl.findProduct(skuNo,
+                        productName,
+                        brandName, maker, tempClassName);
+
+                System.out.println("제품 조회 완료");
+
+                // 제품 조회 결과 List로 형변환
+                List<Product> tmpProducts = products.get();
+
+                // product id들 저장
+                List<Long> listId = new ArrayList<>();
+
+                for(int i = 0; i< tmpProducts.size(); i++){
+                        listId.add(tmpProducts.get(i).getId());
+                }
+
+                Optional<List<Inspect>> inspect = inspectServicrImpl.findInspect(listId, beforeDate, afterDate);
                 System.out.println("Service 조회 완료");
+
                 // System.out.println(products);
                 return InspectDAO.<List<Inspect>>builder()
                                 .data(inspect)
                                 .build();
         }
-//
-//        // sku 1개 제품 조회
-//        @GetMapping("/selectSkuNo")
-//        public ProductDAO<Product> selectSkuNo(
-//                @RequestParam(value = "skuNo", required = false, defaultValue = "") String skuNo) {
-//
-//                List<String> tempChk = new ArrayList<>();
-//
-//                System.out.println("Controller 접근됨. /selectSkuNo");
-//                System.out.println("skuNo : " + skuNo);
-//                Optional<Product> product = productServicrImpl.findSkuNo(skuNo);
-//                System.out.println("Service 조회 완료");
-//                // System.out.println(products);
-//                return ProductDAO.<Product>builder()
-//                        .data(product)
-//                        .build();
-//        }
 }

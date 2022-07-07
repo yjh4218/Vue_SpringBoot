@@ -22,13 +22,17 @@ public interface InspectRepository extends JpaRepository<Inspect, Long> {
 
     Boolean existsByProductAndInspectDate(Product product, Date inspectDate);
 
+    Boolean existsByProductId(Long productId);
+
     // 제품 조회(분류 포함)
     @Query(nativeQuery = true, value = "SELECT * FROM INSPECT WHERE sku_no LIKE %:skuNo% AND product_name LIKE %:productName% AND brand_name LIKE %:brandName% AND maker LIKE %:maker% AND class_name IN (:className) AND inspect_date BETWEEN :beforeDate AND :afterDate")
     Optional<List<Inspect>> findBySkuNoContainingAndProductNameContainingAndBrandNameContainingAndMakerContainingIgnoreCaseAndClassNameAndInspectDateBetween(
-            @Param("skuNo")String skuNo,
-            @Param("productName")String productName,
-            @Param("className")  Set<String> className,
-            @Param("beforeDate")Date beforeDate,
+            @Param("skuNo") String skuNo,
+            @Param("productName") String productName,
+            @Param("brandName") String brandName,
+            @Param("maker") String maker,
+            @Param("className") Set<String> className,
+            @Param("beforeDate") Date beforeDate,
             @Param("afterDate") Date afterDate
             );
 
@@ -37,6 +41,8 @@ public interface InspectRepository extends JpaRepository<Inspect, Long> {
     Optional<List<Inspect>> findBySkuNoContainingAndProductNameContainingAndBrandNameContainingAndMakerContainingIgnoreCaseAndInspectDateBetween(
             @Param("skuNo")String skuNo,
             @Param("productName")String productName,
+            @Param("brandName") String brandName,
+            @Param("maker") String maker,
             @Param("beforeDate")Date beforeDate,
             @Param("afterDate") Date afterDate
     );
@@ -54,6 +60,6 @@ public interface InspectRepository extends JpaRepository<Inspect, Long> {
 //    );
 
 //    @Query(nativeQuery = true, value = "SELECT * FROM INSPECT WHERE inspect_date BETWEEN :beforeDate AND :afterDate")
-    Optional<List<Inspect>> findByInspectDateBetween(Date beforeDate, Date afterDate);
+    Optional<List<Inspect>> findByProductIdAndInspectDateBetween(Long productId, Date beforeDate, Date afterDate);
 
 }
