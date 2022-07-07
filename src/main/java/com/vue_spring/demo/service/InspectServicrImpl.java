@@ -11,12 +11,8 @@ import org.springframework.stereotype.Repository;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
-import javax.persistence.criteria.CriteriaBuilder;
 import java.io.File;
-import java.util.Date;
-import java.util.List;
-import java.util.Optional;
-import java.util.Set;
+import java.util.*;
 
 @Repository
 @Service
@@ -219,25 +215,24 @@ public class InspectServicrImpl implements InspectService {
     }
 
     // 일부 상품 조회. 조건에 따른 검색 진행
-    public Optional<List<Inspect>> findInspect(String skuNo, String productName,
-                                               String brandName, String maker, Set<String> tempClassName, Date beforeDate, Date afterDate) {
+    public Optional<List<Inspect>> findInspect(List<Long> productId, Date beforeDate, Date afterDate) {
 
-        System.out.println("ProductServicrImpl");
-        System.out.println("productName : " + productName );
-        System.out.println("tempSelectChk : " + tempClassName );
+        System.out.println("InspectServicrImpl 검수 조회");
 
-        // 분류 검색 구분에 따른 조회 방법을 다르게 함
-        if(tempClassName.size() < 1){
-            System.out.println("제품분류 없음.");
-            // 분류 조회 하지 않을 경우
-            return (Optional<List<Inspect>>)inspectRepository.findByInspectDateBetween(beforeDate, afterDate);
-        }else{
-            System.out.println("제품분류 있음.");
-            // 분류 조회할 경우
-            return (Optional<List<Inspect>>) inspectRepository
-                    .findBySkuNoContainingAndProductNameContainingAndBrandNameContainingAndMakerContainingIgnoreCaseAndClassNameAndInspectDateBetween(
-                            skuNo, productName, tempClassName, beforeDate, afterDate);
+        // Optional 빈 객체 생성
+        Optional<List<Inspect>> tmpInspectList = Optional.empty();
+        List<Inspect> inspectList = new ArrayList<>();
+
+        // ProductId 값에 따라 데이터 조회
+        for(int i = 0; i< productId.size(); i++){
+            // Inspect 테이블에 조회 및 저장
+            System.out.println("Inspect 테이블에 값이 있다면 데이터 저장");
+            tmpInspectList = inspectRepository.findByProductIdAndInspectDateBetween(productId.get(i), beforeDate, afterDate);
+
+            inspectList.addAll(tmpInspectList.orElse(null));
         }
+
+        return Optional.of(inspectList);
     }
 
     // 제품 중복 확인

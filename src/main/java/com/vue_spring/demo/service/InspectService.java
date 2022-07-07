@@ -14,8 +14,7 @@ import java.util.Set;
 public interface InspectService {
 
 
-    public Optional<List<Inspect>> findInspect(String skuNo, String productName,
-                                               String brandName, String maker, Set<String> tempClassName, Date beforeDate, Date afterDate);
+    public Optional<List<Inspect>> findInspect(List<Long> productId, Date beforeDate, Date afterDate);
 
     public Boolean insertInspect(Inspect inspect, List<MultipartFile> imgFiles) throws Exception;
 

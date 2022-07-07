@@ -91,17 +91,17 @@ public class ProductController {
                 return new ResponseDto<Integer>(HttpStatus.OK.value(),data);
         }
 
-        // 모든 제품 조회
-        @GetMapping("/selectAllProducts")
-        public ProductDAO<List<Product>> selectAllProductlist() {
-                System.out.println("Controller 접근됨. /selectAllProducts");
-                Optional<List<Product>> products = Optional.ofNullable(productServicrImpl.findProductAll());
-                System.out.println("Service 조회 완료");
-                // System.out.println(products);
-                return ProductDAO.<List<Product>>builder()
-                                .data(products)
-                                .build();
-        }
+//        // 모든 제품 조회
+//        @GetMapping("/selectAllProducts")
+//        public ProductDAO<List<Product>> selectAllProductlist() {
+//                System.out.println("Controller 접근됨. /selectAllProducts");
+//                Optional<List<Product>> products = Optional.ofNullable(productServicrImpl.findProductAll());
+//                System.out.println("Service 조회 완료");
+//                // System.out.println(products);
+//                return ProductDAO.<List<Product>>builder()
+//                                .data(products)
+//                                .build();
+//        }
 
         // 일부 제품 조회
         @GetMapping("/selectProducts")
