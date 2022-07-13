@@ -1,8 +1,9 @@
 package com.vue_spring.demo.component;
 
-import com.vue_spring.demo.DTO.InspectImageDTO;
-import com.vue_spring.demo.model.Inspect;
+import com.vue_spring.demo.DTO.ImageDTO;
+import com.vue_spring.demo.model.ClaimImage;
 import com.vue_spring.demo.model.InspectImage;
+import com.vue_spring.demo.model.ProductImage;
 import org.springframework.stereotype.Component;
 import org.springframework.util.CollectionUtils;
 import org.springframework.util.ObjectUtils;
@@ -17,11 +18,11 @@ import java.util.List;
 @Component
 public class FileHandler {
 
-    public List<InspectImage> parseFileInfo(
-            List<MultipartFile> multipartFiles
+    public <T> List <T> parseFileInfo(
+            List<MultipartFile> multipartFiles, T t
     )throws Exception {
-// 반환할 파일 리스트
-        List<InspectImage> fileList = new ArrayList<>();
+        // 반환할 파일 리스트
+        List<T> fileList = new ArrayList<>();
 
         // 전달되어 온 파일이 존재할 경우
         if(!CollectionUtils.isEmpty(multipartFiles)) {
@@ -75,21 +76,35 @@ public class FileHandler {
                 String new_file_name = System.nanoTime() + originalFileExtension;
 
                 // 파일 DTO 생성
-                InspectImageDTO photoDto = InspectImageDTO.builder()
+                ImageDTO photoDto = ImageDTO.builder()
                         .imgFileName(multipartFile.getOriginalFilename())
                         .imgFilePath(path + File.separator + new_file_name)
                         .imgFileSize(multipartFile.getSize())
                         .build();
 
-                // 파일 DTO 이용하여 Photo 엔티티 생성
-                InspectImage inspectImage = new InspectImage(
+                if(t instanceof ProductImage){
+                    ProductImage image = new ProductImage(
                         photoDto.getImgFileName(),
                         photoDto.getImgFilePath(),
                         photoDto.getImgFileSize()
-                );
+                    );
+                    fileList.add((T) image);
+                } else if(t instanceof InspectImage){
+                    InspectImage image = new InspectImage(
+                            photoDto.getImgFileName(),
+                            photoDto.getImgFilePath(),
+                            photoDto.getImgFileSize()
+                    );
+                    fileList.add((T) image);
+                } else if(t instanceof ClaimImage){
+                    ClaimImage image = new ClaimImage(
+                            photoDto.getImgFileName(),
+                            photoDto.getImgFilePath(),
+                            photoDto.getImgFileSize()
+                    );
+                    fileList.add((T) image);
+                }
 
-                // 생성 후 리스트에 추가
-                fileList.add(inspectImage);
 
                 // 업로드 한 파일 데이터를 지정한 파일에 저장
                 file = new File(absolutePath + path + File.separator + new_file_name);
@@ -100,7 +115,6 @@ public class FileHandler {
                 file.setReadable(true);
             }
         }
-
         return fileList;
     }
 }

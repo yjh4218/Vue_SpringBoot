@@ -24,6 +24,8 @@ public interface InspectRepository extends JpaRepository<Inspect, Long> {
 
     Boolean existsByProductId(Long productId);
 
+    Boolean deleteByProductId(Long productId);
+
     // 제품 조회(분류 포함)
     @Query(nativeQuery = true, value = "SELECT * FROM INSPECT WHERE sku_no LIKE %:skuNo% AND product_name LIKE %:productName% AND brand_name LIKE %:brandName% AND maker LIKE %:maker% AND class_name IN (:className) AND inspect_date BETWEEN :beforeDate AND :afterDate")
     Optional<List<Inspect>> findBySkuNoContainingAndProductNameContainingAndBrandNameContainingAndMakerContainingIgnoreCaseAndClassNameAndInspectDateBetween(
@@ -61,5 +63,12 @@ public interface InspectRepository extends JpaRepository<Inspect, Long> {
 
 //    @Query(nativeQuery = true, value = "SELECT * FROM INSPECT WHERE inspect_date BETWEEN :beforeDate AND :afterDate")
     Optional<List<Inspect>> findByProductIdAndInspectDateBetween(Long productId, Date beforeDate, Date afterDate);
+
+//    @Query(nativeQuery = true, value = "SELECT id FROM INSPECT WHERE product_id = :productId")
+    Optional<List<Inspect>> findByProductId(Long productId);
+
+    Optional<List<Inspect>> findByInspectDateBetween(Date beforeDate, Date afterDate);
+
+
 
 }

@@ -17,6 +17,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.springframework.format.annotation.DateTimeFormat;
 
+@Builder
 @AllArgsConstructor
 @NoArgsConstructor
 @Entity
@@ -56,6 +57,16 @@ public class Product {
     // 제품 유통기한
     @Column(nullable = false, length = 100)
     private Integer expDate;
+
+    //     파일 원본명
+    @OneToMany(
+            mappedBy = "product",
+            cascade = {CascadeType.PERSIST, CascadeType.REMOVE},
+            orphanRemoval = true
+    )
+//    @JsonBackReference //순환참조 방지
+    @Builder.Default
+    private List<ProductImage> imageFile = new ArrayList<>();
 
     // 제품 구매가격
     @Column(nullable = true, length = 100)
@@ -100,6 +111,16 @@ public class Product {
     // 데이터 입력, 수정 시간
     @CreationTimestamp
     private Timestamp createDate;
+
+    // product에서 파일 처리 위함
+    public void addPhoto(ProductImage productImage) {
+        this.imageFile.add(productImage);
+
+        // 게시글에 파일이 저장되어있지 않은 경우
+        if(productImage.getProduct() != this)
+            // 파일 저장
+            productImage.setProduct(this);
+    }
 
     public long getId() {
         return id;
@@ -163,6 +184,14 @@ public class Product {
 
     public void setExpDate(Integer expDate) {
         this.expDate = expDate;
+    }
+
+    public List<ProductImage> getImageFile() {
+        return imageFile;
+    }
+
+    public void setImageFile(List<ProductImage> imageFile) {
+        this.imageFile = imageFile;
     }
 
     public Integer getPurchasePrice() {

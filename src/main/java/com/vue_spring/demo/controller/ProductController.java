@@ -2,56 +2,106 @@ package com.vue_spring.demo.controller;
 
 import java.io.UnsupportedEncodingException;
 import java.net.URLDecoder;
-import java.nio.charset.StandardCharsets;
 import java.util.*;
 
 import com.vue_spring.demo.DAO.ProductDAO;
 import com.vue_spring.demo.DTO.ResponseDto;
 import com.vue_spring.demo.model.Product;
-import com.vue_spring.demo.service.ProductServicrImpl;
+import com.vue_spring.demo.service.ProductServiceImpl;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
 @RestController
 @RequestMapping("product")
 public class ProductController {
 
         @Autowired
-        private ProductServicrImpl productServicrImpl;
+        private ProductServiceImpl productServicrImpl;
+
+//        // 제품 추가하기
+//        @PostMapping("/insertProduct")
+//        public ResponseDto<Integer> insertProduct(@RequestBody Product product) {
+//                System.out.println("Controller 접근됨. /insertProduct");
+//                System.out.println(product);
+//
+//                boolean check = productServicrImpl.insertProduct(product);
+//
+//                int data = 0;
+//
+//                if(check) data=1;
+//                else data=0;
+//
+//                return new ResponseDto<Integer>(HttpStatus.OK.value(),data);
+//        }
 
         // 제품 추가하기
-        @PostMapping("/insertProduct")
-        public ResponseDto<Integer> insertProduct(@RequestBody Product product) {
-                System.out.println("Controller 접근됨. /insertProduct");
+        @PostMapping(value = "/insertProduct", consumes = { MediaType.APPLICATION_JSON_VALUE, MediaType.MULTIPART_FORM_DATA_VALUE })
+        public ResponseDto<Integer> insertProduct(@RequestPart("data") Product product,
+                                                  @RequestPart(value = "image",required = false) List<MultipartFile> imgFiles
+        ) throws Exception {
+                // @RequestParam(value = "skuNo") MultipartFile imgFiles,
+                System.out.println("Controller 접근됨. /insertInspect");
                 System.out.println(product);
-
-                boolean check = productServicrImpl.insertProduct(product);
+                System.out.println("imgFiles : " + imgFiles);
 
                 int data = 0;
 
+                Boolean check = productServicrImpl.insertProduct(product, imgFiles);
+
+                System.out.println("check : " + check);
+
+                // 저장 성공
                 if(check) data=1;
+                // 저장 실패
                 else data=0;
 
+                System.out.println("data : " + data);
                 return new ResponseDto<Integer>(HttpStatus.OK.value(),data);
         }
+
 
         // 제품 수정하기
-        @PutMapping("/updateProduct")
-        public ResponseDto<Integer> updateProduct(@RequestBody Product product) {
-                System.out.println("Controller 접근됨. /updateProduct");
-                System.out.println(product.getId());
-
-                boolean check = productServicrImpl.updateProduct(product);
+//        @PutMapping("/updateProduct")
+//        public ResponseDto<Integer> updateProduct(@RequestBody Product product) {
+//                System.out.println("Controller 접근됨. /updateProduct");
+//                System.out.println(product.getId());
+//
+//                boolean check = productServicrImpl.updateProduct(product);
+//
+//                int data = 0;
+//
+//                if(check) data=1;
+//                else data=0;
+//
+//                return new ResponseDto<Integer>(HttpStatus.OK.value(),data);
+//        }
+        // 제품 수정하기
+        @PutMapping(value = "/updateProduct",consumes = { MediaType.APPLICATION_JSON_VALUE, MediaType.MULTIPART_FORM_DATA_VALUE })
+        public ResponseDto<Integer> updateProduct(@RequestPart("data") Product product,
+                                                  @RequestPart("productId") long productId,
+                                                  @RequestPart(value = "image",required = false) List<MultipartFile> imgFiles
+        ) throws Exception {
+                System.out.println("Controller 접근됨. /updateInspect");
+                System.out.println("imgFiles : " + imgFiles);
+                System.out.println("productId : " + productId);
 
                 int data = 0;
 
-                if(check) data=1;
-                else data=0;
+                // 검수 내용이 있으면 수정 진행
+                Boolean check = productServicrImpl.updateProduct(product, imgFiles);
+                System.out.println("check : " + check);
 
+                // 저장 성공
+                if (check) data = 1;
+                        // 저장 실패
+                else data = 0;
                 return new ResponseDto<Integer>(HttpStatus.OK.value(),data);
         }
+
 
         // 제품 삭제하기
         @DeleteMapping("/deleteProduct")
@@ -60,7 +110,7 @@ public class ProductController {
                 System.out.println("Controller 접근됨. /deleteProduct");
                 System.out.println(skuNo);
 
-                boolean check = productServicrImpl.deleteProduct(id, skuNo);
+                boolean check = productServicrImpl.deleteProduct(id);
 
                 System.out.println("check : " + check );
 

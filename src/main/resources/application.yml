@@ -1,0 +1,50 @@
+
+# 서버 설정
+server:
+  port : 3000
+
+# view Resolver
+# spring.mvc.view.prefix=/WEB-INF/jsp/
+# spring.mvc.view.suffix=.jsp
+
+# 수정하면 바로 새로고침 (배포할때 제거)
+spring:
+#  devtools:
+#    restart:
+#      enabled : false
+
+# 데이터베이스 설정
+  datasource:
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    url : jdbc:mysql://localhost:3306/spring_vue?serverTimezone=UTC&characterEncoding=UTF-8
+    username : root
+    password : 1234
+  jpa:
+    show-sql : true
+    database : mysql
+    hibernate :
+      use-new-id-generator-mappings : false
+      ddl-auto : update
+    properties:
+      hibernate:
+        jdbc:
+          lob:
+            non_contextual_creation : true
+  servlet:
+    multipart:
+      maxFileSize : 10MB
+      maxRequestSize : 10MB
+  redis:
+    port: 6379
+    host: localhost
+
+jwt:
+  secret: c3ByaW5nLWJvb3Qtc2VjdXJpdHktand0LXR1dG9yaWFsLWppd29vbi1zcHJpbmctYm9vdC1zZWN1cml0eS1qd3QtdHV0b3JpYWwK
+
+logging:
+  level:
+    com.tutorial: debug
+
+
+#application-oauth.properties
+#spring.profiles.includes = oauth

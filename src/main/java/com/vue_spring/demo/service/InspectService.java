@@ -16,6 +16,8 @@ public interface InspectService {
 
     public Optional<List<Inspect>> findInspect(List<Long> productId, Date beforeDate, Date afterDate);
 
+    public Optional<List<Inspect>> findInspect(Date beforeDate, Date afterDate);
+
     public Boolean insertInspect(Inspect inspect, List<MultipartFile> imgFiles) throws Exception;
 
     public Boolean updateInspect(Inspect inspect, List<MultipartFile> imgFiles) throws Exception;
@@ -25,4 +27,7 @@ public interface InspectService {
     public Boolean checkInspect(Product product, Date inspectDate);
 
     public Boolean deleteInspect(long id);
+
+    public Boolean findProductInspect(long id);
+
 }

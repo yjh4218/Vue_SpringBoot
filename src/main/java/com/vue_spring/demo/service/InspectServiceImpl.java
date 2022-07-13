@@ -16,7 +16,7 @@ import java.util.*;
 
 @Repository
 @Service
-public class InspectServicrImpl implements InspectService {
+public class InspectServiceImpl implements InspectService {
 
     @Autowired
     private InspectRepository inspectRepository;
@@ -25,7 +25,7 @@ public class InspectServicrImpl implements InspectService {
 
     private final FileHandler fileHandler;
 
-    public InspectServicrImpl(FileHandler fileHandler) {
+    public InspectServiceImpl(FileHandler fileHandler) {
         this.fileHandler = fileHandler;
     }
 
@@ -40,7 +40,8 @@ public class InspectServicrImpl implements InspectService {
         System.out.println("검수 추가 서비스222 : " + imgFiles);
 
         // 이미지 파일 경로 지정
-        List<InspectImage> inspectList = fileHandler.parseFileInfo(imgFiles);
+        InspectImage tmpImage = new InspectImage();
+        List<InspectImage> inspectList = fileHandler.parseFileInfo(imgFiles, tmpImage);
 
         System.out.println(inspect);
         System.out.println(inspectList);
@@ -60,18 +61,11 @@ public class InspectServicrImpl implements InspectService {
                 
                 for(InspectImage image : inspectList) {
 
-                    System.out.println("검수 추가 서비스33333 : " + inspectList);
-                    System.out.println("검수 추가 서비스44444 : " + inspect);
-
                     // 이미지 데이터가 존재할 경우 진행
                     if(!inspectTemp.isEmpty()){
-                        
-                        System.out.println("inspectTemp : " + inspectSelect);
 
                         // 이미지 파일들에 검수정보 저장(inspect_id)
                         image.setInspect(inspectSelect);
-
-                        System.out.println("image : " + image);
 
                         // image DB에 저장
                         inspectImageRepository.save(image);
@@ -80,7 +74,6 @@ public class InspectServicrImpl implements InspectService {
                         inspectSelect.addPhoto(image);
                     }
                 }
-
                 // DB에 사진정보 추가한 상태로 다시 저장
                 inspectRepository.save(inspectSelect);
 
@@ -115,7 +108,8 @@ public class InspectServicrImpl implements InspectService {
         // 새로운 이미지 파일이 있다면
         if(imgFiles != null){
             // 이미지 파일 지정
-            List<InspectImage> inspectList = fileHandler.parseFileInfo(imgFiles);
+            InspectImage tmpImage = new InspectImage();
+            List<InspectImage> inspectList = fileHandler.parseFileInfo(imgFiles, tmpImage);
 
             System.out.println("이미지 있음");
 
@@ -235,20 +229,39 @@ public class InspectServicrImpl implements InspectService {
         return Optional.of(inspectList);
     }
 
-    // 제품 중복 확인
+    // 일부 상품 조회. 날짜만 진행
+    public Optional<List<Inspect>> findInspect(Date beforeDate, Date afterDate) {
+
+        System.out.println("InspectServicrImpl 검수 조회");
+
+        return inspectRepository.findByInspectDateBetween(beforeDate, afterDate);
+    }
+
+    // 검수 중복 확인
     public Boolean checkInspect(Product product, Date inspectDate){
         boolean check = inspectRepository.existsByProductAndInspectDate(product, inspectDate);
         return check;
     }
     
-    // 제품 검색
+    // 검수 검색
     public Optional<Inspect> findInspect(long id){
         return (Optional<Inspect>) inspectRepository.findById(id);
     }
 
-    // 제품 있는지 확인
+    // 검수 있는지 확인
     public Boolean checkInspect(long id){
         boolean check = inspectRepository.existsById(id);
         return check;
     }
+
+    // 상품id로 된 검수 내용 있는지 확인
+    public Boolean findProductInspect(long id){
+        return inspectRepository.existsByProductId(id);
+    }
+
+    public Optional<List<Inspect>> findInspectProductList(long id){
+        return inspectRepository.findByProductId(id);
+    }
+
+
 }
