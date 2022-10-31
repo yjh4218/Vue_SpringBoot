@@ -20,7 +20,7 @@ public interface ClaimService {
 
     public Boolean insertClaim(Claim claim, List<MultipartFile> imgFiles) throws Exception;
 
-    public Boolean updateClaim(Claim claim, List<MultipartFile> imgFiles) throws Exception;
+    public Boolean updateClaim(Claim claim, List<MultipartFile> imgFiles, List<Long> imgId) throws Exception;
 
     public Boolean checkClaim(long id);
 

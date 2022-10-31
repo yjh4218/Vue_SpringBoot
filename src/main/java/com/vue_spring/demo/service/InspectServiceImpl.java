@@ -1,5 +1,6 @@
 package com.vue_spring.demo.service;
 
+import com.vue_spring.demo.DAO.InspectExcelInterfaceDAO;
 import com.vue_spring.demo.Repository.InspectImageRepository;
 import com.vue_spring.demo.Repository.InspectRepository;
 import com.vue_spring.demo.component.FileHandler;
@@ -52,40 +53,31 @@ public class InspectServiceImpl implements InspectService {
         try{
             // 검수 데이터 저장 DB에 저장
             Long id = inspectRepository.save(inspect).getId();
-            // DB에 저장된 검수 내용 조회
-            Optional<Inspect> inspectTemp = inspectRepository.findById(id);
 
             // 이미지 파일이 있을 때만 실행함.
             if(!inspectList.isEmpty()) {
-                Inspect inspectSelect = inspectTemp.get();
-                
+
+                // DB에 저장된 검수 내용 조회
+                Inspect saveInspect = inspectRepository.findById(id).get();
+
                 for(InspectImage image : inspectList) {
 
-                    // 이미지 데이터가 존재할 경우 진행
-                    if(!inspectTemp.isEmpty()){
+                    // 이미지 파일들에 검수정보 저장(inspect_id)
+                    image.setInspect(saveInspect);
 
-                        // 이미지 파일들에 검수정보 저장(inspect_id)
-                        image.setInspect(inspectSelect);
+                    // image DB에 저장
+                    inspectImageRepository.save(image);
 
-                        // image DB에 저장
-                        inspectImageRepository.save(image);
-
-                        // DB에 저장된 검수 내용에 사진 정보 저장
-                        inspectSelect.addPhoto(image);
-                    }
+                    // DB에 저장된 검수 내용에 사진 정보 저장
+                    saveInspect.addPhoto(image);
                 }
                 // DB에 사진정보 추가한 상태로 다시 저장
-                inspectRepository.save(inspectSelect);
+                inspectRepository.save(saveInspect);
 
                 // 저장 성공
                 check = true;
             }
-            // 이미지 파일이 없을 경우 검수 내용만 저장
-            else{
-                inspectRepository.save(inspect);
-                // 저장 성공
-                check = true;
-            }
+
         }catch (Exception e){
             System.out.println(e.getMessage());
             //저장 실패
@@ -96,7 +88,7 @@ public class InspectServiceImpl implements InspectService {
     }
 
     // 검수 수정
-    public Boolean updateInspect(Inspect inspect, List<MultipartFile> imgFiles) throws Exception {
+    public Boolean updateInspect(Inspect inspect, List<MultipartFile> imgFiles, List<Long> imgId) throws Exception {
         System.out.println("검수 수정 서비스 : " + inspect);
         System.out.println("검수 수정 서비스222 : " + imgFiles);
 
@@ -105,26 +97,66 @@ public class InspectServiceImpl implements InspectService {
         // 기존에 등록된 이미지가 있는지 확인
         boolean existImg = inspectImageRepository.existsByInspectId(inspect.getId());
 
-        // 새로운 이미지 파일이 있다면
-        if(imgFiles != null){
-            // 이미지 파일 지정
-            InspectImage tmpImage = new InspectImage();
-            List<InspectImage> inspectList = fileHandler.parseFileInfo(imgFiles, tmpImage);
+        // 기존에 등록된 이미지가 있으면 삭제
+        try{
+            if(existImg) {
+                Optional<List<InspectImage>> exiImg = inspectImageRepository.findByInspectId(inspect.getId());
 
-            System.out.println("이미지 있음");
+                // 사용자가 모든 파일 삭제했을 경우
+                if(imgId == null){
+                    for (InspectImage image : exiImg.get()) {
+                        File file = new File(image.getImgFilePath());
+                        file.delete();
 
-            // 기존에 등록된 이미지가 있으면 삭제
-            if(existImg){
-                Optional<List<InspectImage>> deleteImg = inspectImageRepository.findByInspectId(inspect.getId());
-                // 경로에 지정된 파일 삭제
-                for(InspectImage image : deleteImg.get()){
-                    File file = new File(image.getImgFilePath());
-                    file.delete();
+                        // DB의 파일 삭제
+                        inspectImageRepository.deleteById(image.getId());
+                    }
                 }
-                // DB의 파일 삭제
-                inspectImageRepository.deleteByInspectId(inspect.getId());
+                // 경로에 지정된 파일 삭제. 사용자가 삭제하지 않은 파일은 삭제 안 함
+                else if(exiImg.get().size() == imgId.size()) {
+                    for(InspectImage image : exiImg.get()){
+                        inspect.addPhoto(image);
+                    }
+                }
+                else {
+                    for (InspectImage image : exiImg.get()) {
+                        boolean checkImg = false;
+                        for (long tempId : imgId) {
+                            if (image.getId().equals(tempId)) {
+                                checkImg = true;
+                                break;
+                            }
+                        }
+                        // 사용자가 삭제한 파일만 삭제
+                        if (!checkImg) {
+                            // 경로에 있는 파일 삭제
+                            System.out.println("사용자가 삭제한 이미지 삭제");
+                            System.out.println(image);
+                            File file = new File(image.getImgFilePath());
+                            file.delete();
+
+                            // DB의 파일 삭제
+                            inspectImageRepository.deleteById(image.getId());
+                        }
+                        // 사용자가 삭제하지 않은 파일은 다시 저장
+                        else {
+                            Optional<InspectImage> saveImg = inspectImageRepository.findById(image.getId());
+                            InspectImage tempImg = saveImg.get();
+                            tempImg.setInspect(inspect);
+                            inspect.addPhoto(tempImg);
+                        }
+                    }
+                }
             }
-            try{
+
+            // 새로운 이미지 파일이 있다면
+            if(imgFiles != null){
+                // 이미지 파일 지정
+                InspectImage tmpImage = new InspectImage();
+                List<InspectImage> inspectList = fileHandler.parseFileInfo(imgFiles, tmpImage);
+
+                System.out.println("이미지 있음");
+
                 // 이미지 파일 저장.
                 for(InspectImage image : inspectList) {
 
@@ -139,30 +171,16 @@ public class InspectServiceImpl implements InspectService {
                     // image DB에 저장
                     inspectImageRepository.save(image);
                 }
-
-                // inspect 업데이트
-                inspectRepository.save(inspect);
-
-                // 저장 성공
-                check = true;
-            }catch (Exception e){
-                System.out.println(e.getMessage());
-                check=false;
             }
-        }
-        // DB에 있는 이미지 갖고와서 연결 진행
-        else{
-            // 기존에 등록된 이미지가 있으면 다시 연결
-            if(existImg){
-                Optional<List<InspectImage>> inspectList = inspectImageRepository.findByInspectId(inspect.getId());
-                for(InspectImage image : inspectList.get()){
-                    inspect.addPhoto(image);
-                }
-            }
+
             // inspect 업데이트
             inspectRepository.save(inspect);
+
             // 저장 성공
             check = true;
+        }catch (Exception e){
+            System.out.println(e.getMessage());
+            check=false;
         }
 
         return check;
@@ -208,33 +226,57 @@ public class InspectServiceImpl implements InspectService {
         return (List<Inspect>) inspectRepository.findAll();
     }
 
+    // 조건에 맞는 모든 검수 검색(엑셀용)
+    public Optional<List<InspectExcelInterfaceDAO>> findInspectAllDate(Date beforeDate, Date afterDate) {
+        return inspectRepository.findByInspectDateBetween(beforeDate, afterDate);
+    }
+
+    // 조건에 맞는 모든 검수 검색(엑셀용)
+    public Optional<List<InspectExcelInterfaceDAO>> findInspectAllDate(List<Long> products,Date beforeDate, Date afterDate) {
+        return inspectRepository.findByProductInspectList(products, beforeDate, afterDate);
+    }
+
     // 일부 상품 조회. 조건에 따른 검색 진행
-    public Optional<List<Inspect>> findInspect(List<Long> productId, Date beforeDate, Date afterDate) {
+    public List<Long> findInspect(List<Long> productId, Date beforeDate, Date afterDate) {
 
         System.out.println("InspectServicrImpl 검수 조회");
 
         // Optional 빈 객체 생성
-        Optional<List<Inspect>> tmpInspectList = Optional.empty();
-        List<Inspect> inspectList = new ArrayList<>();
+        List<Long> inspectList = new ArrayList<>();
 
         // ProductId 값에 따라 데이터 조회
         for(int i = 0; i< productId.size(); i++){
             // Inspect 테이블에 조회 및 저장
-            System.out.println("Inspect 테이블에 값이 있다면 데이터 저장");
-            tmpInspectList = inspectRepository.findByProductIdAndInspectDateBetween(productId.get(i), beforeDate, afterDate);
+            System.out.println("Inspect 테이블에 값이 있다면 id 값들 가져옴 저장");
+            List<Long> tmpInspectList = inspectRepository.findByProductIdInspectList(productId.get(i), beforeDate, afterDate);
 
-            inspectList.addAll(tmpInspectList.orElse(null));
+            for(int j = 0; j < tmpInspectList.size(); j++){
+                inspectList.add(tmpInspectList.get(j));
+            }
         }
 
-        return Optional.of(inspectList);
+        return inspectList;
     }
 
-    // 일부 상품 조회. 날짜만 진행
+    // 일부 상품 조회. 날짜만 진행(처음 조회)
     public Optional<List<Inspect>> findInspect(Date beforeDate, Date afterDate) {
 
-        System.out.println("InspectServicrImpl 검수 조회");
+        System.out.println("처음 조회. 15개만 검수 조회");
 
-        return inspectRepository.findByInspectDateBetween(beforeDate, afterDate);
+        return inspectRepository.findByInspectListAndClassNameFirst(beforeDate, afterDate);
+    }
+
+    // 조건에 맞는 상품 조회
+    public Optional<List<Inspect>> findInspect(Long[] inspectCurseId) {
+
+        System.out.println("15개만 검수 조회");
+
+        return inspectRepository.findByInspectCurseId(inspectCurseId);
+    }
+
+    // 처음 조회 시 아이디만 검색(분류 없음. 날짜만 검색)
+    public List<Long> findSelectId(Date beforeDate, Date afterDate){
+        return inspectRepository.findById(beforeDate, afterDate);
     }
 
     // 검수 중복 확인
@@ -247,6 +289,11 @@ public class InspectServiceImpl implements InspectService {
     public Optional<Inspect> findInspect(long id){
         return (Optional<Inspect>) inspectRepository.findById(id);
     }
+
+    // 검색양 조회
+//    public Long findSelectInspectCnt(Date beforeDate, Date afterDate){
+//
+//    }
 
     // 검수 있는지 확인
     public Boolean checkInspect(long id){

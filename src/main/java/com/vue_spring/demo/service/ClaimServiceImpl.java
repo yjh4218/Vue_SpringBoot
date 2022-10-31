@@ -97,7 +97,7 @@ public class ClaimServiceImpl implements ClaimService {
     }
 
     // 클레임 수정
-    public Boolean updateClaim(Claim claim, List<MultipartFile> imgFiles) throws Exception {
+    public Boolean updateClaim(Claim claim, List<MultipartFile> imgFiles, List<Long> imgId) throws Exception {
         System.out.println("클레임 수정 서비스 : " + claim);
         System.out.println("클레임 수정 서비스222 : " + imgFiles);
 
@@ -119,11 +119,32 @@ public class ClaimServiceImpl implements ClaimService {
                 Optional<List<ClaimImage>> deleteImg = claimImageRepository.findByClaimId(claim.getId());
                 // 경로에 지정된 파일 삭제
                 for(ClaimImage image : deleteImg.get()){
-                    File file = new File(image.getImgFilePath());
-                    file.delete();
+                    boolean checkImg = false;
+                    for(long tempId : imgId){
+                        if(image.getId().equals(tempId)){
+                            checkImg = true;
+                            break;
+                        }
+                    }
+                    // 사용자가 삭제한 파일만 삭제
+                    if(!checkImg){
+                        // 경로에 있는 파일 삭제
+                        System.out.println("사용자가 삭제한 이미지 삭제");
+                        System.out.println(image);
+                        File file = new File(image.getImgFilePath());
+                        file.delete();
+
+                        // DB의 파일 삭제
+                        claimImageRepository.deleteById(image.getId());
+                    }
+                    // 사용자가 삭제하지 않은 파일은 다시 저장
+                    else{
+                        Optional<ClaimImage> saveImg = claimImageRepository.findById(image.getId());
+                        ClaimImage tempImg = saveImg.get();
+                        tempImg.setClaim(claim);
+                        claim.addPhoto(tempImg);
+                    }
                 }
-                // DB의 파일 삭제
-                claimImageRepository.deleteByClaimId(claim.getId());
             }
             try{
                 // 이미지 파일 저장.
@@ -197,8 +218,8 @@ public class ClaimServiceImpl implements ClaimService {
                 }
                 // DB의 파일 삭제
                 claimImageRepository.deleteByClaimId(id);
-                claimRepository.deleteById(id);
             }
+            claimRepository.deleteById(id);
             return true;
         }
     }

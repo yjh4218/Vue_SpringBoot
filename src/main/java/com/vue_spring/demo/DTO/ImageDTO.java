@@ -31,10 +31,6 @@ public class ImageDTO {
         return imgFileName;
     }
 
-    public void setImgFileName(String imgFileName) {
-        this.imgFileName = imgFileName;
-    }
-
     public String getImgFilePath() {
         return imgFilePath;
     }
@@ -49,5 +45,9 @@ public class ImageDTO {
 
     public void setImgFileSize(long imgFileSize) {
         this.imgFileSize = imgFileSize;
+    }
+
+    public void setImgFileName(String imgFileName) {
+        this.imgFileName = imgFileName;
     }
 }

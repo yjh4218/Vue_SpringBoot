@@ -18,16 +18,17 @@ import java.util.Set;
 public interface MakerRepository extends JpaRepository<Maker, Long> {
 
         // 제품 조회(분류 포함)
-        @Query(nativeQuery = true, value = "SELECT * FROM MAKER WHERE maker_name LIKE %:makerName% AND maker_address LIKE %:makerAddress% AND maker_person LIKE %:makerPerson% AND maker_phone LIKE %:makerPhone% AND business_type IN (:businessType)")
+        @Query(nativeQuery = true, value = "SELECT * FROM MAKER WHERE maker_name LIKE %:makerName% AND maker_address LIKE %:makerAddress% AND maker_person LIKE %:makerPerson% AND maker_phone LIKE %:makerPhone% AND class_name IN (:className) order by class_name desc")
         Optional<List<Maker>> findByMakerNameContainingAndMakerAddressContainingAndMakerPersonContainingAndMakerPhoneContainingIgnoreCaseAndtempBusinessType(
                 @Param("makerName") String makerName,
                 @Param("makerAddress") String makerAddress,
                 @Param("makerPerson") String makerPerson,
                 @Param("makerPhone") String makerPhone,
-                @Param("businessType")  Set<String> businessType
+                @Param("className")  Set<String> className
         );
 //
 //        // 제품 조회(분류 제외)
+        @Query(nativeQuery = true, value = "SELECT * FROM MAKER WHERE maker_name LIKE %:makerName% AND maker_address LIKE %:makerAddress% AND maker_person LIKE %:makerPerson% AND maker_phone LIKE %:makerPhone% order by class_name desc")
         Optional<List<Maker>> findByMakerNameContainingAndMakerAddressContainingAndMakerPersonContainingAndMakerPhoneContainingIgnoreCase(
                 String makerName, String makerAddress, String makerPerson, String makerPhone);
 //

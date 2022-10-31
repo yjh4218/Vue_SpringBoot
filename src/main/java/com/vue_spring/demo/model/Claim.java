@@ -19,7 +19,6 @@ import java.util.List;
 @Builder
 @Entity
 @Table(name = "Claim")
-@Data
 public class Claim {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY) // auto_increment
@@ -55,6 +54,10 @@ public class Claim {
     @Column(nullable = true, length = 100)
     private String claimDecide;
 
+    // 클레임 상세 분류
+    @Column(nullable = true, length = 100)
+    private String claimDecideSideOptions;
+     
     // 회수 여부
     @Column(nullable = true, length = 300)
     private String recall;
@@ -88,6 +91,126 @@ public class Claim {
     // 데이터 입력, 수정 시간
     @CreationTimestamp
     private Timestamp createDate;
+
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
+
+    public Product getProduct() {
+        return product;
+    }
+
+    public void setProduct(Product product) {
+        this.product = product;
+    }
+
+    public String getOrderNum() {
+        return orderNum;
+    }
+
+    public void setOrderNum(String orderNum) {
+        this.orderNum = orderNum;
+    }
+
+    public String getZenDeskID() {
+        return zenDeskID;
+    }
+
+    public void setZenDeskID(String zenDeskID) {
+        this.zenDeskID = zenDeskID;
+    }
+
+    public Date getClaimDate() {
+        return claimDate;
+    }
+
+    public void setClaimDate(Date claimDate) {
+        this.claimDate = claimDate;
+    }
+
+    public Date getLotDate() {
+        return lotDate;
+    }
+
+    public void setLotDate(Date lotDate) {
+        this.lotDate = lotDate;
+    }
+
+    public String getClaimDecide() {
+        return claimDecide;
+    }
+
+    public void setClaimDecide(String claimDecide) {
+        this.claimDecide = claimDecide;
+    }
+
+    public String getClaimDecideSideOptions() {
+        return claimDecideSideOptions;
+    }
+
+    public void setClaimDecideSideOptions(String claimDecideSideOptions) {
+        this.claimDecideSideOptions = claimDecideSideOptions;
+    }
+
+    public String getRecall() {
+        return recall;
+    }
+
+    public void setRecall(String recall) {
+        this.recall = recall;
+    }
+
+    public String getAsanaLink() {
+        return asanaLink;
+    }
+
+    public void setAsanaLink(String asanaLink) {
+        this.asanaLink = asanaLink;
+    }
+
+    public String getClaimContent() {
+        return claimContent;
+    }
+
+    public void setClaimContent(String claimContent) {
+        this.claimContent = claimContent;
+    }
+
+    public String getSpecialReport() {
+        return specialReport;
+    }
+
+    public void setSpecialReport(String specialReport) {
+        this.specialReport = specialReport;
+    }
+
+    public List<ClaimImage> getImageFile() {
+        return imageFile;
+    }
+
+    public void setImageFile(List<ClaimImage> imageFile) {
+        this.imageFile = imageFile;
+    }
+
+    public String getNote() {
+        return note;
+    }
+
+    public void setNote(String note) {
+        this.note = note;
+    }
+
+    public Timestamp getCreateDate() {
+        return createDate;
+    }
+
+    public void setCreateDate(Timestamp createDate) {
+        this.createDate = createDate;
+    }
 
     // Claim에서 파일 처리 위함
     public void addPhoto(ClaimImage claimImage) {

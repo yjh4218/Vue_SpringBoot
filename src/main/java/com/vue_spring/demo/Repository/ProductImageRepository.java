@@ -19,4 +19,5 @@ public interface ProductImageRepository extends JpaRepository<ProductImage, Long
     Boolean existsByProductId(@Param("productId") long productId);
 
     Optional<List<ProductImage>> findByProductId(@Param("productId") long productId);
+
 }

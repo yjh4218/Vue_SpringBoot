@@ -9,31 +9,45 @@ server:
 
 # 수정하면 바로 새로고침 (배포할때 제거)
 spring:
+    profiles:
+        active: local
+
+---
+
 #  devtools:
 #    restart:
 #      enabled : false
 
 # 데이터베이스 설정
+spring:
   datasource:
-    driver-class-name: com.mysql.cj.jdbc.Driver
-    url : jdbc:mysql://localhost:3306/spring_vue?serverTimezone=UTC&characterEncoding=UTF-8
+    driver-class-name: net.sf.log4jdbc.sql.jdbcapi.DriverSpy
+    url: jdbc:log4jdbc:mysql://localhost:3306/spring_vue?serverTimezone=UTC&characterEncoding=UTF-8
+#    driver-class-name: com.mysql.cj.jdbc.Driver
+#    url : jdbc:mysql://localhost:3306/spring_vue?serverTimezone=UTC&characterEncoding=UTF-8
     username : root
     password : 1234
   jpa:
-    show-sql : true
+    show_sql : true
+    format_sql : true
     database : mysql
     hibernate :
-      use-new-id-generator-mappings : false
-      ddl-auto : update
+        use-new-id-generator-mappings : false
+        ddl-auto : update
+        default_batch_fetch_size: 10
     properties:
       hibernate:
         jdbc:
           lob:
             non_contextual_creation : true
+        show_sql : true
+        format_sql : true
+        use_sql_comments : true
   servlet:
     multipart:
       maxFileSize : 10MB
       maxRequestSize : 10MB
+#      location: E:\\fileImage
   redis:
     port: 6379
     host: localhost
@@ -43,7 +57,7 @@ jwt:
 
 logging:
   level:
-    com.tutorial: debug
+    root: debug
 
 
 #application-oauth.properties

@@ -70,7 +70,8 @@ public class ClaimController {
         @PutMapping(value = "/updateClaim",consumes = { MediaType.APPLICATION_JSON_VALUE, MediaType.MULTIPART_FORM_DATA_VALUE })
         public ResponseDto<Integer> updateClaim(@RequestPart("data") Claim claim,
                                                   @RequestPart("productId") long productId,
-                                                  @RequestPart(value = "image",required = false) List<MultipartFile> imgFiles
+                                                  @RequestPart(value = "image",required = false) List<MultipartFile> imgFiles,
+                                                @RequestParam(value = "imgId",required = false) List<Long> imgId
         ) throws Exception {
                 System.out.println("Controller 접근됨. /updateClaim");
                 System.out.println(claim.getNote());
@@ -86,7 +87,7 @@ public class ClaimController {
 
                 System.out.println("product : " + product.get());
                 // 검수 내용이 있으면 수정 진행
-                Boolean check = claimServiceImpl.updateClaim(claim, imgFiles);
+                Boolean check = claimServiceImpl.updateClaim(claim, imgFiles, imgId);
                 System.out.println("check : " + check);
 
                 // 저장 성공
@@ -171,23 +172,10 @@ public class ClaimController {
 
                         System.out.println("조건에 맞춰서 제품 조회");
                         // 조건에 맞춰서 제품 조회
-                        Optional<List<Product>> products = (Optional<List<Product>>) productServicrImpl.findProduct(skuNo,
-                                productName,
+                       List<Long> products = productServicrImpl.findAllProductId(skuNo, productName,
                                 brandName, maker, tempClassName);
 
-                        System.out.println("제품 조회 완료");
-
-                        // 제품 조회 결과 List로 형변환
-                        List<Product> tmpProducts = products.get();
-
-                        // product id들 저장
-                        List<Long> listId = new ArrayList<>();
-
-                        for(int i = 0; i< tmpProducts.size(); i++){
-                                listId.add(tmpProducts.get(i).getId());
-                        }
-
-                        Optional<List<Claim>> claims = claimServiceImpl.findClaim(listId, beforeDate, afterDate);
+                        Optional<List<Claim>> claims = claimServiceImpl.findClaim(products, beforeDate, afterDate);
                         System.out.println("Service 조회 완료");
 
                         // System.out.println(products);

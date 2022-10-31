@@ -11,9 +11,10 @@ import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
+import lombok.Data;
+import org.hibernate.annotations.BatchSize;
 import org.hibernate.annotations.CreationTimestamp;
 
-import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.springframework.format.annotation.DateTimeFormat;
 
@@ -26,10 +27,9 @@ public class Product {
     // Sku 번호
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY) // auto_increment
-
     private long id;
 
-    @Column(length = 12)
+    @Column(length = 13)
     private String skuNo;
 
     // 제품명
@@ -48,6 +48,14 @@ public class Product {
     @Column(nullable = false, length = 100)
     private String className;
 
+    // 보관방법
+    @Column(nullable = false, length = 100)
+    private String storMethod;
+
+    // 수분율
+    @Column(nullable = false)
+    private long moisture;
+
     // 제품 초도생산 일자
     @Column(nullable = false, length = 100)
     @JsonFormat(shape= JsonFormat.Shape.STRING, pattern="yyyy-MM-dd")
@@ -56,33 +64,36 @@ public class Product {
 
     // 제품 유통기한
     @Column(nullable = false, length = 100)
-    private Integer expDate;
+    private String expDate;
 
     //     파일 원본명
     @OneToMany(
             mappedBy = "product",
             cascade = {CascadeType.PERSIST, CascadeType.REMOVE},
+            fetch = FetchType.LAZY,
             orphanRemoval = true
     )
 //    @JsonBackReference //순환참조 방지
     @Builder.Default
+    @BatchSize(size=10)
     private List<ProductImage> imageFile = new ArrayList<>();
 
-    // 제품 구매가격
+    // 제품 중량(100g 기준)
     @Column(nullable = true, length = 100)
-    private Integer purchasePrice;
+    private String productWeight;
 
-    // 제품 판매가격
-    @Column(nullable = true, length = 100)
-    private Integer sellingPrice;
-
-    // 제품 성상
-    @Column(nullable = true, length = 300)
-    private String productCondition;
+    // 원재료명
+    @Column(nullable = true, length = 500)
+    private String rawMaterialName;
 
     // 제품 규격
-    @Column(nullable = true, length = 300)
+    @Column(nullable = true, length = 500)
     private String productStandard;
+
+
+    // 포장 단위
+    @Column(nullable = true, length = 500)
+    private String packingUnit;
 
     // 제품 열량
     @Column(nullable = true, length = 100)
@@ -92,27 +103,34 @@ public class Product {
     @Column(nullable = true, length = 100)
     private Float sodium;
 
-    // 제품 색상
-    @Column(nullable = true, length = 300)
-    private String productColor;
-
-    // 제품 모양
-    @Column(nullable = true, length = 300)
-    private String productShape;
-
     // 비고
     @Column(nullable = true, length = 500)
     private String note;
 
+
+    // 제품 변경내역
+    @OneToMany(
+            mappedBy = "product",
+            cascade = {CascadeType.PERSIST, CascadeType.REMOVE},
+            orphanRemoval = true
+    )
+//    @JsonBackReference //순환참조 방지
+    @Builder.Default
+    @BatchSize(size=10)
+    private List<ProductChangeReply> productChangeReplies = new ArrayList<>();
+
+    @Builder.Default
     @OneToMany (mappedBy = "product")
     @JsonBackReference //순환참조 방지
-    private List<Inspect> insepct = new ArrayList<>();
+    @BatchSize(size=10)
+    private List<Inspect> inspect = new ArrayList<>();
 
     // 데이터 입력, 수정 시간
     @CreationTimestamp
     private Timestamp createDate;
 
-    // product에서 파일 처리 위함
+
+    // product에서 이미지 파일 처리 위함
     public void addPhoto(ProductImage productImage) {
         this.imageFile.add(productImage);
 
@@ -120,6 +138,16 @@ public class Product {
         if(productImage.getProduct() != this)
             // 파일 저장
             productImage.setProduct(this);
+    }
+
+    // product에서 제품 내용 변경 처리 위함
+    public void addReply(ProductChangeReply productChangeReply) {
+        this.productChangeReplies.add(productChangeReply);
+
+        // 게시글에 파일이 저장되어있지 않은 경우
+        if(productChangeReply.getProduct() != this)
+            // 파일 저장
+            productChangeReply.setProduct(this);
     }
 
     public long getId() {
@@ -170,6 +198,22 @@ public class Product {
         this.className = className;
     }
 
+    public String getStorMethod() {
+        return storMethod;
+    }
+
+    public void setStorMethod(String storMethod) {
+        this.storMethod = storMethod;
+    }
+
+    public long getMoisture() {
+        return moisture;
+    }
+
+    public void setMoisture(long moisture) {
+        this.moisture = moisture;
+    }
+
     public Date getMakeDate() {
         return makeDate;
     }
@@ -178,11 +222,11 @@ public class Product {
         this.makeDate = makeDate;
     }
 
-    public Integer getExpDate() {
+    public String getExpDate() {
         return expDate;
     }
 
-    public void setExpDate(Integer expDate) {
+    public void setExpDate(String expDate) {
         this.expDate = expDate;
     }
 
@@ -194,28 +238,20 @@ public class Product {
         this.imageFile = imageFile;
     }
 
-    public Integer getPurchasePrice() {
-        return purchasePrice;
+    public String getProductWeight() {
+        return productWeight;
     }
 
-    public void setPurchasePrice(Integer purchasePrice) {
-        this.purchasePrice = purchasePrice;
+    public void setProductWeight(String productWeight) {
+        this.productWeight = productWeight;
     }
 
-    public Integer getSellingPrice() {
-        return sellingPrice;
+    public String getRawMaterialName() {
+        return rawMaterialName;
     }
 
-    public void setSellingPrice(Integer sellingPrice) {
-        this.sellingPrice = sellingPrice;
-    }
-
-    public String getProductCondition() {
-        return productCondition;
-    }
-
-    public void setProductCondition(String productCondition) {
-        this.productCondition = productCondition;
+    public void setRawMaterialName(String rawMaterialName) {
+        this.rawMaterialName = rawMaterialName;
     }
 
     public String getProductStandard() {
@@ -224,6 +260,14 @@ public class Product {
 
     public void setProductStandard(String productStandard) {
         this.productStandard = productStandard;
+    }
+
+    public String getPackingUnit() {
+        return packingUnit;
+    }
+
+    public void setPackingUnit(String packingUnit) {
+        this.packingUnit = packingUnit;
     }
 
     public Float getCalorie() {
@@ -242,22 +286,6 @@ public class Product {
         this.sodium = sodium;
     }
 
-    public String getProductColor() {
-        return productColor;
-    }
-
-    public void setProductColor(String productColor) {
-        this.productColor = productColor;
-    }
-
-    public String getProductShape() {
-        return productShape;
-    }
-
-    public void setProductShape(String productShape) {
-        this.productShape = productShape;
-    }
-
     public String getNote() {
         return note;
     }
@@ -266,12 +294,20 @@ public class Product {
         this.note = note;
     }
 
-    public List<Inspect> getInsepct() {
-        return insepct;
+    public List<ProductChangeReply> getProductChangeReplies() {
+        return productChangeReplies;
     }
 
-    public void setInsepct(List<Inspect> insepct) {
-        this.insepct = insepct;
+    public void setProductChangeReplies(List<ProductChangeReply> productChangeReplies) {
+        this.productChangeReplies = productChangeReplies;
+    }
+
+    public List<Inspect> getInspect() {
+        return inspect;
+    }
+
+    public void setInspect(List<Inspect> inspect) {
+        this.inspect = inspect;
     }
 
     public Timestamp getCreateDate() {
