@@ -112,7 +112,7 @@ INFO  22-09-21 11:48:13[restartedMain] [RepositoryConfigurationExtensionSupport:
 INFO  22-09-21 11:48:13[restartedMain] [RepositoryConfigurationExtensionSupport:349] - Spring Data Redis - Could not safely identify store assignment for repository candidate interface com.vue_spring.demo.Repository.InspectRepository. If you want this repository to be a Redis repository, consider annotating your entities with one of these annotations: org.springframework.data.redis.core.RedisHash (preferred), or consider extending one of the following types with your repository: org.springframework.data.keyvalue.repository.KeyValueRepository.
 INFO  22-09-21 11:48:13[restartedMain] [RepositoryConfigurationExtensionSupport:349] - Spring Data Redis - Could not safely identify store assignment for repository candidate interface com.vue_spring.demo.Repository.MakerRepository. If you want this repository to be a Redis repository, consider annotating your entities with one of these annotations: org.springframework.data.redis.core.RedisHash (preferred), or consider extending one of the following types with your repository: org.springframework.data.keyvalue.repository.KeyValueRepository.
 INFO  22-09-21 11:48:13[restartedMain] [RepositoryConfigurationExtensionSupport:349] - Spring Data Redis - Could not safely identify store assignment for repository candidate interface com.vue_spring.demo.Repository.MemberRepository. If you want this repository to be a Redis repository, consider annotating your entities with one of these annotations: org.springframework.data.redis.core.RedisHash (preferred), or consider extending one of the following types with your repository: org.springframework.data.keyvalue.repository.KeyValueRepository.
-INFO  22-09-21 11:48:13[restartedMain] [RepositoryConfigurationExtensionSupport:349] - Spring Data Redis - Could not safely identify store assignment for repository candidate interface com.vue_spring.demo.Repository.ProductImageRepository. If you want this repository to be a Redis repository, consider annotating your entities with one of these annotations: org.springframework.data.redis.core.RedisHash (preferred), or consider extending one of the following types with your repository: org.springframework.data.keyvalue.repository.KeyValueRepository.
+INFO  22-09-21 11:48:13[restartedMain] [RepositoryConfigurationExtensionSupport:349] - Spring Data Redis - Could not safely identify store assignment for repository candidate interface com.vue_spring.demo.Repository.ProductFileRepository. If you want this repository to be a Redis repository, consider annotating your entities with one of these annotations: org.springframework.data.redis.core.RedisHash (preferred), or consider extending one of the following types with your repository: org.springframework.data.keyvalue.repository.KeyValueRepository.
 INFO  22-09-21 11:48:13[restartedMain] [RepositoryConfigurationExtensionSupport:349] - Spring Data Redis - Could not safely identify store assignment for repository candidate interface com.vue_spring.demo.Repository.ProductRepository. If you want this repository to be a Redis repository, consider annotating your entities with one of these annotations: org.springframework.data.redis.core.RedisHash (preferred), or consider extending one of the following types with your repository: org.springframework.data.keyvalue.repository.KeyValueRepository.
 INFO  22-09-21 11:48:13[restartedMain] [RepositoryConfigurationExtensionSupport:349] - Spring Data Redis - Could not safely identify store assignment for repository candidate interface com.vue_spring.demo.Repository.SalesProductComponentRepository. If you want this repository to be a Redis repository, consider annotating your entities with one of these annotations: org.springframework.data.redis.core.RedisHash (preferred), or consider extending one of the following types with your repository: org.springframework.data.keyvalue.repository.KeyValueRepository.
 INFO  22-09-21 11:48:13[restartedMain] [RepositoryConfigurationExtensionSupport:349] - Spring Data Redis - Could not safely identify store assignment for repository candidate interface com.vue_spring.demo.Repository.SalesRepository. If you want this repository to be a Redis repository, consider annotating your entities with one of these annotations: org.springframework.data.redis.core.RedisHash (preferred), or consider extending one of the following types with your repository: org.springframework.data.keyvalue.repository.KeyValueRepository.
@@ -264,7 +264,7 @@ DEBUG 22-09-21 11:48:15[restartedMain] [LogHelper:102] - PersistenceUnitInfo [
 		com.vue_spring.demo.model.Maker
 		com.vue_spring.demo.model.Member
 		com.vue_spring.demo.model.Product
-		com.vue_spring.demo.model.ProductImage
+		com.vue_spring.demo.model.ProductFile
 		com.vue_spring.demo.model.RefreshToken
 		com.vue_spring.demo.model.Sales
 		com.vue_spring.demo.model.SalesProductComponent]
@@ -933,36 +933,36 @@ DEBUG 22-09-21 11:48:17[restartedMain] [PropertyBinder:175] - MetadataSourceProc
 DEBUG 22-09-21 11:48:17[restartedMain] [AbstractPropertyHolder:94] - Attempting to locate auto-apply AttributeConverter for property [com.vue_spring.demo.model.Product:sodium]
 DEBUG 22-09-21 11:48:17[restartedMain] [SimpleValueBinder:410] - building SimpleValue for sodium
 DEBUG 22-09-21 11:48:17[restartedMain] [PropertyBinder:266] - Building property sodium
-DEBUG 22-09-21 11:48:17[restartedMain] [AnnotationBinder:546] - Binding entity from annotated class: com.vue_spring.demo.model.ProductImage
+DEBUG 22-09-21 11:48:17[restartedMain] [AnnotationBinder:546] - Binding entity from annotated class: com.vue_spring.demo.model.ProductFile
 DEBUG 22-09-21 11:48:17[restartedMain] [Ejb3Column:227] - Binding column: Ejb3DiscriminatorColumn{logicalColumnName'DTYPE', discriminatorTypeName='string'}
 DEBUG 22-09-21 11:48:17[restartedMain] [EntityBinder:431] - Import with entity name ProductImage
-DEBUG 22-09-21 11:48:17[restartedMain] [EntityBinder:874] - Bind entity com.vue_spring.demo.model.ProductImage on table product_image
+DEBUG 22-09-21 11:48:17[restartedMain] [EntityBinder:874] - Bind entity com.vue_spring.demo.model.ProductFile on table product_image
 DEBUG 22-09-21 11:48:17[restartedMain] [Ejb3Column:227] - Binding column: Ejb3Column{table=org.hibernate.mapping.Table(product_image), mappingColumn=id, insertable=true, updatable=true, unique=false}
-DEBUG 22-09-21 11:48:17[restartedMain] [ClassLoaderAccessImpl:60] - Not known whether passed class name [com.vue_spring.demo.model.ProductImage] is safe
-DEBUG 22-09-21 11:48:17[restartedMain] [ClassLoaderAccessImpl:62] - No temp ClassLoader provided; using live ClassLoader for loading potentially unsafe class : com.vue_spring.demo.model.ProductImage
+DEBUG 22-09-21 11:48:17[restartedMain] [ClassLoaderAccessImpl:60] - Not known whether passed class name [com.vue_spring.demo.model.ProductFile] is safe
+DEBUG 22-09-21 11:48:17[restartedMain] [ClassLoaderAccessImpl:62] - No temp ClassLoader provided; using live ClassLoader for loading potentially unsafe class : com.vue_spring.demo.model.ProductFile
 DEBUG 22-09-21 11:48:17[restartedMain] [PropertyBinder:175] - MetadataSourceProcessor property id with lazy=false
-DEBUG 22-09-21 11:48:17[restartedMain] [AbstractPropertyHolder:94] - Attempting to locate auto-apply AttributeConverter for property [com.vue_spring.demo.model.ProductImage:id]
+DEBUG 22-09-21 11:48:17[restartedMain] [AbstractPropertyHolder:94] - Attempting to locate auto-apply AttributeConverter for property [com.vue_spring.demo.model.ProductFile:id]
 DEBUG 22-09-21 11:48:17[restartedMain] [SimpleValueBinder:410] - building SimpleValue for id
 DEBUG 22-09-21 11:48:17[restartedMain] [PropertyBinder:266] - Building property id
 DEBUG 22-09-21 11:48:17[restartedMain] [BinderHelper:514] - #makeIdGenerator(org.hibernate.mapping.SimpleValue([org.hibernate.mapping.Column(id)]), id, identity, , ...)
 DEBUG 22-09-21 11:48:17[restartedMain] [Ejb3Column:227] - Binding column: Ejb3Column{table=org.hibernate.mapping.Table(product_image), mappingColumn=create_date, insertable=true, updatable=true, unique=false}
 DEBUG 22-09-21 11:48:17[restartedMain] [PropertyBinder:175] - MetadataSourceProcessor property createDate with lazy=false
-DEBUG 22-09-21 11:48:17[restartedMain] [AbstractPropertyHolder:94] - Attempting to locate auto-apply AttributeConverter for property [com.vue_spring.demo.model.ProductImage:createDate]
+DEBUG 22-09-21 11:48:17[restartedMain] [AbstractPropertyHolder:94] - Attempting to locate auto-apply AttributeConverter for property [com.vue_spring.demo.model.ProductFile:createDate]
 DEBUG 22-09-21 11:48:17[restartedMain] [SimpleValueBinder:410] - building SimpleValue for createDate
 DEBUG 22-09-21 11:48:17[restartedMain] [PropertyBinder:266] - Building property createDate
 DEBUG 22-09-21 11:48:17[restartedMain] [Ejb3Column:227] - Binding column: Ejb3Column{table=org.hibernate.mapping.Table(product_image), mappingColumn=img_file_name, insertable=true, updatable=true, unique=false}
 DEBUG 22-09-21 11:48:17[restartedMain] [PropertyBinder:175] - MetadataSourceProcessor property imgFileName with lazy=false
-DEBUG 22-09-21 11:48:17[restartedMain] [AbstractPropertyHolder:94] - Attempting to locate auto-apply AttributeConverter for property [com.vue_spring.demo.model.ProductImage:imgFileName]
+DEBUG 22-09-21 11:48:17[restartedMain] [AbstractPropertyHolder:94] - Attempting to locate auto-apply AttributeConverter for property [com.vue_spring.demo.model.ProductFile:imgFileName]
 DEBUG 22-09-21 11:48:17[restartedMain] [SimpleValueBinder:410] - building SimpleValue for imgFileName
 DEBUG 22-09-21 11:48:17[restartedMain] [PropertyBinder:266] - Building property imgFileName
 DEBUG 22-09-21 11:48:17[restartedMain] [Ejb3Column:227] - Binding column: Ejb3Column{table=org.hibernate.mapping.Table(product_image), mappingColumn=img_file_path, insertable=true, updatable=true, unique=false}
 DEBUG 22-09-21 11:48:17[restartedMain] [PropertyBinder:175] - MetadataSourceProcessor property imgFilePath with lazy=false
-DEBUG 22-09-21 11:48:17[restartedMain] [AbstractPropertyHolder:94] - Attempting to locate auto-apply AttributeConverter for property [com.vue_spring.demo.model.ProductImage:imgFilePath]
+DEBUG 22-09-21 11:48:17[restartedMain] [AbstractPropertyHolder:94] - Attempting to locate auto-apply AttributeConverter for property [com.vue_spring.demo.model.ProductFile:imgFilePath]
 DEBUG 22-09-21 11:48:17[restartedMain] [SimpleValueBinder:410] - building SimpleValue for imgFilePath
 DEBUG 22-09-21 11:48:17[restartedMain] [PropertyBinder:266] - Building property imgFilePath
 DEBUG 22-09-21 11:48:17[restartedMain] [Ejb3Column:227] - Binding column: Ejb3Column{table=org.hibernate.mapping.Table(product_image), mappingColumn=img_file_size, insertable=true, updatable=true, unique=false}
 DEBUG 22-09-21 11:48:17[restartedMain] [PropertyBinder:175] - MetadataSourceProcessor property imgFileSize with lazy=false
-DEBUG 22-09-21 11:48:17[restartedMain] [AbstractPropertyHolder:94] - Attempting to locate auto-apply AttributeConverter for property [com.vue_spring.demo.model.ProductImage:imgFileSize]
+DEBUG 22-09-21 11:48:17[restartedMain] [AbstractPropertyHolder:94] - Attempting to locate auto-apply AttributeConverter for property [com.vue_spring.demo.model.ProductFile:imgFileSize]
 DEBUG 22-09-21 11:48:17[restartedMain] [SimpleValueBinder:410] - building SimpleValue for imgFileSize
 DEBUG 22-09-21 11:48:17[restartedMain] [PropertyBinder:266] - Building property imgFileSize
 DEBUG 22-09-21 11:48:17[restartedMain] [Ejb3Column:227] - Binding column: Ejb3JoinColumn{logicalColumnName='productId', referencedColumn='', mappedBy=''}
@@ -1189,8 +1189,8 @@ DEBUG 22-09-21 11:48:17[restartedMain] [CollectionSecondPass:67] - Mapped collec
 DEBUG 22-09-21 11:48:17[restartedMain] [CollectionSecondPass:50] - Second pass for collection: com.vue_spring.demo.model.Product.imageFile
 DEBUG 22-09-21 11:48:17[restartedMain] [CollectionBinder:903] - Binding a OneToMany: com.vue_spring.demo.model.Product.imageFile through a foreign key
 DEBUG 22-09-21 11:48:17[restartedMain] [CollectionBinder:941] - Mapping collection: com.vue_spring.demo.model.Product.imageFile -> product_image
-DEBUG 22-09-21 11:48:17[restartedMain] [TableBinder:554] - Retrieving property com.vue_spring.demo.model.ProductImage.product
-DEBUG 22-09-21 11:48:17[restartedMain] [CollectionSecondPass:67] - Mapped collection key: product_id, one-to-many: com.vue_spring.demo.model.ProductImage
+DEBUG 22-09-21 11:48:17[restartedMain] [TableBinder:554] - Retrieving property com.vue_spring.demo.model.ProductFile.product
+DEBUG 22-09-21 11:48:17[restartedMain] [CollectionSecondPass:67] - Mapped collection key: product_id, one-to-many: com.vue_spring.demo.model.ProductFile
 DEBUG 22-09-21 11:48:17[restartedMain] [CollectionSecondPass:50] - Second pass for collection: com.vue_spring.demo.model.Product.inspect
 DEBUG 22-09-21 11:48:17[restartedMain] [CollectionBinder:903] - Binding a OneToMany: com.vue_spring.demo.model.Product.inspect through a foreign key
 DEBUG 22-09-21 11:48:17[restartedMain] [CollectionBinder:941] - Mapping collection: com.vue_spring.demo.model.Product.inspect -> inspect
@@ -1271,8 +1271,8 @@ DEBUG 22-09-21 11:48:17[restartedMain] [ClassLoaderAccessImpl:60] - Not known wh
 DEBUG 22-09-21 11:48:17[restartedMain] [ClassLoaderAccessImpl:62] - No temp ClassLoader provided; using live ClassLoader for loading potentially unsafe class : com.vue_spring.demo.model.Maker
 DEBUG 22-09-21 11:48:17[restartedMain] [ClassLoaderAccessImpl:60] - Not known whether passed class name [com.vue_spring.demo.model.SalesProductComponent] is safe
 DEBUG 22-09-21 11:48:17[restartedMain] [ClassLoaderAccessImpl:62] - No temp ClassLoader provided; using live ClassLoader for loading potentially unsafe class : com.vue_spring.demo.model.SalesProductComponent
-DEBUG 22-09-21 11:48:17[restartedMain] [ClassLoaderAccessImpl:60] - Not known whether passed class name [com.vue_spring.demo.model.ProductImage] is safe
-DEBUG 22-09-21 11:48:17[restartedMain] [ClassLoaderAccessImpl:62] - No temp ClassLoader provided; using live ClassLoader for loading potentially unsafe class : com.vue_spring.demo.model.ProductImage
+DEBUG 22-09-21 11:48:17[restartedMain] [ClassLoaderAccessImpl:60] - Not known whether passed class name [com.vue_spring.demo.model.ProductFile] is safe
+DEBUG 22-09-21 11:48:17[restartedMain] [ClassLoaderAccessImpl:62] - No temp ClassLoader provided; using live ClassLoader for loading potentially unsafe class : com.vue_spring.demo.model.ProductFile
 DEBUG 22-09-21 11:48:17[restartedMain] [ClassLoaderAccessImpl:60] - Not known whether passed class name [com.vue_spring.demo.model.RefreshToken] is safe
 DEBUG 22-09-21 11:48:17[restartedMain] [ClassLoaderAccessImpl:62] - No temp ClassLoader provided; using live ClassLoader for loading potentially unsafe class : com.vue_spring.demo.model.RefreshToken
 DEBUG 22-09-21 11:48:17[restartedMain] [ClassLoaderAccessImpl:60] - Not known whether passed class name [com.vue_spring.demo.model.ClaimImage] is safe
@@ -1302,8 +1302,8 @@ DEBUG 22-09-21 11:48:18[restartedMain] [ClassLoaderAccessImpl:60] - Not known wh
 DEBUG 22-09-21 11:48:18[restartedMain] [ClassLoaderAccessImpl:62] - No temp ClassLoader provided; using live ClassLoader for loading potentially unsafe class : com.vue_spring.demo.model.Maker
 DEBUG 22-09-21 11:48:18[restartedMain] [ClassLoaderAccessImpl:60] - Not known whether passed class name [com.vue_spring.demo.model.SalesProductComponent] is safe
 DEBUG 22-09-21 11:48:18[restartedMain] [ClassLoaderAccessImpl:62] - No temp ClassLoader provided; using live ClassLoader for loading potentially unsafe class : com.vue_spring.demo.model.SalesProductComponent
-DEBUG 22-09-21 11:48:18[restartedMain] [ClassLoaderAccessImpl:60] - Not known whether passed class name [com.vue_spring.demo.model.ProductImage] is safe
-DEBUG 22-09-21 11:48:18[restartedMain] [ClassLoaderAccessImpl:62] - No temp ClassLoader provided; using live ClassLoader for loading potentially unsafe class : com.vue_spring.demo.model.ProductImage
+DEBUG 22-09-21 11:48:18[restartedMain] [ClassLoaderAccessImpl:60] - Not known whether passed class name [com.vue_spring.demo.model.ProductFile] is safe
+DEBUG 22-09-21 11:48:18[restartedMain] [ClassLoaderAccessImpl:62] - No temp ClassLoader provided; using live ClassLoader for loading potentially unsafe class : com.vue_spring.demo.model.ProductFile
 DEBUG 22-09-21 11:48:18[restartedMain] [ClassLoaderAccessImpl:60] - Not known whether passed class name [com.vue_spring.demo.model.RefreshToken] is safe
 DEBUG 22-09-21 11:48:18[restartedMain] [ClassLoaderAccessImpl:62] - No temp ClassLoader provided; using live ClassLoader for loading potentially unsafe class : com.vue_spring.demo.model.RefreshToken
 DEBUG 22-09-21 11:48:18[restartedMain] [ClassLoaderAccessImpl:60] - Not known whether passed class name [com.vue_spring.demo.model.ClaimImage] is safe
@@ -1423,7 +1423,7 @@ DEBUG 22-09-21 11:48:18[restartedMain] [LoadPlanTreePrinter:55] - LoadPlan(entit
              - (collection element) CollectionFetchableElementEntityGraph(entity=com.vue_spring.demo.model.ClaimImage, querySpaceUid=<gen:2>, path=com.vue_spring.demo.model.Claim.imageFile.<elements>)
           - EntityAttributeFetchImpl(entity=com.vue_spring.demo.model.Product, querySpaceUid=<gen:3>, path=com.vue_spring.demo.model.Claim.product)
              - CollectionAttributeFetchImpl(collection=com.vue_spring.demo.model.Product.imageFile, querySpaceUid=<gen:4>, path=com.vue_spring.demo.model.Claim.product.imageFile)
-                - (collection element) CollectionFetchableElementEntityGraph(entity=com.vue_spring.demo.model.ProductImage, querySpaceUid=<gen:5>, path=com.vue_spring.demo.model.Claim.product.imageFile.<elements>)
+                - (collection element) CollectionFetchableElementEntityGraph(entity=com.vue_spring.demo.model.ProductFile, querySpaceUid=<gen:5>, path=com.vue_spring.demo.model.Claim.product.imageFile.<elements>)
              - CollectionAttributeFetchImpl(collection=com.vue_spring.demo.model.Product.inspect, querySpaceUid=<gen:6>, path=com.vue_spring.demo.model.Claim.product.inspect)
                 - (collection element) CollectionFetchableElementEntityGraph(entity=com.vue_spring.demo.model.Inspect, querySpaceUid=<gen:7>, path=com.vue_spring.demo.model.Claim.product.inspect.<elements>)
     - QuerySpaces
@@ -1497,13 +1497,13 @@ DEBUG 22-09-21 11:48:18[restartedMain] [LoadPlanTreePrinter:55] - LoadPlan(entit
           - suffixed key columns - {id1_10_0_}
 
 DEBUG 22-09-21 11:48:18[restartedMain] [EntityLoader:129] - Static select for entity com.vue_spring.demo.model.SalesProductComponent [NONE]: select salesprodu0_.id as id1_10_0_, salesprodu0_.component_number as componen2_10_0_, salesprodu0_.component_product_name as componen3_10_0_, salesprodu0_.component_quantity as componen4_10_0_, salesprodu0_.component_sku_no as componen5_10_0_, salesprodu0_.create_date as create_d6_10_0_, salesprodu0_.product_length as product_7_10_0_, salesprodu0_.product_name as product_8_10_0_, salesprodu0_.sku_no as sku_no9_10_0_ from sales_product_component salesprodu0_ where salesprodu0_.id=?
-DEBUG 22-09-21 11:48:18[restartedMain] [AbstractEntityPersister:4002] - Static SQL for entity: com.vue_spring.demo.model.ProductImage
-DEBUG 22-09-21 11:48:18[restartedMain] [AbstractEntityPersister:4007] -  Version select: /* get version com.vue_spring.demo.model.ProductImage */ select id from product_image where id =?
-DEBUG 22-09-21 11:48:18[restartedMain] [AbstractEntityPersister:4010] -  Snapshot select: /* get current state com.vue_spring.demo.model.ProductImage */ select productima_.id, productima_.create_date as create_d2_7_, productima_.img_file_name as img_file3_7_, productima_.img_file_path as img_file4_7_, productima_.img_file_size as img_file5_7_, productima_.product_id as product_6_7_ from product_image productima_ where productima_.id=?
-DEBUG 22-09-21 11:48:18[restartedMain] [AbstractEntityPersister:394] -  Insert 0: /* insert com.vue_spring.demo.model.ProductImage */ insert into product_image (create_date, img_file_name, img_file_path, img_file_size, product_id, id) values (?, ?, ?, ?, ?, ?)
-DEBUG 22-09-21 11:48:18[restartedMain] [AbstractEntityPersister:394] -  Update 0: /* update com.vue_spring.demo.model.ProductImage */ update product_image set create_date=?, img_file_name=?, img_file_path=?, img_file_size=?, product_id=? where id=?
-DEBUG 22-09-21 11:48:18[restartedMain] [AbstractEntityPersister:394] -  Delete 0: /* delete com.vue_spring.demo.model.ProductImage */ delete from product_image where id=?
-DEBUG 22-09-21 11:48:18[restartedMain] [AbstractEntityPersister:4018] -  Identity insert: /* insert com.vue_spring.demo.model.ProductImage */ insert into product_image (create_date, img_file_name, img_file_path, img_file_size, product_id) values (?, ?, ?, ?, ?)
+DEBUG 22-09-21 11:48:18[restartedMain] [AbstractEntityPersister:4002] - Static SQL for entity: com.vue_spring.demo.model.ProductFile
+DEBUG 22-09-21 11:48:18[restartedMain] [AbstractEntityPersister:4007] -  Version select: /* get version com.vue_spring.demo.model.ProductFile */ select id from product_image where id =?
+DEBUG 22-09-21 11:48:18[restartedMain] [AbstractEntityPersister:4010] -  Snapshot select: /* get current state com.vue_spring.demo.model.ProductFile */ select productima_.id, productima_.create_date as create_d2_7_, productima_.img_file_name as img_file3_7_, productima_.img_file_path as img_file4_7_, productima_.img_file_size as img_file5_7_, productima_.product_id as product_6_7_ from product_image productima_ where productima_.id=?
+DEBUG 22-09-21 11:48:18[restartedMain] [AbstractEntityPersister:394] -  Insert 0: /* insert com.vue_spring.demo.model.ProductFile */ insert into product_image (create_date, img_file_name, img_file_path, img_file_size, product_id, id) values (?, ?, ?, ?, ?, ?)
+DEBUG 22-09-21 11:48:18[restartedMain] [AbstractEntityPersister:394] -  Update 0: /* update com.vue_spring.demo.model.ProductFile */ update product_image set create_date=?, img_file_name=?, img_file_path=?, img_file_size=?, product_id=? where id=?
+DEBUG 22-09-21 11:48:18[restartedMain] [AbstractEntityPersister:394] -  Delete 0: /* delete com.vue_spring.demo.model.ProductFile */ delete from product_image where id=?
+DEBUG 22-09-21 11:48:18[restartedMain] [AbstractEntityPersister:4018] -  Identity insert: /* insert com.vue_spring.demo.model.ProductFile */ insert into product_image (create_date, img_file_name, img_file_path, img_file_size, product_id) values (?, ?, ?, ?, ?)
 DEBUG 22-09-21 11:48:18[restartedMain] [QuerySpacesImpl:174] - Adding QuerySpace : uid = <gen:0> -> org.hibernate.loader.plan.build.internal.spaces.EntityQuerySpaceImpl@4885a215]
 DEBUG 22-09-21 11:48:18[restartedMain] [MetamodelGraphWalker:146] - Visiting attribute path : createDate
 DEBUG 22-09-21 11:48:18[restartedMain] [MetamodelGraphWalker:146] - Visiting attribute path : imgFileName
@@ -1513,17 +1513,17 @@ DEBUG 22-09-21 11:48:18[restartedMain] [MetamodelGraphWalker:146] - Visiting att
 DEBUG 22-09-21 11:48:18[restartedMain] [QuerySpacesImpl:174] - Adding QuerySpace : uid = <gen:1> -> org.hibernate.loader.plan.build.internal.spaces.EntityQuerySpaceImpl@5047c367]
 DEBUG 22-09-21 11:48:18[restartedMain] [FetchStyleLoadPlanBuildingAssociationVisitationStrategy:160] - Building LoadPlan...
 DEBUG 22-09-21 11:48:18[restartedMain] [LoadQueryJoinAndFetchProcessor:102] - processing queryspace <gen:0>
-DEBUG 22-09-21 11:48:18[restartedMain] [LoadPlanTreePrinter:55] - LoadPlan(entity=com.vue_spring.demo.model.ProductImage)
+DEBUG 22-09-21 11:48:18[restartedMain] [LoadPlanTreePrinter:55] - LoadPlan(entity=com.vue_spring.demo.model.ProductFile)
     - Returns
-       - EntityReturnImpl(entity=com.vue_spring.demo.model.ProductImage, querySpaceUid=<gen:0>, path=com.vue_spring.demo.model.ProductImage)
-          - EntityAttributeFetchImpl(entity=com.vue_spring.demo.model.Product, querySpaceUid=<gen:1>, path=com.vue_spring.demo.model.ProductImage.product)
+       - EntityReturnImpl(entity=com.vue_spring.demo.model.ProductFile, querySpaceUid=<gen:0>, path=com.vue_spring.demo.model.ProductFile)
+          - EntityAttributeFetchImpl(entity=com.vue_spring.demo.model.Product, querySpaceUid=<gen:1>, path=com.vue_spring.demo.model.ProductFile.product)
     - QuerySpaces
-       - EntityQuerySpaceImpl(uid=<gen:0>, entity=com.vue_spring.demo.model.ProductImage)
+       - EntityQuerySpaceImpl(uid=<gen:0>, entity=com.vue_spring.demo.model.ProductFile)
           - SQL table alias mapping - productima0_
           - alias suffix - 0_
           - suffixed key columns - {id1_7_0_}
 
-DEBUG 22-09-21 11:48:18[restartedMain] [EntityLoader:129] - Static select for entity com.vue_spring.demo.model.ProductImage [NONE]: select productima0_.id as id1_7_0_, productima0_.create_date as create_d2_7_0_, productima0_.img_file_name as img_file3_7_0_, productima0_.img_file_path as img_file4_7_0_, productima0_.img_file_size as img_file5_7_0_, productima0_.product_id as product_6_7_0_ from product_image productima0_ where productima0_.id=?
+DEBUG 22-09-21 11:48:18[restartedMain] [EntityLoader:129] - Static select for entity com.vue_spring.demo.model.ProductFile [NONE]: select productima0_.id as id1_7_0_, productima0_.create_date as create_d2_7_0_, productima0_.img_file_name as img_file3_7_0_, productima0_.img_file_path as img_file4_7_0_, productima0_.img_file_size as img_file5_7_0_, productima0_.product_id as product_6_7_0_ from product_image productima0_ where productima0_.id=?
 DEBUG 22-09-21 11:48:18[restartedMain] [AbstractEntityPersister:4002] - Static SQL for entity: com.vue_spring.demo.model.RefreshToken
 DEBUG 22-09-21 11:48:18[restartedMain] [AbstractEntityPersister:4007] -  Version select: /* get version com.vue_spring.demo.model.RefreshToken */ select rt_key from refresh_token where rt_key =?
 DEBUG 22-09-21 11:48:18[restartedMain] [AbstractEntityPersister:4010] -  Snapshot select: /* get current state com.vue_spring.demo.model.RefreshToken */ select refreshtok_.rt_key, refreshtok_.rt_value as rt_value2_8_ from refresh_token refreshtok_ where refreshtok_.rt_key=?
@@ -1647,7 +1647,7 @@ DEBUG 22-09-21 11:48:18[restartedMain] [LoadPlanTreePrinter:55] - LoadPlan(entit
              - (collection element) CollectionFetchableElementEntityGraph(entity=com.vue_spring.demo.model.InspectImage, querySpaceUid=<gen:2>, path=com.vue_spring.demo.model.Inspect.imageFile.<elements>)
           - EntityAttributeFetchImpl(entity=com.vue_spring.demo.model.Product, querySpaceUid=<gen:3>, path=com.vue_spring.demo.model.Inspect.product)
              - CollectionAttributeFetchImpl(collection=com.vue_spring.demo.model.Product.imageFile, querySpaceUid=<gen:4>, path=com.vue_spring.demo.model.Inspect.product.imageFile)
-                - (collection element) CollectionFetchableElementEntityGraph(entity=com.vue_spring.demo.model.ProductImage, querySpaceUid=<gen:5>, path=com.vue_spring.demo.model.Inspect.product.imageFile.<elements>)
+                - (collection element) CollectionFetchableElementEntityGraph(entity=com.vue_spring.demo.model.ProductFile, querySpaceUid=<gen:5>, path=com.vue_spring.demo.model.Inspect.product.imageFile.<elements>)
     - QuerySpaces
        - EntityQuerySpaceImpl(uid=<gen:0>, entity=com.vue_spring.demo.model.Inspect)
           - SQL table alias mapping - inspect0_
@@ -1720,7 +1720,7 @@ DEBUG 22-09-21 11:48:18[restartedMain] [LoadPlanTreePrinter:55] - LoadPlan(entit
     - Returns
        - EntityReturnImpl(entity=com.vue_spring.demo.model.Product, querySpaceUid=<gen:0>, path=com.vue_spring.demo.model.Product)
           - CollectionAttributeFetchImpl(collection=com.vue_spring.demo.model.Product.imageFile, querySpaceUid=<gen:1>, path=com.vue_spring.demo.model.Product.imageFile)
-             - (collection element) CollectionFetchableElementEntityGraph(entity=com.vue_spring.demo.model.ProductImage, querySpaceUid=<gen:2>, path=com.vue_spring.demo.model.Product.imageFile.<elements>)
+             - (collection element) CollectionFetchableElementEntityGraph(entity=com.vue_spring.demo.model.ProductFile, querySpaceUid=<gen:2>, path=com.vue_spring.demo.model.Product.imageFile.<elements>)
           - CollectionAttributeFetchImpl(collection=com.vue_spring.demo.model.Product.inspect, querySpaceUid=<gen:3>, path=com.vue_spring.demo.model.Product.inspect)
              - (collection element) CollectionFetchableElementEntityGraph(entity=com.vue_spring.demo.model.Inspect, querySpaceUid=<gen:4>, path=com.vue_spring.demo.model.Product.inspect.<elements>)
     - QuerySpaces
@@ -1780,7 +1780,7 @@ DEBUG 22-09-21 11:48:18[restartedMain] [LoadQueryJoinAndFetchProcessor:102] - pr
 DEBUG 22-09-21 11:48:18[restartedMain] [LoadPlanTreePrinter:55] - LoadPlan(collection=com.vue_spring.demo.model.Product.imageFile)
     - Returns
        - CollectionReturnImpl(collection=com.vue_spring.demo.model.Product.imageFile, querySpaceUid=<gen:0>, path=[com.vue_spring.demo.model.Product.imageFile])
-          - (collection element) CollectionFetchableElementEntityGraph(entity=com.vue_spring.demo.model.ProductImage, querySpaceUid=<gen:1>, path=[com.vue_spring.demo.model.Product.imageFile].<elements>)
+          - (collection element) CollectionFetchableElementEntityGraph(entity=com.vue_spring.demo.model.ProductFile, querySpaceUid=<gen:1>, path=[com.vue_spring.demo.model.Product.imageFile].<elements>)
     - QuerySpaces
        - CollectionQuerySpaceImpl(uid=<gen:0>, collection=com.vue_spring.demo.model.Product.imageFile)
           - SQL table alias mapping - imagefile0_
@@ -1789,7 +1789,7 @@ DEBUG 22-09-21 11:48:18[restartedMain] [LoadPlanTreePrinter:55] - LoadPlan(colle
           - entity-element alias suffix - 1_
           - 1_entity-element suffixed key columns - id1_7_1_
           - JOIN (JoinDefinedByMetadata(elements)) : <gen:0> -> <gen:1>
-             - EntityQuerySpaceImpl(uid=<gen:1>, entity=com.vue_spring.demo.model.ProductImage)
+             - EntityQuerySpaceImpl(uid=<gen:1>, entity=com.vue_spring.demo.model.ProductFile)
                 - SQL table alias mapping - imagefile0_
                 - alias suffix - 1_
                 - suffixed key columns - {id1_7_1_}
@@ -2227,7 +2227,7 @@ DEBUG 22-09-21 11:48:20[restartedMain] [DefaultListableBeanFactory:225] - Creati
 DEBUG 22-09-21 11:48:20[restartedMain] [SharedEntityManagerCreator$SharedEntityManagerInvocationHandler:302] - Creating new EntityManager for shared EntityManager invocation
 DEBUG 22-09-21 11:48:20[restartedMain] [CachedIntrospectionResults:191] - Not strongly caching class [com.vue_spring.demo.model.Claim] because it is not cache-safe
 DEBUG 22-09-21 11:48:20[restartedMain] [CachedIntrospectionResults:191] - Not strongly caching class [com.vue_spring.demo.model.Product] because it is not cache-safe
-DEBUG 22-09-21 11:48:20[restartedMain] [CachedIntrospectionResults:191] - Not strongly caching class [com.vue_spring.demo.model.ProductImage] because it is not cache-safe
+DEBUG 22-09-21 11:48:20[restartedMain] [CachedIntrospectionResults:191] - Not strongly caching class [com.vue_spring.demo.model.ProductFile] because it is not cache-safe
 DEBUG 22-09-21 11:48:20[restartedMain] [CachedIntrospectionResults:191] - Not strongly caching class [com.vue_spring.demo.model.Inspect] because it is not cache-safe
 DEBUG 22-09-21 11:48:20[restartedMain] [CachedIntrospectionResults:191] - Not strongly caching class [com.vue_spring.demo.model.InspectImage] because it is not cache-safe
 DEBUG 22-09-21 11:48:20[restartedMain] [CachedIntrospectionResults:191] - Not strongly caching class [com.vue_spring.demo.model.ClaimImage] because it is not cache-safe
@@ -2457,9 +2457,9 @@ DEBUG 22-09-21 11:48:21[restartedMain] [TransactionImpl:53] - On TransactionImpl
 DEBUG 22-09-21 11:48:21[restartedMain] [NamedQuery:118] - Did not find named query SalesProductComponent.existsBySkuNo
 DEBUG 22-09-21 11:48:21[restartedMain] [SharedEntityManagerCreator$SharedEntityManagerInvocationHandler:302] - Creating new EntityManager for shared EntityManager invocation
 DEBUG 22-09-21 11:48:21[restartedMain] [RepositoryFactorySupport:376] - Finished creation of repository instance for com.vue_spring.demo.Repository.SalesProductComponentRepository.
-DEBUG 22-09-21 11:48:21[restartedMain] [DefaultListableBeanFactory:225] - Creating shared instance of singleton bean 'productImageRepository'
+DEBUG 22-09-21 11:48:21[restartedMain] [DefaultListableBeanFactory:225] - Creating shared instance of singleton bean 'productFileRepository'
 DEBUG 22-09-21 11:48:21[restartedMain] [SharedEntityManagerCreator$SharedEntityManagerInvocationHandler:302] - Creating new EntityManager for shared EntityManager invocation
-DEBUG 22-09-21 11:48:21[restartedMain] [RepositoryFactorySupport:279] - Initializing repository instance for com.vue_spring.demo.Repository.ProductImageRepository…
+DEBUG 22-09-21 11:48:21[restartedMain] [RepositoryFactorySupport:279] - Initializing repository instance for com.vue_spring.demo.Repository.ProductFileRepository…
 DEBUG 22-09-21 11:48:21[restartedMain] [SharedEntityManagerCreator$SharedEntityManagerInvocationHandler:302] - Creating new EntityManager for shared EntityManager invocation
 DEBUG 22-09-21 11:48:21[restartedMain] [NamedQuery:137] - Looking up named query ProductImage.deleteByProductId
 DEBUG 22-09-21 11:48:21[restartedMain] [TransactionImpl:53] - On TransactionImpl creation, JpaCompliance#isJpaTransactionComplianceEnabled == false
@@ -2473,7 +2473,7 @@ DEBUG 22-09-21 11:48:21[restartedMain] [NamedQuery:137] - Looking up named query
 DEBUG 22-09-21 11:48:21[restartedMain] [TransactionImpl:53] - On TransactionImpl creation, JpaCompliance#isJpaTransactionComplianceEnabled == false
 DEBUG 22-09-21 11:48:21[restartedMain] [NamedQuery:118] - Did not find named query ProductImage.findByProductId
 DEBUG 22-09-21 11:48:21[restartedMain] [SharedEntityManagerCreator$SharedEntityManagerInvocationHandler:302] - Creating new EntityManager for shared EntityManager invocation
-DEBUG 22-09-21 11:48:21[restartedMain] [RepositoryFactorySupport:376] - Finished creation of repository instance for com.vue_spring.demo.Repository.ProductImageRepository.
+DEBUG 22-09-21 11:48:21[restartedMain] [RepositoryFactorySupport:376] - Finished creation of repository instance for com.vue_spring.demo.Repository.ProductFileRepository.
 DEBUG 22-09-21 11:48:21[restartedMain] [DefaultListableBeanFactory:225] - Creating shared instance of singleton bean 'inspectController'
 DEBUG 22-09-21 11:48:21[restartedMain] [DefaultListableBeanFactory:225] - Creating shared instance of singleton bean 'mainController'
 DEBUG 22-09-21 11:48:21[restartedMain] [DefaultListableBeanFactory:225] - Creating shared instance of singleton bean 'makerController'
@@ -4234,7 +4234,7 @@ INFO  22-09-21 11:49:52[restartedMain] [RepositoryConfigurationExtensionSupport:
 INFO  22-09-21 11:49:52[restartedMain] [RepositoryConfigurationExtensionSupport:349] - Spring Data Redis - Could not safely identify store assignment for repository candidate interface com.vue_spring.demo.Repository.InspectRepository. If you want this repository to be a Redis repository, consider annotating your entities with one of these annotations: org.springframework.data.redis.core.RedisHash (preferred), or consider extending one of the following types with your repository: org.springframework.data.keyvalue.repository.KeyValueRepository.
 INFO  22-09-21 11:49:52[restartedMain] [RepositoryConfigurationExtensionSupport:349] - Spring Data Redis - Could not safely identify store assignment for repository candidate interface com.vue_spring.demo.Repository.MakerRepository. If you want this repository to be a Redis repository, consider annotating your entities with one of these annotations: org.springframework.data.redis.core.RedisHash (preferred), or consider extending one of the following types with your repository: org.springframework.data.keyvalue.repository.KeyValueRepository.
 INFO  22-09-21 11:49:52[restartedMain] [RepositoryConfigurationExtensionSupport:349] - Spring Data Redis - Could not safely identify store assignment for repository candidate interface com.vue_spring.demo.Repository.MemberRepository. If you want this repository to be a Redis repository, consider annotating your entities with one of these annotations: org.springframework.data.redis.core.RedisHash (preferred), or consider extending one of the following types with your repository: org.springframework.data.keyvalue.repository.KeyValueRepository.
-INFO  22-09-21 11:49:52[restartedMain] [RepositoryConfigurationExtensionSupport:349] - Spring Data Redis - Could not safely identify store assignment for repository candidate interface com.vue_spring.demo.Repository.ProductImageRepository. If you want this repository to be a Redis repository, consider annotating your entities with one of these annotations: org.springframework.data.redis.core.RedisHash (preferred), or consider extending one of the following types with your repository: org.springframework.data.keyvalue.repository.KeyValueRepository.
+INFO  22-09-21 11:49:52[restartedMain] [RepositoryConfigurationExtensionSupport:349] - Spring Data Redis - Could not safely identify store assignment for repository candidate interface com.vue_spring.demo.Repository.ProductFileRepository. If you want this repository to be a Redis repository, consider annotating your entities with one of these annotations: org.springframework.data.redis.core.RedisHash (preferred), or consider extending one of the following types with your repository: org.springframework.data.keyvalue.repository.KeyValueRepository.
 INFO  22-09-21 11:49:52[restartedMain] [RepositoryConfigurationExtensionSupport:349] - Spring Data Redis - Could not safely identify store assignment for repository candidate interface com.vue_spring.demo.Repository.ProductRepository. If you want this repository to be a Redis repository, consider annotating your entities with one of these annotations: org.springframework.data.redis.core.RedisHash (preferred), or consider extending one of the following types with your repository: org.springframework.data.keyvalue.repository.KeyValueRepository.
 INFO  22-09-21 11:49:52[restartedMain] [RepositoryConfigurationExtensionSupport:349] - Spring Data Redis - Could not safely identify store assignment for repository candidate interface com.vue_spring.demo.Repository.SalesProductComponentRepository. If you want this repository to be a Redis repository, consider annotating your entities with one of these annotations: org.springframework.data.redis.core.RedisHash (preferred), or consider extending one of the following types with your repository: org.springframework.data.keyvalue.repository.KeyValueRepository.
 INFO  22-09-21 11:49:52[restartedMain] [RepositoryConfigurationExtensionSupport:349] - Spring Data Redis - Could not safely identify store assignment for repository candidate interface com.vue_spring.demo.Repository.SalesRepository. If you want this repository to be a Redis repository, consider annotating your entities with one of these annotations: org.springframework.data.redis.core.RedisHash (preferred), or consider extending one of the following types with your repository: org.springframework.data.keyvalue.repository.KeyValueRepository.
@@ -4386,7 +4386,7 @@ DEBUG 22-09-21 11:49:55[restartedMain] [LogHelper:102] - PersistenceUnitInfo [
 		com.vue_spring.demo.model.Maker
 		com.vue_spring.demo.model.Member
 		com.vue_spring.demo.model.Product
-		com.vue_spring.demo.model.ProductImage
+		com.vue_spring.demo.model.ProductFile
 		com.vue_spring.demo.model.RefreshToken
 		com.vue_spring.demo.model.Sales
 		com.vue_spring.demo.model.SalesProductComponent]
@@ -5058,36 +5058,36 @@ DEBUG 22-09-21 11:49:57[restartedMain] [PropertyBinder:175] - MetadataSourceProc
 DEBUG 22-09-21 11:49:57[restartedMain] [AbstractPropertyHolder:94] - Attempting to locate auto-apply AttributeConverter for property [com.vue_spring.demo.model.Product:sodium]
 DEBUG 22-09-21 11:49:57[restartedMain] [SimpleValueBinder:410] - building SimpleValue for sodium
 DEBUG 22-09-21 11:49:57[restartedMain] [PropertyBinder:266] - Building property sodium
-DEBUG 22-09-21 11:49:57[restartedMain] [AnnotationBinder:546] - Binding entity from annotated class: com.vue_spring.demo.model.ProductImage
+DEBUG 22-09-21 11:49:57[restartedMain] [AnnotationBinder:546] - Binding entity from annotated class: com.vue_spring.demo.model.ProductFile
 DEBUG 22-09-21 11:49:57[restartedMain] [Ejb3Column:227] - Binding column: Ejb3DiscriminatorColumn{logicalColumnName'DTYPE', discriminatorTypeName='string'}
 DEBUG 22-09-21 11:49:57[restartedMain] [EntityBinder:431] - Import with entity name ProductImage
-DEBUG 22-09-21 11:49:57[restartedMain] [EntityBinder:874] - Bind entity com.vue_spring.demo.model.ProductImage on table product_image
+DEBUG 22-09-21 11:49:57[restartedMain] [EntityBinder:874] - Bind entity com.vue_spring.demo.model.ProductFile on table product_image
 DEBUG 22-09-21 11:49:57[restartedMain] [Ejb3Column:227] - Binding column: Ejb3Column{table=org.hibernate.mapping.Table(product_image), mappingColumn=id, insertable=true, updatable=true, unique=false}
-DEBUG 22-09-21 11:49:57[restartedMain] [ClassLoaderAccessImpl:60] - Not known whether passed class name [com.vue_spring.demo.model.ProductImage] is safe
-DEBUG 22-09-21 11:49:57[restartedMain] [ClassLoaderAccessImpl:62] - No temp ClassLoader provided; using live ClassLoader for loading potentially unsafe class : com.vue_spring.demo.model.ProductImage
+DEBUG 22-09-21 11:49:57[restartedMain] [ClassLoaderAccessImpl:60] - Not known whether passed class name [com.vue_spring.demo.model.ProductFile] is safe
+DEBUG 22-09-21 11:49:57[restartedMain] [ClassLoaderAccessImpl:62] - No temp ClassLoader provided; using live ClassLoader for loading potentially unsafe class : com.vue_spring.demo.model.ProductFile
 DEBUG 22-09-21 11:49:57[restartedMain] [PropertyBinder:175] - MetadataSourceProcessor property id with lazy=false
-DEBUG 22-09-21 11:49:57[restartedMain] [AbstractPropertyHolder:94] - Attempting to locate auto-apply AttributeConverter for property [com.vue_spring.demo.model.ProductImage:id]
+DEBUG 22-09-21 11:49:57[restartedMain] [AbstractPropertyHolder:94] - Attempting to locate auto-apply AttributeConverter for property [com.vue_spring.demo.model.ProductFile:id]
 DEBUG 22-09-21 11:49:57[restartedMain] [SimpleValueBinder:410] - building SimpleValue for id
 DEBUG 22-09-21 11:49:57[restartedMain] [PropertyBinder:266] - Building property id
 DEBUG 22-09-21 11:49:57[restartedMain] [BinderHelper:514] - #makeIdGenerator(org.hibernate.mapping.SimpleValue([org.hibernate.mapping.Column(id)]), id, identity, , ...)
 DEBUG 22-09-21 11:49:57[restartedMain] [Ejb3Column:227] - Binding column: Ejb3Column{table=org.hibernate.mapping.Table(product_image), mappingColumn=create_date, insertable=true, updatable=true, unique=false}
 DEBUG 22-09-21 11:49:57[restartedMain] [PropertyBinder:175] - MetadataSourceProcessor property createDate with lazy=false
-DEBUG 22-09-21 11:49:57[restartedMain] [AbstractPropertyHolder:94] - Attempting to locate auto-apply AttributeConverter for property [com.vue_spring.demo.model.ProductImage:createDate]
+DEBUG 22-09-21 11:49:57[restartedMain] [AbstractPropertyHolder:94] - Attempting to locate auto-apply AttributeConverter for property [com.vue_spring.demo.model.ProductFile:createDate]
 DEBUG 22-09-21 11:49:57[restartedMain] [SimpleValueBinder:410] - building SimpleValue for createDate
 DEBUG 22-09-21 11:49:57[restartedMain] [PropertyBinder:266] - Building property createDate
 DEBUG 22-09-21 11:49:57[restartedMain] [Ejb3Column:227] - Binding column: Ejb3Column{table=org.hibernate.mapping.Table(product_image), mappingColumn=img_file_name, insertable=true, updatable=true, unique=false}
 DEBUG 22-09-21 11:49:57[restartedMain] [PropertyBinder:175] - MetadataSourceProcessor property imgFileName with lazy=false
-DEBUG 22-09-21 11:49:57[restartedMain] [AbstractPropertyHolder:94] - Attempting to locate auto-apply AttributeConverter for property [com.vue_spring.demo.model.ProductImage:imgFileName]
+DEBUG 22-09-21 11:49:57[restartedMain] [AbstractPropertyHolder:94] - Attempting to locate auto-apply AttributeConverter for property [com.vue_spring.demo.model.ProductFile:imgFileName]
 DEBUG 22-09-21 11:49:57[restartedMain] [SimpleValueBinder:410] - building SimpleValue for imgFileName
 DEBUG 22-09-21 11:49:57[restartedMain] [PropertyBinder:266] - Building property imgFileName
 DEBUG 22-09-21 11:49:57[restartedMain] [Ejb3Column:227] - Binding column: Ejb3Column{table=org.hibernate.mapping.Table(product_image), mappingColumn=img_file_path, insertable=true, updatable=true, unique=false}
 DEBUG 22-09-21 11:49:57[restartedMain] [PropertyBinder:175] - MetadataSourceProcessor property imgFilePath with lazy=false
-DEBUG 22-09-21 11:49:57[restartedMain] [AbstractPropertyHolder:94] - Attempting to locate auto-apply AttributeConverter for property [com.vue_spring.demo.model.ProductImage:imgFilePath]
+DEBUG 22-09-21 11:49:57[restartedMain] [AbstractPropertyHolder:94] - Attempting to locate auto-apply AttributeConverter for property [com.vue_spring.demo.model.ProductFile:imgFilePath]
 DEBUG 22-09-21 11:49:57[restartedMain] [SimpleValueBinder:410] - building SimpleValue for imgFilePath
 DEBUG 22-09-21 11:49:57[restartedMain] [PropertyBinder:266] - Building property imgFilePath
 DEBUG 22-09-21 11:49:57[restartedMain] [Ejb3Column:227] - Binding column: Ejb3Column{table=org.hibernate.mapping.Table(product_image), mappingColumn=img_file_size, insertable=true, updatable=true, unique=false}
 DEBUG 22-09-21 11:49:57[restartedMain] [PropertyBinder:175] - MetadataSourceProcessor property imgFileSize with lazy=false
-DEBUG 22-09-21 11:49:57[restartedMain] [AbstractPropertyHolder:94] - Attempting to locate auto-apply AttributeConverter for property [com.vue_spring.demo.model.ProductImage:imgFileSize]
+DEBUG 22-09-21 11:49:57[restartedMain] [AbstractPropertyHolder:94] - Attempting to locate auto-apply AttributeConverter for property [com.vue_spring.demo.model.ProductFile:imgFileSize]
 DEBUG 22-09-21 11:49:57[restartedMain] [SimpleValueBinder:410] - building SimpleValue for imgFileSize
 DEBUG 22-09-21 11:49:57[restartedMain] [PropertyBinder:266] - Building property imgFileSize
 DEBUG 22-09-21 11:49:57[restartedMain] [Ejb3Column:227] - Binding column: Ejb3JoinColumn{logicalColumnName='productId', referencedColumn='', mappedBy=''}
@@ -5311,8 +5311,8 @@ DEBUG 22-09-21 11:49:57[restartedMain] [CollectionSecondPass:67] - Mapped collec
 DEBUG 22-09-21 11:49:57[restartedMain] [CollectionSecondPass:50] - Second pass for collection: com.vue_spring.demo.model.Product.imageFile
 DEBUG 22-09-21 11:49:57[restartedMain] [CollectionBinder:903] - Binding a OneToMany: com.vue_spring.demo.model.Product.imageFile through a foreign key
 DEBUG 22-09-21 11:49:57[restartedMain] [CollectionBinder:941] - Mapping collection: com.vue_spring.demo.model.Product.imageFile -> product_image
-DEBUG 22-09-21 11:49:57[restartedMain] [TableBinder:554] - Retrieving property com.vue_spring.demo.model.ProductImage.product
-DEBUG 22-09-21 11:49:57[restartedMain] [CollectionSecondPass:67] - Mapped collection key: product_id, one-to-many: com.vue_spring.demo.model.ProductImage
+DEBUG 22-09-21 11:49:57[restartedMain] [TableBinder:554] - Retrieving property com.vue_spring.demo.model.ProductFile.product
+DEBUG 22-09-21 11:49:57[restartedMain] [CollectionSecondPass:67] - Mapped collection key: product_id, one-to-many: com.vue_spring.demo.model.ProductFile
 DEBUG 22-09-21 11:49:57[restartedMain] [CollectionSecondPass:50] - Second pass for collection: com.vue_spring.demo.model.Product.inspect
 DEBUG 22-09-21 11:49:57[restartedMain] [CollectionBinder:903] - Binding a OneToMany: com.vue_spring.demo.model.Product.inspect through a foreign key
 DEBUG 22-09-21 11:49:57[restartedMain] [CollectionBinder:941] - Mapping collection: com.vue_spring.demo.model.Product.inspect -> inspect
@@ -5393,8 +5393,8 @@ DEBUG 22-09-21 11:49:58[restartedMain] [ClassLoaderAccessImpl:60] - Not known wh
 DEBUG 22-09-21 11:49:58[restartedMain] [ClassLoaderAccessImpl:62] - No temp ClassLoader provided; using live ClassLoader for loading potentially unsafe class : com.vue_spring.demo.model.Maker
 DEBUG 22-09-21 11:49:58[restartedMain] [ClassLoaderAccessImpl:60] - Not known whether passed class name [com.vue_spring.demo.model.SalesProductComponent] is safe
 DEBUG 22-09-21 11:49:58[restartedMain] [ClassLoaderAccessImpl:62] - No temp ClassLoader provided; using live ClassLoader for loading potentially unsafe class : com.vue_spring.demo.model.SalesProductComponent
-DEBUG 22-09-21 11:49:58[restartedMain] [ClassLoaderAccessImpl:60] - Not known whether passed class name [com.vue_spring.demo.model.ProductImage] is safe
-DEBUG 22-09-21 11:49:58[restartedMain] [ClassLoaderAccessImpl:62] - No temp ClassLoader provided; using live ClassLoader for loading potentially unsafe class : com.vue_spring.demo.model.ProductImage
+DEBUG 22-09-21 11:49:58[restartedMain] [ClassLoaderAccessImpl:60] - Not known whether passed class name [com.vue_spring.demo.model.ProductFile] is safe
+DEBUG 22-09-21 11:49:58[restartedMain] [ClassLoaderAccessImpl:62] - No temp ClassLoader provided; using live ClassLoader for loading potentially unsafe class : com.vue_spring.demo.model.ProductFile
 DEBUG 22-09-21 11:49:58[restartedMain] [ClassLoaderAccessImpl:60] - Not known whether passed class name [com.vue_spring.demo.model.RefreshToken] is safe
 DEBUG 22-09-21 11:49:58[restartedMain] [ClassLoaderAccessImpl:62] - No temp ClassLoader provided; using live ClassLoader for loading potentially unsafe class : com.vue_spring.demo.model.RefreshToken
 DEBUG 22-09-21 11:49:58[restartedMain] [ClassLoaderAccessImpl:60] - Not known whether passed class name [com.vue_spring.demo.model.ClaimImage] is safe
@@ -5424,8 +5424,8 @@ DEBUG 22-09-21 11:49:58[restartedMain] [ClassLoaderAccessImpl:60] - Not known wh
 DEBUG 22-09-21 11:49:58[restartedMain] [ClassLoaderAccessImpl:62] - No temp ClassLoader provided; using live ClassLoader for loading potentially unsafe class : com.vue_spring.demo.model.Maker
 DEBUG 22-09-21 11:49:58[restartedMain] [ClassLoaderAccessImpl:60] - Not known whether passed class name [com.vue_spring.demo.model.SalesProductComponent] is safe
 DEBUG 22-09-21 11:49:58[restartedMain] [ClassLoaderAccessImpl:62] - No temp ClassLoader provided; using live ClassLoader for loading potentially unsafe class : com.vue_spring.demo.model.SalesProductComponent
-DEBUG 22-09-21 11:49:58[restartedMain] [ClassLoaderAccessImpl:60] - Not known whether passed class name [com.vue_spring.demo.model.ProductImage] is safe
-DEBUG 22-09-21 11:49:58[restartedMain] [ClassLoaderAccessImpl:62] - No temp ClassLoader provided; using live ClassLoader for loading potentially unsafe class : com.vue_spring.demo.model.ProductImage
+DEBUG 22-09-21 11:49:58[restartedMain] [ClassLoaderAccessImpl:60] - Not known whether passed class name [com.vue_spring.demo.model.ProductFile] is safe
+DEBUG 22-09-21 11:49:58[restartedMain] [ClassLoaderAccessImpl:62] - No temp ClassLoader provided; using live ClassLoader for loading potentially unsafe class : com.vue_spring.demo.model.ProductFile
 DEBUG 22-09-21 11:49:58[restartedMain] [ClassLoaderAccessImpl:60] - Not known whether passed class name [com.vue_spring.demo.model.RefreshToken] is safe
 DEBUG 22-09-21 11:49:58[restartedMain] [ClassLoaderAccessImpl:62] - No temp ClassLoader provided; using live ClassLoader for loading potentially unsafe class : com.vue_spring.demo.model.RefreshToken
 DEBUG 22-09-21 11:49:58[restartedMain] [ClassLoaderAccessImpl:60] - Not known whether passed class name [com.vue_spring.demo.model.ClaimImage] is safe
@@ -5545,7 +5545,7 @@ DEBUG 22-09-21 11:49:58[restartedMain] [LoadPlanTreePrinter:55] - LoadPlan(entit
              - (collection element) CollectionFetchableElementEntityGraph(entity=com.vue_spring.demo.model.ClaimImage, querySpaceUid=<gen:2>, path=com.vue_spring.demo.model.Claim.imageFile.<elements>)
           - EntityAttributeFetchImpl(entity=com.vue_spring.demo.model.Product, querySpaceUid=<gen:3>, path=com.vue_spring.demo.model.Claim.product)
              - CollectionAttributeFetchImpl(collection=com.vue_spring.demo.model.Product.imageFile, querySpaceUid=<gen:4>, path=com.vue_spring.demo.model.Claim.product.imageFile)
-                - (collection element) CollectionFetchableElementEntityGraph(entity=com.vue_spring.demo.model.ProductImage, querySpaceUid=<gen:5>, path=com.vue_spring.demo.model.Claim.product.imageFile.<elements>)
+                - (collection element) CollectionFetchableElementEntityGraph(entity=com.vue_spring.demo.model.ProductFile, querySpaceUid=<gen:5>, path=com.vue_spring.demo.model.Claim.product.imageFile.<elements>)
              - CollectionAttributeFetchImpl(collection=com.vue_spring.demo.model.Product.inspect, querySpaceUid=<gen:6>, path=com.vue_spring.demo.model.Claim.product.inspect)
                 - (collection element) CollectionFetchableElementEntityGraph(entity=com.vue_spring.demo.model.Inspect, querySpaceUid=<gen:7>, path=com.vue_spring.demo.model.Claim.product.inspect.<elements>)
     - QuerySpaces
@@ -5619,13 +5619,13 @@ DEBUG 22-09-21 11:49:58[restartedMain] [LoadPlanTreePrinter:55] - LoadPlan(entit
           - suffixed key columns - {id1_10_0_}
 
 DEBUG 22-09-21 11:49:58[restartedMain] [EntityLoader:129] - Static select for entity com.vue_spring.demo.model.SalesProductComponent [NONE]: select salesprodu0_.id as id1_10_0_, salesprodu0_.component_number as componen2_10_0_, salesprodu0_.component_product_name as componen3_10_0_, salesprodu0_.component_quantity as componen4_10_0_, salesprodu0_.component_sku_no as componen5_10_0_, salesprodu0_.create_date as create_d6_10_0_, salesprodu0_.product_length as product_7_10_0_, salesprodu0_.product_name as product_8_10_0_, salesprodu0_.sku_no as sku_no9_10_0_ from sales_product_component salesprodu0_ where salesprodu0_.id=?
-DEBUG 22-09-21 11:49:58[restartedMain] [AbstractEntityPersister:4002] - Static SQL for entity: com.vue_spring.demo.model.ProductImage
-DEBUG 22-09-21 11:49:58[restartedMain] [AbstractEntityPersister:4007] -  Version select: /* get version com.vue_spring.demo.model.ProductImage */ select id from product_image where id =?
-DEBUG 22-09-21 11:49:58[restartedMain] [AbstractEntityPersister:4010] -  Snapshot select: /* get current state com.vue_spring.demo.model.ProductImage */ select productima_.id, productima_.create_date as create_d2_7_, productima_.img_file_name as img_file3_7_, productima_.img_file_path as img_file4_7_, productima_.img_file_size as img_file5_7_, productima_.product_id as product_6_7_ from product_image productima_ where productima_.id=?
-DEBUG 22-09-21 11:49:58[restartedMain] [AbstractEntityPersister:394] -  Insert 0: /* insert com.vue_spring.demo.model.ProductImage */ insert into product_image (create_date, img_file_name, img_file_path, img_file_size, product_id, id) values (?, ?, ?, ?, ?, ?)
-DEBUG 22-09-21 11:49:58[restartedMain] [AbstractEntityPersister:394] -  Update 0: /* update com.vue_spring.demo.model.ProductImage */ update product_image set create_date=?, img_file_name=?, img_file_path=?, img_file_size=?, product_id=? where id=?
-DEBUG 22-09-21 11:49:58[restartedMain] [AbstractEntityPersister:394] -  Delete 0: /* delete com.vue_spring.demo.model.ProductImage */ delete from product_image where id=?
-DEBUG 22-09-21 11:49:58[restartedMain] [AbstractEntityPersister:4018] -  Identity insert: /* insert com.vue_spring.demo.model.ProductImage */ insert into product_image (create_date, img_file_name, img_file_path, img_file_size, product_id) values (?, ?, ?, ?, ?)
+DEBUG 22-09-21 11:49:58[restartedMain] [AbstractEntityPersister:4002] - Static SQL for entity: com.vue_spring.demo.model.ProductFile
+DEBUG 22-09-21 11:49:58[restartedMain] [AbstractEntityPersister:4007] -  Version select: /* get version com.vue_spring.demo.model.ProductFile */ select id from product_image where id =?
+DEBUG 22-09-21 11:49:58[restartedMain] [AbstractEntityPersister:4010] -  Snapshot select: /* get current state com.vue_spring.demo.model.ProductFile */ select productima_.id, productima_.create_date as create_d2_7_, productima_.img_file_name as img_file3_7_, productima_.img_file_path as img_file4_7_, productima_.img_file_size as img_file5_7_, productima_.product_id as product_6_7_ from product_image productima_ where productima_.id=?
+DEBUG 22-09-21 11:49:58[restartedMain] [AbstractEntityPersister:394] -  Insert 0: /* insert com.vue_spring.demo.model.ProductFile */ insert into product_image (create_date, img_file_name, img_file_path, img_file_size, product_id, id) values (?, ?, ?, ?, ?, ?)
+DEBUG 22-09-21 11:49:58[restartedMain] [AbstractEntityPersister:394] -  Update 0: /* update com.vue_spring.demo.model.ProductFile */ update product_image set create_date=?, img_file_name=?, img_file_path=?, img_file_size=?, product_id=? where id=?
+DEBUG 22-09-21 11:49:58[restartedMain] [AbstractEntityPersister:394] -  Delete 0: /* delete com.vue_spring.demo.model.ProductFile */ delete from product_image where id=?
+DEBUG 22-09-21 11:49:58[restartedMain] [AbstractEntityPersister:4018] -  Identity insert: /* insert com.vue_spring.demo.model.ProductFile */ insert into product_image (create_date, img_file_name, img_file_path, img_file_size, product_id) values (?, ?, ?, ?, ?)
 DEBUG 22-09-21 11:49:58[restartedMain] [QuerySpacesImpl:174] - Adding QuerySpace : uid = <gen:0> -> org.hibernate.loader.plan.build.internal.spaces.EntityQuerySpaceImpl@33a8b995]
 DEBUG 22-09-21 11:49:58[restartedMain] [MetamodelGraphWalker:146] - Visiting attribute path : createDate
 DEBUG 22-09-21 11:49:58[restartedMain] [MetamodelGraphWalker:146] - Visiting attribute path : imgFileName
@@ -5635,17 +5635,17 @@ DEBUG 22-09-21 11:49:58[restartedMain] [MetamodelGraphWalker:146] - Visiting att
 DEBUG 22-09-21 11:49:58[restartedMain] [QuerySpacesImpl:174] - Adding QuerySpace : uid = <gen:1> -> org.hibernate.loader.plan.build.internal.spaces.EntityQuerySpaceImpl@31a8308]
 DEBUG 22-09-21 11:49:58[restartedMain] [FetchStyleLoadPlanBuildingAssociationVisitationStrategy:160] - Building LoadPlan...
 DEBUG 22-09-21 11:49:58[restartedMain] [LoadQueryJoinAndFetchProcessor:102] - processing queryspace <gen:0>
-DEBUG 22-09-21 11:49:58[restartedMain] [LoadPlanTreePrinter:55] - LoadPlan(entity=com.vue_spring.demo.model.ProductImage)
+DEBUG 22-09-21 11:49:58[restartedMain] [LoadPlanTreePrinter:55] - LoadPlan(entity=com.vue_spring.demo.model.ProductFile)
     - Returns
-       - EntityReturnImpl(entity=com.vue_spring.demo.model.ProductImage, querySpaceUid=<gen:0>, path=com.vue_spring.demo.model.ProductImage)
-          - EntityAttributeFetchImpl(entity=com.vue_spring.demo.model.Product, querySpaceUid=<gen:1>, path=com.vue_spring.demo.model.ProductImage.product)
+       - EntityReturnImpl(entity=com.vue_spring.demo.model.ProductFile, querySpaceUid=<gen:0>, path=com.vue_spring.demo.model.ProductFile)
+          - EntityAttributeFetchImpl(entity=com.vue_spring.demo.model.Product, querySpaceUid=<gen:1>, path=com.vue_spring.demo.model.ProductFile.product)
     - QuerySpaces
-       - EntityQuerySpaceImpl(uid=<gen:0>, entity=com.vue_spring.demo.model.ProductImage)
+       - EntityQuerySpaceImpl(uid=<gen:0>, entity=com.vue_spring.demo.model.ProductFile)
           - SQL table alias mapping - productima0_
           - alias suffix - 0_
           - suffixed key columns - {id1_7_0_}
 
-DEBUG 22-09-21 11:49:58[restartedMain] [EntityLoader:129] - Static select for entity com.vue_spring.demo.model.ProductImage [NONE]: select productima0_.id as id1_7_0_, productima0_.create_date as create_d2_7_0_, productima0_.img_file_name as img_file3_7_0_, productima0_.img_file_path as img_file4_7_0_, productima0_.img_file_size as img_file5_7_0_, productima0_.product_id as product_6_7_0_ from product_image productima0_ where productima0_.id=?
+DEBUG 22-09-21 11:49:58[restartedMain] [EntityLoader:129] - Static select for entity com.vue_spring.demo.model.ProductFile [NONE]: select productima0_.id as id1_7_0_, productima0_.create_date as create_d2_7_0_, productima0_.img_file_name as img_file3_7_0_, productima0_.img_file_path as img_file4_7_0_, productima0_.img_file_size as img_file5_7_0_, productima0_.product_id as product_6_7_0_ from product_image productima0_ where productima0_.id=?
 DEBUG 22-09-21 11:49:58[restartedMain] [AbstractEntityPersister:4002] - Static SQL for entity: com.vue_spring.demo.model.RefreshToken
 DEBUG 22-09-21 11:49:58[restartedMain] [AbstractEntityPersister:4007] -  Version select: /* get version com.vue_spring.demo.model.RefreshToken */ select rt_key from refresh_token where rt_key =?
 DEBUG 22-09-21 11:49:58[restartedMain] [AbstractEntityPersister:4010] -  Snapshot select: /* get current state com.vue_spring.demo.model.RefreshToken */ select refreshtok_.rt_key, refreshtok_.rt_value as rt_value2_8_ from refresh_token refreshtok_ where refreshtok_.rt_key=?
@@ -5769,7 +5769,7 @@ DEBUG 22-09-21 11:49:58[restartedMain] [LoadPlanTreePrinter:55] - LoadPlan(entit
              - (collection element) CollectionFetchableElementEntityGraph(entity=com.vue_spring.demo.model.InspectImage, querySpaceUid=<gen:2>, path=com.vue_spring.demo.model.Inspect.imageFile.<elements>)
           - EntityAttributeFetchImpl(entity=com.vue_spring.demo.model.Product, querySpaceUid=<gen:3>, path=com.vue_spring.demo.model.Inspect.product)
              - CollectionAttributeFetchImpl(collection=com.vue_spring.demo.model.Product.imageFile, querySpaceUid=<gen:4>, path=com.vue_spring.demo.model.Inspect.product.imageFile)
-                - (collection element) CollectionFetchableElementEntityGraph(entity=com.vue_spring.demo.model.ProductImage, querySpaceUid=<gen:5>, path=com.vue_spring.demo.model.Inspect.product.imageFile.<elements>)
+                - (collection element) CollectionFetchableElementEntityGraph(entity=com.vue_spring.demo.model.ProductFile, querySpaceUid=<gen:5>, path=com.vue_spring.demo.model.Inspect.product.imageFile.<elements>)
     - QuerySpaces
        - EntityQuerySpaceImpl(uid=<gen:0>, entity=com.vue_spring.demo.model.Inspect)
           - SQL table alias mapping - inspect0_
@@ -5842,7 +5842,7 @@ DEBUG 22-09-21 11:49:58[restartedMain] [LoadPlanTreePrinter:55] - LoadPlan(entit
     - Returns
        - EntityReturnImpl(entity=com.vue_spring.demo.model.Product, querySpaceUid=<gen:0>, path=com.vue_spring.demo.model.Product)
           - CollectionAttributeFetchImpl(collection=com.vue_spring.demo.model.Product.imageFile, querySpaceUid=<gen:1>, path=com.vue_spring.demo.model.Product.imageFile)
-             - (collection element) CollectionFetchableElementEntityGraph(entity=com.vue_spring.demo.model.ProductImage, querySpaceUid=<gen:2>, path=com.vue_spring.demo.model.Product.imageFile.<elements>)
+             - (collection element) CollectionFetchableElementEntityGraph(entity=com.vue_spring.demo.model.ProductFile, querySpaceUid=<gen:2>, path=com.vue_spring.demo.model.Product.imageFile.<elements>)
           - CollectionAttributeFetchImpl(collection=com.vue_spring.demo.model.Product.inspect, querySpaceUid=<gen:3>, path=com.vue_spring.demo.model.Product.inspect)
              - (collection element) CollectionFetchableElementEntityGraph(entity=com.vue_spring.demo.model.Inspect, querySpaceUid=<gen:4>, path=com.vue_spring.demo.model.Product.inspect.<elements>)
     - QuerySpaces
@@ -5902,7 +5902,7 @@ DEBUG 22-09-21 11:49:58[restartedMain] [LoadQueryJoinAndFetchProcessor:102] - pr
 DEBUG 22-09-21 11:49:58[restartedMain] [LoadPlanTreePrinter:55] - LoadPlan(collection=com.vue_spring.demo.model.Product.imageFile)
     - Returns
        - CollectionReturnImpl(collection=com.vue_spring.demo.model.Product.imageFile, querySpaceUid=<gen:0>, path=[com.vue_spring.demo.model.Product.imageFile])
-          - (collection element) CollectionFetchableElementEntityGraph(entity=com.vue_spring.demo.model.ProductImage, querySpaceUid=<gen:1>, path=[com.vue_spring.demo.model.Product.imageFile].<elements>)
+          - (collection element) CollectionFetchableElementEntityGraph(entity=com.vue_spring.demo.model.ProductFile, querySpaceUid=<gen:1>, path=[com.vue_spring.demo.model.Product.imageFile].<elements>)
     - QuerySpaces
        - CollectionQuerySpaceImpl(uid=<gen:0>, collection=com.vue_spring.demo.model.Product.imageFile)
           - SQL table alias mapping - imagefile0_
@@ -5911,7 +5911,7 @@ DEBUG 22-09-21 11:49:58[restartedMain] [LoadPlanTreePrinter:55] - LoadPlan(colle
           - entity-element alias suffix - 1_
           - 1_entity-element suffixed key columns - id1_7_1_
           - JOIN (JoinDefinedByMetadata(elements)) : <gen:0> -> <gen:1>
-             - EntityQuerySpaceImpl(uid=<gen:1>, entity=com.vue_spring.demo.model.ProductImage)
+             - EntityQuerySpaceImpl(uid=<gen:1>, entity=com.vue_spring.demo.model.ProductFile)
                 - SQL table alias mapping - imagefile0_
                 - alias suffix - 1_
                 - suffixed key columns - {id1_7_1_}
@@ -6349,7 +6349,7 @@ DEBUG 22-09-21 11:50:00[restartedMain] [DefaultListableBeanFactory:225] - Creati
 DEBUG 22-09-21 11:50:00[restartedMain] [SharedEntityManagerCreator$SharedEntityManagerInvocationHandler:302] - Creating new EntityManager for shared EntityManager invocation
 DEBUG 22-09-21 11:50:00[restartedMain] [CachedIntrospectionResults:191] - Not strongly caching class [com.vue_spring.demo.model.Claim] because it is not cache-safe
 DEBUG 22-09-21 11:50:00[restartedMain] [CachedIntrospectionResults:191] - Not strongly caching class [com.vue_spring.demo.model.Product] because it is not cache-safe
-DEBUG 22-09-21 11:50:00[restartedMain] [CachedIntrospectionResults:191] - Not strongly caching class [com.vue_spring.demo.model.ProductImage] because it is not cache-safe
+DEBUG 22-09-21 11:50:00[restartedMain] [CachedIntrospectionResults:191] - Not strongly caching class [com.vue_spring.demo.model.ProductFile] because it is not cache-safe
 DEBUG 22-09-21 11:50:00[restartedMain] [CachedIntrospectionResults:191] - Not strongly caching class [com.vue_spring.demo.model.Inspect] because it is not cache-safe
 DEBUG 22-09-21 11:50:00[restartedMain] [CachedIntrospectionResults:191] - Not strongly caching class [com.vue_spring.demo.model.InspectImage] because it is not cache-safe
 DEBUG 22-09-21 11:50:00[restartedMain] [CachedIntrospectionResults:191] - Not strongly caching class [com.vue_spring.demo.model.ClaimImage] because it is not cache-safe
@@ -6464,9 +6464,9 @@ DEBUG 22-09-21 11:50:00[restartedMain] [QueryTranslatorImpl:279] - --- SQL AST -
 DEBUG 22-09-21 11:50:00[restartedMain] [ErrorTracker:97] - throwQueryException() : no errors
 DEBUG 22-09-21 11:50:00[restartedMain] [ErrorTracker:97] - throwQueryException() : no errors
 DEBUG 22-09-21 11:50:00[restartedMain] [RepositoryFactorySupport:376] - Finished creation of repository instance for com.vue_spring.demo.Repository.ProductRepository.
-DEBUG 22-09-21 11:50:00[restartedMain] [DefaultListableBeanFactory:225] - Creating shared instance of singleton bean 'productImageRepository'
+DEBUG 22-09-21 11:50:00[restartedMain] [DefaultListableBeanFactory:225] - Creating shared instance of singleton bean 'productFileRepository'
 DEBUG 22-09-21 11:50:00[restartedMain] [SharedEntityManagerCreator$SharedEntityManagerInvocationHandler:302] - Creating new EntityManager for shared EntityManager invocation
-DEBUG 22-09-21 11:50:00[restartedMain] [RepositoryFactorySupport:279] - Initializing repository instance for com.vue_spring.demo.Repository.ProductImageRepository…
+DEBUG 22-09-21 11:50:00[restartedMain] [RepositoryFactorySupport:279] - Initializing repository instance for com.vue_spring.demo.Repository.ProductFileRepository…
 DEBUG 22-09-21 11:50:00[restartedMain] [SharedEntityManagerCreator$SharedEntityManagerInvocationHandler:302] - Creating new EntityManager for shared EntityManager invocation
 DEBUG 22-09-21 11:50:00[restartedMain] [NamedQuery:137] - Looking up named query ProductImage.deleteByProductId
 DEBUG 22-09-21 11:50:00[restartedMain] [TransactionImpl:53] - On TransactionImpl creation, JpaCompliance#isJpaTransactionComplianceEnabled == false
@@ -6480,7 +6480,7 @@ DEBUG 22-09-21 11:50:00[restartedMain] [NamedQuery:137] - Looking up named query
 DEBUG 22-09-21 11:50:00[restartedMain] [TransactionImpl:53] - On TransactionImpl creation, JpaCompliance#isJpaTransactionComplianceEnabled == false
 DEBUG 22-09-21 11:50:00[restartedMain] [NamedQuery:118] - Did not find named query ProductImage.findByProductId
 DEBUG 22-09-21 11:50:00[restartedMain] [SharedEntityManagerCreator$SharedEntityManagerInvocationHandler:302] - Creating new EntityManager for shared EntityManager invocation
-DEBUG 22-09-21 11:50:00[restartedMain] [RepositoryFactorySupport:376] - Finished creation of repository instance for com.vue_spring.demo.Repository.ProductImageRepository.
+DEBUG 22-09-21 11:50:00[restartedMain] [RepositoryFactorySupport:376] - Finished creation of repository instance for com.vue_spring.demo.Repository.ProductFileRepository.
 DEBUG 22-09-21 11:50:00[restartedMain] [DefaultListableBeanFactory:225] - Creating shared instance of singleton bean 'salesProductComponentRepository'
 DEBUG 22-09-21 11:50:00[restartedMain] [SharedEntityManagerCreator$SharedEntityManagerInvocationHandler:302] - Creating new EntityManager for shared EntityManager invocation
 DEBUG 22-09-21 11:50:00[restartedMain] [CachedIntrospectionResults:191] - Not strongly caching class [com.vue_spring.demo.model.SalesProductComponent] because it is not cache-safe
@@ -8722,7 +8722,7 @@ DEBUG 22-09-21 11:57:57[http-nio-3000-exec-2] [SQL:144] -
 DEBUG 22-09-21 11:57:57[http-nio-3000-exec-2] [ResultSetProcessorImpl:193] - Preparing collection initializer : [com.vue_spring.demo.model.Product.imageFile#2]
 DEBUG 22-09-21 11:57:57[http-nio-3000-exec-2] [CollectionReferenceInitializerImpl:59] - Found row of collection: [com.vue_spring.demo.model.Product.imageFile#2]
 DEBUG 22-09-21 11:57:57[http-nio-3000-exec-2] [CollectionReferenceInitializerImpl:59] - Found row of collection: [com.vue_spring.demo.model.Product.imageFile#2]
-DEBUG 22-09-21 11:57:57[http-nio-3000-exec-2] [TwoPhaseLoad:171] - Resolving attributes for [com.vue_spring.demo.model.ProductImage#3]
+DEBUG 22-09-21 11:57:57[http-nio-3000-exec-2] [TwoPhaseLoad:171] - Resolving attributes for [com.vue_spring.demo.model.ProductFile#3]
 DEBUG 22-09-21 11:57:57[http-nio-3000-exec-2] [TwoPhaseLoad:184] - Processing attribute `createDate` : value = 2022-09-20 16:28:20.994
 DEBUG 22-09-21 11:57:57[http-nio-3000-exec-2] [TwoPhaseLoad:215] - Attribute (`createDate`)  - enhanced for lazy-loading? - false
 DEBUG 22-09-21 11:57:57[http-nio-3000-exec-2] [TwoPhaseLoad:184] - Processing attribute `imgFileName` : value = KakaoTalk_20220110_180011897_02.jpg
@@ -8733,8 +8733,8 @@ DEBUG 22-09-21 11:57:57[http-nio-3000-exec-2] [TwoPhaseLoad:184] - Processing at
 DEBUG 22-09-21 11:57:57[http-nio-3000-exec-2] [TwoPhaseLoad:215] - Attribute (`imgFileSize`)  - enhanced for lazy-loading? - false
 DEBUG 22-09-21 11:57:57[http-nio-3000-exec-2] [TwoPhaseLoad:184] - Processing attribute `product` : value = 2
 DEBUG 22-09-21 11:57:57[http-nio-3000-exec-2] [TwoPhaseLoad:215] - Attribute (`product`)  - enhanced for lazy-loading? - false
-DEBUG 22-09-21 11:57:57[http-nio-3000-exec-2] [TwoPhaseLoad:352] - Done materializing entity [com.vue_spring.demo.model.ProductImage#3]
-DEBUG 22-09-21 11:57:57[http-nio-3000-exec-2] [TwoPhaseLoad:171] - Resolving attributes for [com.vue_spring.demo.model.ProductImage#4]
+DEBUG 22-09-21 11:57:57[http-nio-3000-exec-2] [TwoPhaseLoad:352] - Done materializing entity [com.vue_spring.demo.model.ProductFile#3]
+DEBUG 22-09-21 11:57:57[http-nio-3000-exec-2] [TwoPhaseLoad:171] - Resolving attributes for [com.vue_spring.demo.model.ProductFile#4]
 DEBUG 22-09-21 11:57:57[http-nio-3000-exec-2] [TwoPhaseLoad:184] - Processing attribute `createDate` : value = 2022-09-20 16:28:21.007
 DEBUG 22-09-21 11:57:57[http-nio-3000-exec-2] [TwoPhaseLoad:215] - Attribute (`createDate`)  - enhanced for lazy-loading? - false
 DEBUG 22-09-21 11:57:57[http-nio-3000-exec-2] [TwoPhaseLoad:184] - Processing attribute `imgFileName` : value = KakaoTalk_20220110_180011897_03.jpg
@@ -8745,7 +8745,7 @@ DEBUG 22-09-21 11:57:57[http-nio-3000-exec-2] [TwoPhaseLoad:184] - Processing at
 DEBUG 22-09-21 11:57:57[http-nio-3000-exec-2] [TwoPhaseLoad:215] - Attribute (`imgFileSize`)  - enhanced for lazy-loading? - false
 DEBUG 22-09-21 11:57:57[http-nio-3000-exec-2] [TwoPhaseLoad:184] - Processing attribute `product` : value = 2
 DEBUG 22-09-21 11:57:57[http-nio-3000-exec-2] [TwoPhaseLoad:215] - Attribute (`product`)  - enhanced for lazy-loading? - false
-DEBUG 22-09-21 11:57:57[http-nio-3000-exec-2] [TwoPhaseLoad:352] - Done materializing entity [com.vue_spring.demo.model.ProductImage#4]
+DEBUG 22-09-21 11:57:57[http-nio-3000-exec-2] [TwoPhaseLoad:352] - Done materializing entity [com.vue_spring.demo.model.ProductFile#4]
 DEBUG 22-09-21 11:57:57[http-nio-3000-exec-2] [CollectionLoadContext:394] - 1 collections were found in result set for role: com.vue_spring.demo.model.Product.imageFile
 DEBUG 22-09-21 11:57:57[http-nio-3000-exec-2] [CollectionLoadContext:303] - Collection fully initialized: [com.vue_spring.demo.model.Product.imageFile#2]
 DEBUG 22-09-21 11:57:57[http-nio-3000-exec-2] [CollectionLoadContext:394] - 1 collections initialized for role: com.vue_spring.demo.model.Product.imageFile
@@ -8792,7 +8792,7 @@ DEBUG 22-09-21 11:57:57[http-nio-3000-exec-2] [SQL:144] -
 DEBUG 22-09-21 11:57:57[http-nio-3000-exec-2] [ResultSetProcessorImpl:193] - Preparing collection initializer : [com.vue_spring.demo.model.Product.imageFile#3]
 DEBUG 22-09-21 11:57:57[http-nio-3000-exec-2] [CollectionReferenceInitializerImpl:59] - Found row of collection: [com.vue_spring.demo.model.Product.imageFile#3]
 DEBUG 22-09-21 11:57:57[http-nio-3000-exec-2] [CollectionReferenceInitializerImpl:59] - Found row of collection: [com.vue_spring.demo.model.Product.imageFile#3]
-DEBUG 22-09-21 11:57:57[http-nio-3000-exec-2] [TwoPhaseLoad:171] - Resolving attributes for [com.vue_spring.demo.model.ProductImage#5]
+DEBUG 22-09-21 11:57:57[http-nio-3000-exec-2] [TwoPhaseLoad:171] - Resolving attributes for [com.vue_spring.demo.model.ProductFile#5]
 DEBUG 22-09-21 11:57:57[http-nio-3000-exec-2] [TwoPhaseLoad:184] - Processing attribute `createDate` : value = 2022-09-20 17:24:54.173
 DEBUG 22-09-21 11:57:57[http-nio-3000-exec-2] [TwoPhaseLoad:215] - Attribute (`createDate`)  - enhanced for lazy-loading? - false
 DEBUG 22-09-21 11:57:57[http-nio-3000-exec-2] [TwoPhaseLoad:184] - Processing attribute `imgFileName` : value = The 잇츄 꿀잠츄s_2024.01.12.jpg
@@ -8803,8 +8803,8 @@ DEBUG 22-09-21 11:57:57[http-nio-3000-exec-2] [TwoPhaseLoad:184] - Processing at
 DEBUG 22-09-21 11:57:57[http-nio-3000-exec-2] [TwoPhaseLoad:215] - Attribute (`imgFileSize`)  - enhanced for lazy-loading? - false
 DEBUG 22-09-21 11:57:57[http-nio-3000-exec-2] [TwoPhaseLoad:184] - Processing attribute `product` : value = 3
 DEBUG 22-09-21 11:57:57[http-nio-3000-exec-2] [TwoPhaseLoad:215] - Attribute (`product`)  - enhanced for lazy-loading? - false
-DEBUG 22-09-21 11:57:57[http-nio-3000-exec-2] [TwoPhaseLoad:352] - Done materializing entity [com.vue_spring.demo.model.ProductImage#5]
-DEBUG 22-09-21 11:57:57[http-nio-3000-exec-2] [TwoPhaseLoad:171] - Resolving attributes for [com.vue_spring.demo.model.ProductImage#6]
+DEBUG 22-09-21 11:57:57[http-nio-3000-exec-2] [TwoPhaseLoad:352] - Done materializing entity [com.vue_spring.demo.model.ProductFile#5]
+DEBUG 22-09-21 11:57:57[http-nio-3000-exec-2] [TwoPhaseLoad:171] - Resolving attributes for [com.vue_spring.demo.model.ProductFile#6]
 DEBUG 22-09-21 11:57:57[http-nio-3000-exec-2] [TwoPhaseLoad:184] - Processing attribute `createDate` : value = 2022-09-20 17:24:54.188
 DEBUG 22-09-21 11:57:57[http-nio-3000-exec-2] [TwoPhaseLoad:215] - Attribute (`createDate`)  - enhanced for lazy-loading? - false
 DEBUG 22-09-21 11:57:57[http-nio-3000-exec-2] [TwoPhaseLoad:184] - Processing attribute `imgFileName` : value = The 잇츄 옐로우s_2024.01.10.jpg
@@ -8815,7 +8815,7 @@ DEBUG 22-09-21 11:57:57[http-nio-3000-exec-2] [TwoPhaseLoad:184] - Processing at
 DEBUG 22-09-21 11:57:57[http-nio-3000-exec-2] [TwoPhaseLoad:215] - Attribute (`imgFileSize`)  - enhanced for lazy-loading? - false
 DEBUG 22-09-21 11:57:57[http-nio-3000-exec-2] [TwoPhaseLoad:184] - Processing attribute `product` : value = 3
 DEBUG 22-09-21 11:57:57[http-nio-3000-exec-2] [TwoPhaseLoad:215] - Attribute (`product`)  - enhanced for lazy-loading? - false
-DEBUG 22-09-21 11:57:57[http-nio-3000-exec-2] [TwoPhaseLoad:352] - Done materializing entity [com.vue_spring.demo.model.ProductImage#6]
+DEBUG 22-09-21 11:57:57[http-nio-3000-exec-2] [TwoPhaseLoad:352] - Done materializing entity [com.vue_spring.demo.model.ProductFile#6]
 DEBUG 22-09-21 11:57:57[http-nio-3000-exec-2] [CollectionLoadContext:394] - 1 collections were found in result set for role: com.vue_spring.demo.model.Product.imageFile
 DEBUG 22-09-21 11:57:57[http-nio-3000-exec-2] [CollectionLoadContext:303] - Collection fully initialized: [com.vue_spring.demo.model.Product.imageFile#3]
 DEBUG 22-09-21 11:57:57[http-nio-3000-exec-2] [CollectionLoadContext:394] - 1 collections initialized for role: com.vue_spring.demo.model.Product.imageFile
@@ -8974,7 +8974,7 @@ INFO  22-09-21 12:01:30[restartedMain] [RepositoryConfigurationExtensionSupport:
 INFO  22-09-21 12:01:30[restartedMain] [RepositoryConfigurationExtensionSupport:349] - Spring Data Redis - Could not safely identify store assignment for repository candidate interface com.vue_spring.demo.Repository.InspectRepository. If you want this repository to be a Redis repository, consider annotating your entities with one of these annotations: org.springframework.data.redis.core.RedisHash (preferred), or consider extending one of the following types with your repository: org.springframework.data.keyvalue.repository.KeyValueRepository.
 INFO  22-09-21 12:01:30[restartedMain] [RepositoryConfigurationExtensionSupport:349] - Spring Data Redis - Could not safely identify store assignment for repository candidate interface com.vue_spring.demo.Repository.MakerRepository. If you want this repository to be a Redis repository, consider annotating your entities with one of these annotations: org.springframework.data.redis.core.RedisHash (preferred), or consider extending one of the following types with your repository: org.springframework.data.keyvalue.repository.KeyValueRepository.
 INFO  22-09-21 12:01:30[restartedMain] [RepositoryConfigurationExtensionSupport:349] - Spring Data Redis - Could not safely identify store assignment for repository candidate interface com.vue_spring.demo.Repository.MemberRepository. If you want this repository to be a Redis repository, consider annotating your entities with one of these annotations: org.springframework.data.redis.core.RedisHash (preferred), or consider extending one of the following types with your repository: org.springframework.data.keyvalue.repository.KeyValueRepository.
-INFO  22-09-21 12:01:30[restartedMain] [RepositoryConfigurationExtensionSupport:349] - Spring Data Redis - Could not safely identify store assignment for repository candidate interface com.vue_spring.demo.Repository.ProductImageRepository. If you want this repository to be a Redis repository, consider annotating your entities with one of these annotations: org.springframework.data.redis.core.RedisHash (preferred), or consider extending one of the following types with your repository: org.springframework.data.keyvalue.repository.KeyValueRepository.
+INFO  22-09-21 12:01:30[restartedMain] [RepositoryConfigurationExtensionSupport:349] - Spring Data Redis - Could not safely identify store assignment for repository candidate interface com.vue_spring.demo.Repository.ProductFileRepository. If you want this repository to be a Redis repository, consider annotating your entities with one of these annotations: org.springframework.data.redis.core.RedisHash (preferred), or consider extending one of the following types with your repository: org.springframework.data.keyvalue.repository.KeyValueRepository.
 INFO  22-09-21 12:01:30[restartedMain] [RepositoryConfigurationExtensionSupport:349] - Spring Data Redis - Could not safely identify store assignment for repository candidate interface com.vue_spring.demo.Repository.ProductRepository. If you want this repository to be a Redis repository, consider annotating your entities with one of these annotations: org.springframework.data.redis.core.RedisHash (preferred), or consider extending one of the following types with your repository: org.springframework.data.keyvalue.repository.KeyValueRepository.
 INFO  22-09-21 12:01:30[restartedMain] [RepositoryConfigurationExtensionSupport:349] - Spring Data Redis - Could not safely identify store assignment for repository candidate interface com.vue_spring.demo.Repository.SalesProductComponentRepository. If you want this repository to be a Redis repository, consider annotating your entities with one of these annotations: org.springframework.data.redis.core.RedisHash (preferred), or consider extending one of the following types with your repository: org.springframework.data.keyvalue.repository.KeyValueRepository.
 INFO  22-09-21 12:01:30[restartedMain] [RepositoryConfigurationExtensionSupport:349] - Spring Data Redis - Could not safely identify store assignment for repository candidate interface com.vue_spring.demo.Repository.SalesRepository. If you want this repository to be a Redis repository, consider annotating your entities with one of these annotations: org.springframework.data.redis.core.RedisHash (preferred), or consider extending one of the following types with your repository: org.springframework.data.keyvalue.repository.KeyValueRepository.
@@ -9150,7 +9150,7 @@ DEBUG 22-09-21 12:01:33[restartedMain] [LogHelper:102] - PersistenceUnitInfo [
 		com.vue_spring.demo.model.Maker
 		com.vue_spring.demo.model.Member
 		com.vue_spring.demo.model.Product
-		com.vue_spring.demo.model.ProductImage
+		com.vue_spring.demo.model.ProductFile
 		com.vue_spring.demo.model.RefreshToken
 		com.vue_spring.demo.model.Sales
 		com.vue_spring.demo.model.SalesProductComponent]
@@ -9798,36 +9798,36 @@ DEBUG 22-09-21 12:01:35[restartedMain] [PropertyBinder:175] - MetadataSourceProc
 DEBUG 22-09-21 12:01:35[restartedMain] [AbstractPropertyHolder:94] - Attempting to locate auto-apply AttributeConverter for property [com.vue_spring.demo.model.Product:sodium]
 DEBUG 22-09-21 12:01:35[restartedMain] [SimpleValueBinder:410] - building SimpleValue for sodium
 DEBUG 22-09-21 12:01:35[restartedMain] [PropertyBinder:266] - Building property sodium
-DEBUG 22-09-21 12:01:35[restartedMain] [AnnotationBinder:546] - Binding entity from annotated class: com.vue_spring.demo.model.ProductImage
+DEBUG 22-09-21 12:01:35[restartedMain] [AnnotationBinder:546] - Binding entity from annotated class: com.vue_spring.demo.model.ProductFile
 DEBUG 22-09-21 12:01:35[restartedMain] [Ejb3Column:227] - Binding column: Ejb3DiscriminatorColumn{logicalColumnName'DTYPE', discriminatorTypeName='string'}
 DEBUG 22-09-21 12:01:35[restartedMain] [EntityBinder:431] - Import with entity name ProductImage
-DEBUG 22-09-21 12:01:35[restartedMain] [EntityBinder:874] - Bind entity com.vue_spring.demo.model.ProductImage on table product_image
+DEBUG 22-09-21 12:01:35[restartedMain] [EntityBinder:874] - Bind entity com.vue_spring.demo.model.ProductFile on table product_image
 DEBUG 22-09-21 12:01:35[restartedMain] [Ejb3Column:227] - Binding column: Ejb3Column{table=org.hibernate.mapping.Table(product_image), mappingColumn=id, insertable=true, updatable=true, unique=false}
-DEBUG 22-09-21 12:01:35[restartedMain] [ClassLoaderAccessImpl:60] - Not known whether passed class name [com.vue_spring.demo.model.ProductImage] is safe
-DEBUG 22-09-21 12:01:35[restartedMain] [ClassLoaderAccessImpl:62] - No temp ClassLoader provided; using live ClassLoader for loading potentially unsafe class : com.vue_spring.demo.model.ProductImage
+DEBUG 22-09-21 12:01:35[restartedMain] [ClassLoaderAccessImpl:60] - Not known whether passed class name [com.vue_spring.demo.model.ProductFile] is safe
+DEBUG 22-09-21 12:01:35[restartedMain] [ClassLoaderAccessImpl:62] - No temp ClassLoader provided; using live ClassLoader for loading potentially unsafe class : com.vue_spring.demo.model.ProductFile
 DEBUG 22-09-21 12:01:35[restartedMain] [PropertyBinder:175] - MetadataSourceProcessor property id with lazy=false
-DEBUG 22-09-21 12:01:35[restartedMain] [AbstractPropertyHolder:94] - Attempting to locate auto-apply AttributeConverter for property [com.vue_spring.demo.model.ProductImage:id]
+DEBUG 22-09-21 12:01:35[restartedMain] [AbstractPropertyHolder:94] - Attempting to locate auto-apply AttributeConverter for property [com.vue_spring.demo.model.ProductFile:id]
 DEBUG 22-09-21 12:01:35[restartedMain] [SimpleValueBinder:410] - building SimpleValue for id
 DEBUG 22-09-21 12:01:35[restartedMain] [PropertyBinder:266] - Building property id
 DEBUG 22-09-21 12:01:35[restartedMain] [BinderHelper:514] - #makeIdGenerator(org.hibernate.mapping.SimpleValue([org.hibernate.mapping.Column(id)]), id, identity, , ...)
 DEBUG 22-09-21 12:01:35[restartedMain] [Ejb3Column:227] - Binding column: Ejb3Column{table=org.hibernate.mapping.Table(product_image), mappingColumn=create_date, insertable=true, updatable=true, unique=false}
 DEBUG 22-09-21 12:01:35[restartedMain] [PropertyBinder:175] - MetadataSourceProcessor property createDate with lazy=false
-DEBUG 22-09-21 12:01:35[restartedMain] [AbstractPropertyHolder:94] - Attempting to locate auto-apply AttributeConverter for property [com.vue_spring.demo.model.ProductImage:createDate]
+DEBUG 22-09-21 12:01:35[restartedMain] [AbstractPropertyHolder:94] - Attempting to locate auto-apply AttributeConverter for property [com.vue_spring.demo.model.ProductFile:createDate]
 DEBUG 22-09-21 12:01:35[restartedMain] [SimpleValueBinder:410] - building SimpleValue for createDate
 DEBUG 22-09-21 12:01:35[restartedMain] [PropertyBinder:266] - Building property createDate
 DEBUG 22-09-21 12:01:35[restartedMain] [Ejb3Column:227] - Binding column: Ejb3Column{table=org.hibernate.mapping.Table(product_image), mappingColumn=img_file_name, insertable=true, updatable=true, unique=false}
 DEBUG 22-09-21 12:01:35[restartedMain] [PropertyBinder:175] - MetadataSourceProcessor property imgFileName with lazy=false
-DEBUG 22-09-21 12:01:35[restartedMain] [AbstractPropertyHolder:94] - Attempting to locate auto-apply AttributeConverter for property [com.vue_spring.demo.model.ProductImage:imgFileName]
+DEBUG 22-09-21 12:01:35[restartedMain] [AbstractPropertyHolder:94] - Attempting to locate auto-apply AttributeConverter for property [com.vue_spring.demo.model.ProductFile:imgFileName]
 DEBUG 22-09-21 12:01:35[restartedMain] [SimpleValueBinder:410] - building SimpleValue for imgFileName
 DEBUG 22-09-21 12:01:35[restartedMain] [PropertyBinder:266] - Building property imgFileName
 DEBUG 22-09-21 12:01:35[restartedMain] [Ejb3Column:227] - Binding column: Ejb3Column{table=org.hibernate.mapping.Table(product_image), mappingColumn=img_file_path, insertable=true, updatable=true, unique=false}
 DEBUG 22-09-21 12:01:35[restartedMain] [PropertyBinder:175] - MetadataSourceProcessor property imgFilePath with lazy=false
-DEBUG 22-09-21 12:01:35[restartedMain] [AbstractPropertyHolder:94] - Attempting to locate auto-apply AttributeConverter for property [com.vue_spring.demo.model.ProductImage:imgFilePath]
+DEBUG 22-09-21 12:01:35[restartedMain] [AbstractPropertyHolder:94] - Attempting to locate auto-apply AttributeConverter for property [com.vue_spring.demo.model.ProductFile:imgFilePath]
 DEBUG 22-09-21 12:01:35[restartedMain] [SimpleValueBinder:410] - building SimpleValue for imgFilePath
 DEBUG 22-09-21 12:01:35[restartedMain] [PropertyBinder:266] - Building property imgFilePath
 DEBUG 22-09-21 12:01:35[restartedMain] [Ejb3Column:227] - Binding column: Ejb3Column{table=org.hibernate.mapping.Table(product_image), mappingColumn=img_file_size, insertable=true, updatable=true, unique=false}
 DEBUG 22-09-21 12:01:35[restartedMain] [PropertyBinder:175] - MetadataSourceProcessor property imgFileSize with lazy=false
-DEBUG 22-09-21 12:01:35[restartedMain] [AbstractPropertyHolder:94] - Attempting to locate auto-apply AttributeConverter for property [com.vue_spring.demo.model.ProductImage:imgFileSize]
+DEBUG 22-09-21 12:01:35[restartedMain] [AbstractPropertyHolder:94] - Attempting to locate auto-apply AttributeConverter for property [com.vue_spring.demo.model.ProductFile:imgFileSize]
 DEBUG 22-09-21 12:01:35[restartedMain] [SimpleValueBinder:410] - building SimpleValue for imgFileSize
 DEBUG 22-09-21 12:01:35[restartedMain] [PropertyBinder:266] - Building property imgFileSize
 DEBUG 22-09-21 12:01:35[restartedMain] [Ejb3Column:227] - Binding column: Ejb3JoinColumn{logicalColumnName='productId', referencedColumn='', mappedBy=''}
@@ -10051,8 +10051,8 @@ DEBUG 22-09-21 12:01:36[restartedMain] [CollectionSecondPass:67] - Mapped collec
 DEBUG 22-09-21 12:01:36[restartedMain] [CollectionSecondPass:50] - Second pass for collection: com.vue_spring.demo.model.Product.imageFile
 DEBUG 22-09-21 12:01:36[restartedMain] [CollectionBinder:903] - Binding a OneToMany: com.vue_spring.demo.model.Product.imageFile through a foreign key
 DEBUG 22-09-21 12:01:36[restartedMain] [CollectionBinder:941] - Mapping collection: com.vue_spring.demo.model.Product.imageFile -> product_image
-DEBUG 22-09-21 12:01:36[restartedMain] [TableBinder:554] - Retrieving property com.vue_spring.demo.model.ProductImage.product
-DEBUG 22-09-21 12:01:36[restartedMain] [CollectionSecondPass:67] - Mapped collection key: product_id, one-to-many: com.vue_spring.demo.model.ProductImage
+DEBUG 22-09-21 12:01:36[restartedMain] [TableBinder:554] - Retrieving property com.vue_spring.demo.model.ProductFile.product
+DEBUG 22-09-21 12:01:36[restartedMain] [CollectionSecondPass:67] - Mapped collection key: product_id, one-to-many: com.vue_spring.demo.model.ProductFile
 DEBUG 22-09-21 12:01:36[restartedMain] [CollectionSecondPass:50] - Second pass for collection: com.vue_spring.demo.model.Product.inspect
 DEBUG 22-09-21 12:01:36[restartedMain] [CollectionBinder:903] - Binding a OneToMany: com.vue_spring.demo.model.Product.inspect through a foreign key
 DEBUG 22-09-21 12:01:36[restartedMain] [CollectionBinder:941] - Mapping collection: com.vue_spring.demo.model.Product.inspect -> inspect
@@ -10133,8 +10133,8 @@ DEBUG 22-09-21 12:01:36[restartedMain] [ClassLoaderAccessImpl:60] - Not known wh
 DEBUG 22-09-21 12:01:36[restartedMain] [ClassLoaderAccessImpl:62] - No temp ClassLoader provided; using live ClassLoader for loading potentially unsafe class : com.vue_spring.demo.model.Maker
 DEBUG 22-09-21 12:01:36[restartedMain] [ClassLoaderAccessImpl:60] - Not known whether passed class name [com.vue_spring.demo.model.SalesProductComponent] is safe
 DEBUG 22-09-21 12:01:36[restartedMain] [ClassLoaderAccessImpl:62] - No temp ClassLoader provided; using live ClassLoader for loading potentially unsafe class : com.vue_spring.demo.model.SalesProductComponent
-DEBUG 22-09-21 12:01:36[restartedMain] [ClassLoaderAccessImpl:60] - Not known whether passed class name [com.vue_spring.demo.model.ProductImage] is safe
-DEBUG 22-09-21 12:01:36[restartedMain] [ClassLoaderAccessImpl:62] - No temp ClassLoader provided; using live ClassLoader for loading potentially unsafe class : com.vue_spring.demo.model.ProductImage
+DEBUG 22-09-21 12:01:36[restartedMain] [ClassLoaderAccessImpl:60] - Not known whether passed class name [com.vue_spring.demo.model.ProductFile] is safe
+DEBUG 22-09-21 12:01:36[restartedMain] [ClassLoaderAccessImpl:62] - No temp ClassLoader provided; using live ClassLoader for loading potentially unsafe class : com.vue_spring.demo.model.ProductFile
 DEBUG 22-09-21 12:01:36[restartedMain] [ClassLoaderAccessImpl:60] - Not known whether passed class name [com.vue_spring.demo.model.RefreshToken] is safe
 DEBUG 22-09-21 12:01:36[restartedMain] [ClassLoaderAccessImpl:62] - No temp ClassLoader provided; using live ClassLoader for loading potentially unsafe class : com.vue_spring.demo.model.RefreshToken
 DEBUG 22-09-21 12:01:36[restartedMain] [ClassLoaderAccessImpl:60] - Not known whether passed class name [com.vue_spring.demo.model.ClaimImage] is safe
@@ -10164,8 +10164,8 @@ DEBUG 22-09-21 12:01:36[restartedMain] [ClassLoaderAccessImpl:60] - Not known wh
 DEBUG 22-09-21 12:01:36[restartedMain] [ClassLoaderAccessImpl:62] - No temp ClassLoader provided; using live ClassLoader for loading potentially unsafe class : com.vue_spring.demo.model.Maker
 DEBUG 22-09-21 12:01:36[restartedMain] [ClassLoaderAccessImpl:60] - Not known whether passed class name [com.vue_spring.demo.model.SalesProductComponent] is safe
 DEBUG 22-09-21 12:01:36[restartedMain] [ClassLoaderAccessImpl:62] - No temp ClassLoader provided; using live ClassLoader for loading potentially unsafe class : com.vue_spring.demo.model.SalesProductComponent
-DEBUG 22-09-21 12:01:36[restartedMain] [ClassLoaderAccessImpl:60] - Not known whether passed class name [com.vue_spring.demo.model.ProductImage] is safe
-DEBUG 22-09-21 12:01:36[restartedMain] [ClassLoaderAccessImpl:62] - No temp ClassLoader provided; using live ClassLoader for loading potentially unsafe class : com.vue_spring.demo.model.ProductImage
+DEBUG 22-09-21 12:01:36[restartedMain] [ClassLoaderAccessImpl:60] - Not known whether passed class name [com.vue_spring.demo.model.ProductFile] is safe
+DEBUG 22-09-21 12:01:36[restartedMain] [ClassLoaderAccessImpl:62] - No temp ClassLoader provided; using live ClassLoader for loading potentially unsafe class : com.vue_spring.demo.model.ProductFile
 DEBUG 22-09-21 12:01:37[restartedMain] [ClassLoaderAccessImpl:60] - Not known whether passed class name [com.vue_spring.demo.model.RefreshToken] is safe
 DEBUG 22-09-21 12:01:37[restartedMain] [ClassLoaderAccessImpl:62] - No temp ClassLoader provided; using live ClassLoader for loading potentially unsafe class : com.vue_spring.demo.model.RefreshToken
 DEBUG 22-09-21 12:01:37[restartedMain] [ClassLoaderAccessImpl:60] - Not known whether passed class name [com.vue_spring.demo.model.ClaimImage] is safe
@@ -10285,7 +10285,7 @@ DEBUG 22-09-21 12:01:37[restartedMain] [LoadPlanTreePrinter:55] - LoadPlan(entit
              - (collection element) CollectionFetchableElementEntityGraph(entity=com.vue_spring.demo.model.ClaimImage, querySpaceUid=<gen:2>, path=com.vue_spring.demo.model.Claim.imageFile.<elements>)
           - EntityAttributeFetchImpl(entity=com.vue_spring.demo.model.Product, querySpaceUid=<gen:3>, path=com.vue_spring.demo.model.Claim.product)
              - CollectionAttributeFetchImpl(collection=com.vue_spring.demo.model.Product.imageFile, querySpaceUid=<gen:4>, path=com.vue_spring.demo.model.Claim.product.imageFile)
-                - (collection element) CollectionFetchableElementEntityGraph(entity=com.vue_spring.demo.model.ProductImage, querySpaceUid=<gen:5>, path=com.vue_spring.demo.model.Claim.product.imageFile.<elements>)
+                - (collection element) CollectionFetchableElementEntityGraph(entity=com.vue_spring.demo.model.ProductFile, querySpaceUid=<gen:5>, path=com.vue_spring.demo.model.Claim.product.imageFile.<elements>)
              - CollectionAttributeFetchImpl(collection=com.vue_spring.demo.model.Product.inspect, querySpaceUid=<gen:6>, path=com.vue_spring.demo.model.Claim.product.inspect)
                 - (collection element) CollectionFetchableElementEntityGraph(entity=com.vue_spring.demo.model.Inspect, querySpaceUid=<gen:7>, path=com.vue_spring.demo.model.Claim.product.inspect.<elements>)
     - QuerySpaces
@@ -10359,13 +10359,13 @@ DEBUG 22-09-21 12:01:37[restartedMain] [LoadPlanTreePrinter:55] - LoadPlan(entit
           - suffixed key columns - {id1_10_0_}
 
 DEBUG 22-09-21 12:01:37[restartedMain] [EntityLoader:129] - Static select for entity com.vue_spring.demo.model.SalesProductComponent [NONE]: select salesprodu0_.id as id1_10_0_, salesprodu0_.component_number as componen2_10_0_, salesprodu0_.component_product_name as componen3_10_0_, salesprodu0_.component_quantity as componen4_10_0_, salesprodu0_.component_sku_no as componen5_10_0_, salesprodu0_.create_date as create_d6_10_0_, salesprodu0_.product_length as product_7_10_0_, salesprodu0_.product_name as product_8_10_0_, salesprodu0_.sku_no as sku_no9_10_0_ from sales_product_component salesprodu0_ where salesprodu0_.id=?
-DEBUG 22-09-21 12:01:37[restartedMain] [AbstractEntityPersister:4002] - Static SQL for entity: com.vue_spring.demo.model.ProductImage
-DEBUG 22-09-21 12:01:37[restartedMain] [AbstractEntityPersister:4007] -  Version select: /* get version com.vue_spring.demo.model.ProductImage */ select id from product_image where id =?
-DEBUG 22-09-21 12:01:37[restartedMain] [AbstractEntityPersister:4010] -  Snapshot select: /* get current state com.vue_spring.demo.model.ProductImage */ select productima_.id, productima_.create_date as create_d2_7_, productima_.img_file_name as img_file3_7_, productima_.img_file_path as img_file4_7_, productima_.img_file_size as img_file5_7_, productima_.product_id as product_6_7_ from product_image productima_ where productima_.id=?
-DEBUG 22-09-21 12:01:37[restartedMain] [AbstractEntityPersister:394] -  Insert 0: /* insert com.vue_spring.demo.model.ProductImage */ insert into product_image (create_date, img_file_name, img_file_path, img_file_size, product_id, id) values (?, ?, ?, ?, ?, ?)
-DEBUG 22-09-21 12:01:37[restartedMain] [AbstractEntityPersister:394] -  Update 0: /* update com.vue_spring.demo.model.ProductImage */ update product_image set create_date=?, img_file_name=?, img_file_path=?, img_file_size=?, product_id=? where id=?
-DEBUG 22-09-21 12:01:37[restartedMain] [AbstractEntityPersister:394] -  Delete 0: /* delete com.vue_spring.demo.model.ProductImage */ delete from product_image where id=?
-DEBUG 22-09-21 12:01:37[restartedMain] [AbstractEntityPersister:4018] -  Identity insert: /* insert com.vue_spring.demo.model.ProductImage */ insert into product_image (create_date, img_file_name, img_file_path, img_file_size, product_id) values (?, ?, ?, ?, ?)
+DEBUG 22-09-21 12:01:37[restartedMain] [AbstractEntityPersister:4002] - Static SQL for entity: com.vue_spring.demo.model.ProductFile
+DEBUG 22-09-21 12:01:37[restartedMain] [AbstractEntityPersister:4007] -  Version select: /* get version com.vue_spring.demo.model.ProductFile */ select id from product_image where id =?
+DEBUG 22-09-21 12:01:37[restartedMain] [AbstractEntityPersister:4010] -  Snapshot select: /* get current state com.vue_spring.demo.model.ProductFile */ select productima_.id, productima_.create_date as create_d2_7_, productima_.img_file_name as img_file3_7_, productima_.img_file_path as img_file4_7_, productima_.img_file_size as img_file5_7_, productima_.product_id as product_6_7_ from product_image productima_ where productima_.id=?
+DEBUG 22-09-21 12:01:37[restartedMain] [AbstractEntityPersister:394] -  Insert 0: /* insert com.vue_spring.demo.model.ProductFile */ insert into product_image (create_date, img_file_name, img_file_path, img_file_size, product_id, id) values (?, ?, ?, ?, ?, ?)
+DEBUG 22-09-21 12:01:37[restartedMain] [AbstractEntityPersister:394] -  Update 0: /* update com.vue_spring.demo.model.ProductFile */ update product_image set create_date=?, img_file_name=?, img_file_path=?, img_file_size=?, product_id=? where id=?
+DEBUG 22-09-21 12:01:37[restartedMain] [AbstractEntityPersister:394] -  Delete 0: /* delete com.vue_spring.demo.model.ProductFile */ delete from product_image where id=?
+DEBUG 22-09-21 12:01:37[restartedMain] [AbstractEntityPersister:4018] -  Identity insert: /* insert com.vue_spring.demo.model.ProductFile */ insert into product_image (create_date, img_file_name, img_file_path, img_file_size, product_id) values (?, ?, ?, ?, ?)
 DEBUG 22-09-21 12:01:37[restartedMain] [QuerySpacesImpl:174] - Adding QuerySpace : uid = <gen:0> -> org.hibernate.loader.plan.build.internal.spaces.EntityQuerySpaceImpl@136e4f24]
 DEBUG 22-09-21 12:01:37[restartedMain] [MetamodelGraphWalker:146] - Visiting attribute path : createDate
 DEBUG 22-09-21 12:01:37[restartedMain] [MetamodelGraphWalker:146] - Visiting attribute path : imgFileName
@@ -10375,17 +10375,17 @@ DEBUG 22-09-21 12:01:37[restartedMain] [MetamodelGraphWalker:146] - Visiting att
 DEBUG 22-09-21 12:01:37[restartedMain] [QuerySpacesImpl:174] - Adding QuerySpace : uid = <gen:1> -> org.hibernate.loader.plan.build.internal.spaces.EntityQuerySpaceImpl@1c9038a2]
 DEBUG 22-09-21 12:01:37[restartedMain] [FetchStyleLoadPlanBuildingAssociationVisitationStrategy:160] - Building LoadPlan...
 DEBUG 22-09-21 12:01:37[restartedMain] [LoadQueryJoinAndFetchProcessor:102] - processing queryspace <gen:0>
-DEBUG 22-09-21 12:01:37[restartedMain] [LoadPlanTreePrinter:55] - LoadPlan(entity=com.vue_spring.demo.model.ProductImage)
+DEBUG 22-09-21 12:01:37[restartedMain] [LoadPlanTreePrinter:55] - LoadPlan(entity=com.vue_spring.demo.model.ProductFile)
     - Returns
-       - EntityReturnImpl(entity=com.vue_spring.demo.model.ProductImage, querySpaceUid=<gen:0>, path=com.vue_spring.demo.model.ProductImage)
-          - EntityAttributeFetchImpl(entity=com.vue_spring.demo.model.Product, querySpaceUid=<gen:1>, path=com.vue_spring.demo.model.ProductImage.product)
+       - EntityReturnImpl(entity=com.vue_spring.demo.model.ProductFile, querySpaceUid=<gen:0>, path=com.vue_spring.demo.model.ProductFile)
+          - EntityAttributeFetchImpl(entity=com.vue_spring.demo.model.Product, querySpaceUid=<gen:1>, path=com.vue_spring.demo.model.ProductFile.product)
     - QuerySpaces
-       - EntityQuerySpaceImpl(uid=<gen:0>, entity=com.vue_spring.demo.model.ProductImage)
+       - EntityQuerySpaceImpl(uid=<gen:0>, entity=com.vue_spring.demo.model.ProductFile)
           - SQL table alias mapping - productima0_
           - alias suffix - 0_
           - suffixed key columns - {id1_7_0_}
 
-DEBUG 22-09-21 12:01:37[restartedMain] [EntityLoader:129] - Static select for entity com.vue_spring.demo.model.ProductImage [NONE]: select productima0_.id as id1_7_0_, productima0_.create_date as create_d2_7_0_, productima0_.img_file_name as img_file3_7_0_, productima0_.img_file_path as img_file4_7_0_, productima0_.img_file_size as img_file5_7_0_, productima0_.product_id as product_6_7_0_ from product_image productima0_ where productima0_.id=?
+DEBUG 22-09-21 12:01:37[restartedMain] [EntityLoader:129] - Static select for entity com.vue_spring.demo.model.ProductFile [NONE]: select productima0_.id as id1_7_0_, productima0_.create_date as create_d2_7_0_, productima0_.img_file_name as img_file3_7_0_, productima0_.img_file_path as img_file4_7_0_, productima0_.img_file_size as img_file5_7_0_, productima0_.product_id as product_6_7_0_ from product_image productima0_ where productima0_.id=?
 DEBUG 22-09-21 12:01:37[restartedMain] [AbstractEntityPersister:4002] - Static SQL for entity: com.vue_spring.demo.model.RefreshToken
 DEBUG 22-09-21 12:01:37[restartedMain] [AbstractEntityPersister:4007] -  Version select: /* get version com.vue_spring.demo.model.RefreshToken */ select rt_key from refresh_token where rt_key =?
 DEBUG 22-09-21 12:01:37[restartedMain] [AbstractEntityPersister:4010] -  Snapshot select: /* get current state com.vue_spring.demo.model.RefreshToken */ select refreshtok_.rt_key, refreshtok_.rt_value as rt_value2_8_ from refresh_token refreshtok_ where refreshtok_.rt_key=?
@@ -10509,7 +10509,7 @@ DEBUG 22-09-21 12:01:37[restartedMain] [LoadPlanTreePrinter:55] - LoadPlan(entit
              - (collection element) CollectionFetchableElementEntityGraph(entity=com.vue_spring.demo.model.InspectImage, querySpaceUid=<gen:2>, path=com.vue_spring.demo.model.Inspect.imageFile.<elements>)
           - EntityAttributeFetchImpl(entity=com.vue_spring.demo.model.Product, querySpaceUid=<gen:3>, path=com.vue_spring.demo.model.Inspect.product)
              - CollectionAttributeFetchImpl(collection=com.vue_spring.demo.model.Product.imageFile, querySpaceUid=<gen:4>, path=com.vue_spring.demo.model.Inspect.product.imageFile)
-                - (collection element) CollectionFetchableElementEntityGraph(entity=com.vue_spring.demo.model.ProductImage, querySpaceUid=<gen:5>, path=com.vue_spring.demo.model.Inspect.product.imageFile.<elements>)
+                - (collection element) CollectionFetchableElementEntityGraph(entity=com.vue_spring.demo.model.ProductFile, querySpaceUid=<gen:5>, path=com.vue_spring.demo.model.Inspect.product.imageFile.<elements>)
     - QuerySpaces
        - EntityQuerySpaceImpl(uid=<gen:0>, entity=com.vue_spring.demo.model.Inspect)
           - SQL table alias mapping - inspect0_
@@ -10582,7 +10582,7 @@ DEBUG 22-09-21 12:01:37[restartedMain] [LoadPlanTreePrinter:55] - LoadPlan(entit
     - Returns
        - EntityReturnImpl(entity=com.vue_spring.demo.model.Product, querySpaceUid=<gen:0>, path=com.vue_spring.demo.model.Product)
           - CollectionAttributeFetchImpl(collection=com.vue_spring.demo.model.Product.imageFile, querySpaceUid=<gen:1>, path=com.vue_spring.demo.model.Product.imageFile)
-             - (collection element) CollectionFetchableElementEntityGraph(entity=com.vue_spring.demo.model.ProductImage, querySpaceUid=<gen:2>, path=com.vue_spring.demo.model.Product.imageFile.<elements>)
+             - (collection element) CollectionFetchableElementEntityGraph(entity=com.vue_spring.demo.model.ProductFile, querySpaceUid=<gen:2>, path=com.vue_spring.demo.model.Product.imageFile.<elements>)
           - CollectionAttributeFetchImpl(collection=com.vue_spring.demo.model.Product.inspect, querySpaceUid=<gen:3>, path=com.vue_spring.demo.model.Product.inspect)
              - (collection element) CollectionFetchableElementEntityGraph(entity=com.vue_spring.demo.model.Inspect, querySpaceUid=<gen:4>, path=com.vue_spring.demo.model.Product.inspect.<elements>)
     - QuerySpaces
@@ -10642,7 +10642,7 @@ DEBUG 22-09-21 12:01:37[restartedMain] [LoadQueryJoinAndFetchProcessor:102] - pr
 DEBUG 22-09-21 12:01:37[restartedMain] [LoadPlanTreePrinter:55] - LoadPlan(collection=com.vue_spring.demo.model.Product.imageFile)
     - Returns
        - CollectionReturnImpl(collection=com.vue_spring.demo.model.Product.imageFile, querySpaceUid=<gen:0>, path=[com.vue_spring.demo.model.Product.imageFile])
-          - (collection element) CollectionFetchableElementEntityGraph(entity=com.vue_spring.demo.model.ProductImage, querySpaceUid=<gen:1>, path=[com.vue_spring.demo.model.Product.imageFile].<elements>)
+          - (collection element) CollectionFetchableElementEntityGraph(entity=com.vue_spring.demo.model.ProductFile, querySpaceUid=<gen:1>, path=[com.vue_spring.demo.model.Product.imageFile].<elements>)
     - QuerySpaces
        - CollectionQuerySpaceImpl(uid=<gen:0>, collection=com.vue_spring.demo.model.Product.imageFile)
           - SQL table alias mapping - imagefile0_
@@ -10651,7 +10651,7 @@ DEBUG 22-09-21 12:01:37[restartedMain] [LoadPlanTreePrinter:55] - LoadPlan(colle
           - entity-element alias suffix - 1_
           - 1_entity-element suffixed key columns - id1_7_1_
           - JOIN (JoinDefinedByMetadata(elements)) : <gen:0> -> <gen:1>
-             - EntityQuerySpaceImpl(uid=<gen:1>, entity=com.vue_spring.demo.model.ProductImage)
+             - EntityQuerySpaceImpl(uid=<gen:1>, entity=com.vue_spring.demo.model.ProductFile)
                 - SQL table alias mapping - imagefile0_
                 - alias suffix - 1_
                 - suffixed key columns - {id1_7_1_}
@@ -11104,7 +11104,7 @@ DEBUG 22-09-21 12:01:39[restartedMain] [DefaultListableBeanFactory:225] - Creati
 DEBUG 22-09-21 12:01:39[restartedMain] [SharedEntityManagerCreator$SharedEntityManagerInvocationHandler:302] - Creating new EntityManager for shared EntityManager invocation
 DEBUG 22-09-21 12:01:39[restartedMain] [CachedIntrospectionResults:191] - Not strongly caching class [com.vue_spring.demo.model.Claim] because it is not cache-safe
 DEBUG 22-09-21 12:01:39[restartedMain] [CachedIntrospectionResults:191] - Not strongly caching class [com.vue_spring.demo.model.Product] because it is not cache-safe
-DEBUG 22-09-21 12:01:39[restartedMain] [CachedIntrospectionResults:191] - Not strongly caching class [com.vue_spring.demo.model.ProductImage] because it is not cache-safe
+DEBUG 22-09-21 12:01:39[restartedMain] [CachedIntrospectionResults:191] - Not strongly caching class [com.vue_spring.demo.model.ProductFile] because it is not cache-safe
 DEBUG 22-09-21 12:01:39[restartedMain] [CachedIntrospectionResults:191] - Not strongly caching class [com.vue_spring.demo.model.Inspect] because it is not cache-safe
 DEBUG 22-09-21 12:01:39[restartedMain] [CachedIntrospectionResults:191] - Not strongly caching class [com.vue_spring.demo.model.InspectImage] because it is not cache-safe
 DEBUG 22-09-21 12:01:39[restartedMain] [CachedIntrospectionResults:191] - Not strongly caching class [com.vue_spring.demo.model.ClaimImage] because it is not cache-safe
@@ -11275,9 +11275,9 @@ DEBUG 22-09-21 12:01:39[restartedMain] [TransactionImpl:53] - On TransactionImpl
 DEBUG 22-09-21 12:01:39[restartedMain] [NamedQuery:118] - Did not find named query SalesProductComponent.existsBySkuNo
 DEBUG 22-09-21 12:01:39[restartedMain] [SharedEntityManagerCreator$SharedEntityManagerInvocationHandler:302] - Creating new EntityManager for shared EntityManager invocation
 DEBUG 22-09-21 12:01:39[restartedMain] [RepositoryFactorySupport:376] - Finished creation of repository instance for com.vue_spring.demo.Repository.SalesProductComponentRepository.
-DEBUG 22-09-21 12:01:39[restartedMain] [DefaultListableBeanFactory:225] - Creating shared instance of singleton bean 'productImageRepository'
+DEBUG 22-09-21 12:01:39[restartedMain] [DefaultListableBeanFactory:225] - Creating shared instance of singleton bean 'productFileRepository'
 DEBUG 22-09-21 12:01:39[restartedMain] [SharedEntityManagerCreator$SharedEntityManagerInvocationHandler:302] - Creating new EntityManager for shared EntityManager invocation
-DEBUG 22-09-21 12:01:39[restartedMain] [RepositoryFactorySupport:279] - Initializing repository instance for com.vue_spring.demo.Repository.ProductImageRepository…
+DEBUG 22-09-21 12:01:39[restartedMain] [RepositoryFactorySupport:279] - Initializing repository instance for com.vue_spring.demo.Repository.ProductFileRepository…
 DEBUG 22-09-21 12:01:39[restartedMain] [SharedEntityManagerCreator$SharedEntityManagerInvocationHandler:302] - Creating new EntityManager for shared EntityManager invocation
 DEBUG 22-09-21 12:01:39[restartedMain] [NamedQuery:137] - Looking up named query ProductImage.deleteByProductId
 DEBUG 22-09-21 12:01:39[restartedMain] [TransactionImpl:53] - On TransactionImpl creation, JpaCompliance#isJpaTransactionComplianceEnabled == false
@@ -11291,7 +11291,7 @@ DEBUG 22-09-21 12:01:39[restartedMain] [NamedQuery:137] - Looking up named query
 DEBUG 22-09-21 12:01:39[restartedMain] [TransactionImpl:53] - On TransactionImpl creation, JpaCompliance#isJpaTransactionComplianceEnabled == false
 DEBUG 22-09-21 12:01:39[restartedMain] [NamedQuery:118] - Did not find named query ProductImage.findByProductId
 DEBUG 22-09-21 12:01:39[restartedMain] [SharedEntityManagerCreator$SharedEntityManagerInvocationHandler:302] - Creating new EntityManager for shared EntityManager invocation
-DEBUG 22-09-21 12:01:39[restartedMain] [RepositoryFactorySupport:376] - Finished creation of repository instance for com.vue_spring.demo.Repository.ProductImageRepository.
+DEBUG 22-09-21 12:01:39[restartedMain] [RepositoryFactorySupport:376] - Finished creation of repository instance for com.vue_spring.demo.Repository.ProductFileRepository.
 DEBUG 22-09-21 12:01:39[restartedMain] [DefaultListableBeanFactory:225] - Creating shared instance of singleton bean 'inspectServiceImpl'
 DEBUG 22-09-21 12:01:39[restartedMain] [DefaultListableBeanFactory:808] - Autowiring by type from bean name 'inspectServiceImpl' via constructor to bean named 'fileHandler'
 DEBUG 22-09-21 12:01:39[restartedMain] [CachedIntrospectionResults:191] - Not strongly caching class [com.vue_spring.demo.service.InspectServiceImpl] because it is not cache-safe
@@ -13409,7 +13409,7 @@ DEBUG 22-09-21 12:01:52[http-nio-3000-exec-1] [sqltiming:368] -  com.zaxxer.hika
 DEBUG 22-09-21 12:01:52[http-nio-3000-exec-1] [ResultSetProcessorImpl:193] - Preparing collection initializer : [com.vue_spring.demo.model.Product.imageFile#2]
 DEBUG 22-09-21 12:01:52[http-nio-3000-exec-1] [CollectionReferenceInitializerImpl:59] - Found row of collection: [com.vue_spring.demo.model.Product.imageFile#2]
 DEBUG 22-09-21 12:01:52[http-nio-3000-exec-1] [CollectionReferenceInitializerImpl:59] - Found row of collection: [com.vue_spring.demo.model.Product.imageFile#2]
-DEBUG 22-09-21 12:01:52[http-nio-3000-exec-1] [TwoPhaseLoad:171] - Resolving attributes for [com.vue_spring.demo.model.ProductImage#3]
+DEBUG 22-09-21 12:01:52[http-nio-3000-exec-1] [TwoPhaseLoad:171] - Resolving attributes for [com.vue_spring.demo.model.ProductFile#3]
 DEBUG 22-09-21 12:01:52[http-nio-3000-exec-1] [TwoPhaseLoad:184] - Processing attribute `createDate` : value = 2022-09-20 16:28:20.994
 DEBUG 22-09-21 12:01:52[http-nio-3000-exec-1] [TwoPhaseLoad:215] - Attribute (`createDate`)  - enhanced for lazy-loading? - false
 DEBUG 22-09-21 12:01:52[http-nio-3000-exec-1] [TwoPhaseLoad:184] - Processing attribute `imgFileName` : value = KakaoTalk_20220110_180011897_02.jpg
@@ -13420,8 +13420,8 @@ DEBUG 22-09-21 12:01:52[http-nio-3000-exec-1] [TwoPhaseLoad:184] - Processing at
 DEBUG 22-09-21 12:01:52[http-nio-3000-exec-1] [TwoPhaseLoad:215] - Attribute (`imgFileSize`)  - enhanced for lazy-loading? - false
 DEBUG 22-09-21 12:01:52[http-nio-3000-exec-1] [TwoPhaseLoad:184] - Processing attribute `product` : value = 2
 DEBUG 22-09-21 12:01:52[http-nio-3000-exec-1] [TwoPhaseLoad:215] - Attribute (`product`)  - enhanced for lazy-loading? - false
-DEBUG 22-09-21 12:01:52[http-nio-3000-exec-1] [TwoPhaseLoad:352] - Done materializing entity [com.vue_spring.demo.model.ProductImage#3]
-DEBUG 22-09-21 12:01:52[http-nio-3000-exec-1] [TwoPhaseLoad:171] - Resolving attributes for [com.vue_spring.demo.model.ProductImage#4]
+DEBUG 22-09-21 12:01:52[http-nio-3000-exec-1] [TwoPhaseLoad:352] - Done materializing entity [com.vue_spring.demo.model.ProductFile#3]
+DEBUG 22-09-21 12:01:52[http-nio-3000-exec-1] [TwoPhaseLoad:171] - Resolving attributes for [com.vue_spring.demo.model.ProductFile#4]
 DEBUG 22-09-21 12:01:52[http-nio-3000-exec-1] [TwoPhaseLoad:184] - Processing attribute `createDate` : value = 2022-09-20 16:28:21.007
 DEBUG 22-09-21 12:01:52[http-nio-3000-exec-1] [TwoPhaseLoad:215] - Attribute (`createDate`)  - enhanced for lazy-loading? - false
 DEBUG 22-09-21 12:01:52[http-nio-3000-exec-1] [TwoPhaseLoad:184] - Processing attribute `imgFileName` : value = KakaoTalk_20220110_180011897_03.jpg
@@ -13432,7 +13432,7 @@ DEBUG 22-09-21 12:01:52[http-nio-3000-exec-1] [TwoPhaseLoad:184] - Processing at
 DEBUG 22-09-21 12:01:52[http-nio-3000-exec-1] [TwoPhaseLoad:215] - Attribute (`imgFileSize`)  - enhanced for lazy-loading? - false
 DEBUG 22-09-21 12:01:52[http-nio-3000-exec-1] [TwoPhaseLoad:184] - Processing attribute `product` : value = 2
 DEBUG 22-09-21 12:01:52[http-nio-3000-exec-1] [TwoPhaseLoad:215] - Attribute (`product`)  - enhanced for lazy-loading? - false
-DEBUG 22-09-21 12:01:52[http-nio-3000-exec-1] [TwoPhaseLoad:352] - Done materializing entity [com.vue_spring.demo.model.ProductImage#4]
+DEBUG 22-09-21 12:01:52[http-nio-3000-exec-1] [TwoPhaseLoad:352] - Done materializing entity [com.vue_spring.demo.model.ProductFile#4]
 DEBUG 22-09-21 12:01:52[http-nio-3000-exec-1] [CollectionLoadContext:394] - 1 collections were found in result set for role: com.vue_spring.demo.model.Product.imageFile
 DEBUG 22-09-21 12:01:52[http-nio-3000-exec-1] [CollectionLoadContext:303] - Collection fully initialized: [com.vue_spring.demo.model.Product.imageFile#2]
 DEBUG 22-09-21 12:01:52[http-nio-3000-exec-1] [CollectionLoadContext:394] - 1 collections initialized for role: com.vue_spring.demo.model.Product.imageFile
@@ -13485,7 +13485,7 @@ DEBUG 22-09-21 12:01:52[http-nio-3000-exec-1] [sqltiming:368] -  com.zaxxer.hika
 DEBUG 22-09-21 12:01:52[http-nio-3000-exec-1] [ResultSetProcessorImpl:193] - Preparing collection initializer : [com.vue_spring.demo.model.Product.imageFile#3]
 DEBUG 22-09-21 12:01:52[http-nio-3000-exec-1] [CollectionReferenceInitializerImpl:59] - Found row of collection: [com.vue_spring.demo.model.Product.imageFile#3]
 DEBUG 22-09-21 12:01:52[http-nio-3000-exec-1] [CollectionReferenceInitializerImpl:59] - Found row of collection: [com.vue_spring.demo.model.Product.imageFile#3]
-DEBUG 22-09-21 12:01:52[http-nio-3000-exec-1] [TwoPhaseLoad:171] - Resolving attributes for [com.vue_spring.demo.model.ProductImage#5]
+DEBUG 22-09-21 12:01:52[http-nio-3000-exec-1] [TwoPhaseLoad:171] - Resolving attributes for [com.vue_spring.demo.model.ProductFile#5]
 DEBUG 22-09-21 12:01:52[http-nio-3000-exec-1] [TwoPhaseLoad:184] - Processing attribute `createDate` : value = 2022-09-20 17:24:54.173
 DEBUG 22-09-21 12:01:52[http-nio-3000-exec-1] [TwoPhaseLoad:215] - Attribute (`createDate`)  - enhanced for lazy-loading? - false
 DEBUG 22-09-21 12:01:52[http-nio-3000-exec-1] [TwoPhaseLoad:184] - Processing attribute `imgFileName` : value = The 잇츄 꿀잠츄s_2024.01.12.jpg
@@ -13496,8 +13496,8 @@ DEBUG 22-09-21 12:01:52[http-nio-3000-exec-1] [TwoPhaseLoad:184] - Processing at
 DEBUG 22-09-21 12:01:52[http-nio-3000-exec-1] [TwoPhaseLoad:215] - Attribute (`imgFileSize`)  - enhanced for lazy-loading? - false
 DEBUG 22-09-21 12:01:52[http-nio-3000-exec-1] [TwoPhaseLoad:184] - Processing attribute `product` : value = 3
 DEBUG 22-09-21 12:01:52[http-nio-3000-exec-1] [TwoPhaseLoad:215] - Attribute (`product`)  - enhanced for lazy-loading? - false
-DEBUG 22-09-21 12:01:52[http-nio-3000-exec-1] [TwoPhaseLoad:352] - Done materializing entity [com.vue_spring.demo.model.ProductImage#5]
-DEBUG 22-09-21 12:01:52[http-nio-3000-exec-1] [TwoPhaseLoad:171] - Resolving attributes for [com.vue_spring.demo.model.ProductImage#6]
+DEBUG 22-09-21 12:01:52[http-nio-3000-exec-1] [TwoPhaseLoad:352] - Done materializing entity [com.vue_spring.demo.model.ProductFile#5]
+DEBUG 22-09-21 12:01:52[http-nio-3000-exec-1] [TwoPhaseLoad:171] - Resolving attributes for [com.vue_spring.demo.model.ProductFile#6]
 DEBUG 22-09-21 12:01:52[http-nio-3000-exec-1] [TwoPhaseLoad:184] - Processing attribute `createDate` : value = 2022-09-20 17:24:54.188
 DEBUG 22-09-21 12:01:52[http-nio-3000-exec-1] [TwoPhaseLoad:215] - Attribute (`createDate`)  - enhanced for lazy-loading? - false
 DEBUG 22-09-21 12:01:52[http-nio-3000-exec-1] [TwoPhaseLoad:184] - Processing attribute `imgFileName` : value = The 잇츄 옐로우s_2024.01.10.jpg
@@ -13508,7 +13508,7 @@ DEBUG 22-09-21 12:01:52[http-nio-3000-exec-1] [TwoPhaseLoad:184] - Processing at
 DEBUG 22-09-21 12:01:52[http-nio-3000-exec-1] [TwoPhaseLoad:215] - Attribute (`imgFileSize`)  - enhanced for lazy-loading? - false
 DEBUG 22-09-21 12:01:52[http-nio-3000-exec-1] [TwoPhaseLoad:184] - Processing attribute `product` : value = 3
 DEBUG 22-09-21 12:01:52[http-nio-3000-exec-1] [TwoPhaseLoad:215] - Attribute (`product`)  - enhanced for lazy-loading? - false
-DEBUG 22-09-21 12:01:52[http-nio-3000-exec-1] [TwoPhaseLoad:352] - Done materializing entity [com.vue_spring.demo.model.ProductImage#6]
+DEBUG 22-09-21 12:01:52[http-nio-3000-exec-1] [TwoPhaseLoad:352] - Done materializing entity [com.vue_spring.demo.model.ProductFile#6]
 DEBUG 22-09-21 12:01:52[http-nio-3000-exec-1] [CollectionLoadContext:394] - 1 collections were found in result set for role: com.vue_spring.demo.model.Product.imageFile
 DEBUG 22-09-21 12:01:52[http-nio-3000-exec-1] [CollectionLoadContext:303] - Collection fully initialized: [com.vue_spring.demo.model.Product.imageFile#3]
 DEBUG 22-09-21 12:01:52[http-nio-3000-exec-1] [CollectionLoadContext:394] - 1 collections initialized for role: com.vue_spring.demo.model.Product.imageFile
@@ -13737,7 +13737,7 @@ DEBUG 22-09-21 12:02:00[http-nio-3000-exec-2] [sqltiming:368] -  com.zaxxer.hika
 DEBUG 22-09-21 12:02:00[http-nio-3000-exec-2] [ResultSetProcessorImpl:193] - Preparing collection initializer : [com.vue_spring.demo.model.Product.imageFile#2]
 DEBUG 22-09-21 12:02:00[http-nio-3000-exec-2] [CollectionReferenceInitializerImpl:59] - Found row of collection: [com.vue_spring.demo.model.Product.imageFile#2]
 DEBUG 22-09-21 12:02:00[http-nio-3000-exec-2] [CollectionReferenceInitializerImpl:59] - Found row of collection: [com.vue_spring.demo.model.Product.imageFile#2]
-DEBUG 22-09-21 12:02:00[http-nio-3000-exec-2] [TwoPhaseLoad:171] - Resolving attributes for [com.vue_spring.demo.model.ProductImage#3]
+DEBUG 22-09-21 12:02:00[http-nio-3000-exec-2] [TwoPhaseLoad:171] - Resolving attributes for [com.vue_spring.demo.model.ProductFile#3]
 DEBUG 22-09-21 12:02:00[http-nio-3000-exec-2] [TwoPhaseLoad:184] - Processing attribute `createDate` : value = 2022-09-20 16:28:20.994
 DEBUG 22-09-21 12:02:00[http-nio-3000-exec-2] [TwoPhaseLoad:215] - Attribute (`createDate`)  - enhanced for lazy-loading? - false
 DEBUG 22-09-21 12:02:00[http-nio-3000-exec-2] [TwoPhaseLoad:184] - Processing attribute `imgFileName` : value = KakaoTalk_20220110_180011897_02.jpg
@@ -13748,8 +13748,8 @@ DEBUG 22-09-21 12:02:00[http-nio-3000-exec-2] [TwoPhaseLoad:184] - Processing at
 DEBUG 22-09-21 12:02:00[http-nio-3000-exec-2] [TwoPhaseLoad:215] - Attribute (`imgFileSize`)  - enhanced for lazy-loading? - false
 DEBUG 22-09-21 12:02:00[http-nio-3000-exec-2] [TwoPhaseLoad:184] - Processing attribute `product` : value = 2
 DEBUG 22-09-21 12:02:00[http-nio-3000-exec-2] [TwoPhaseLoad:215] - Attribute (`product`)  - enhanced for lazy-loading? - false
-DEBUG 22-09-21 12:02:00[http-nio-3000-exec-2] [TwoPhaseLoad:352] - Done materializing entity [com.vue_spring.demo.model.ProductImage#3]
-DEBUG 22-09-21 12:02:00[http-nio-3000-exec-2] [TwoPhaseLoad:171] - Resolving attributes for [com.vue_spring.demo.model.ProductImage#4]
+DEBUG 22-09-21 12:02:00[http-nio-3000-exec-2] [TwoPhaseLoad:352] - Done materializing entity [com.vue_spring.demo.model.ProductFile#3]
+DEBUG 22-09-21 12:02:00[http-nio-3000-exec-2] [TwoPhaseLoad:171] - Resolving attributes for [com.vue_spring.demo.model.ProductFile#4]
 DEBUG 22-09-21 12:02:00[http-nio-3000-exec-2] [TwoPhaseLoad:184] - Processing attribute `createDate` : value = 2022-09-20 16:28:21.007
 DEBUG 22-09-21 12:02:00[http-nio-3000-exec-2] [TwoPhaseLoad:215] - Attribute (`createDate`)  - enhanced for lazy-loading? - false
 DEBUG 22-09-21 12:02:00[http-nio-3000-exec-2] [TwoPhaseLoad:184] - Processing attribute `imgFileName` : value = KakaoTalk_20220110_180011897_03.jpg
@@ -13760,7 +13760,7 @@ DEBUG 22-09-21 12:02:00[http-nio-3000-exec-2] [TwoPhaseLoad:184] - Processing at
 DEBUG 22-09-21 12:02:00[http-nio-3000-exec-2] [TwoPhaseLoad:215] - Attribute (`imgFileSize`)  - enhanced for lazy-loading? - false
 DEBUG 22-09-21 12:02:00[http-nio-3000-exec-2] [TwoPhaseLoad:184] - Processing attribute `product` : value = 2
 DEBUG 22-09-21 12:02:00[http-nio-3000-exec-2] [TwoPhaseLoad:215] - Attribute (`product`)  - enhanced for lazy-loading? - false
-DEBUG 22-09-21 12:02:00[http-nio-3000-exec-2] [TwoPhaseLoad:352] - Done materializing entity [com.vue_spring.demo.model.ProductImage#4]
+DEBUG 22-09-21 12:02:00[http-nio-3000-exec-2] [TwoPhaseLoad:352] - Done materializing entity [com.vue_spring.demo.model.ProductFile#4]
 DEBUG 22-09-21 12:02:00[http-nio-3000-exec-2] [CollectionLoadContext:394] - 1 collections were found in result set for role: com.vue_spring.demo.model.Product.imageFile
 DEBUG 22-09-21 12:02:00[http-nio-3000-exec-2] [CollectionLoadContext:303] - Collection fully initialized: [com.vue_spring.demo.model.Product.imageFile#2]
 DEBUG 22-09-21 12:02:00[http-nio-3000-exec-2] [CollectionLoadContext:394] - 1 collections initialized for role: com.vue_spring.demo.model.Product.imageFile
@@ -13813,7 +13813,7 @@ DEBUG 22-09-21 12:02:01[http-nio-3000-exec-2] [sqltiming:368] -  com.zaxxer.hika
 DEBUG 22-09-21 12:02:01[http-nio-3000-exec-2] [ResultSetProcessorImpl:193] - Preparing collection initializer : [com.vue_spring.demo.model.Product.imageFile#3]
 DEBUG 22-09-21 12:02:01[http-nio-3000-exec-2] [CollectionReferenceInitializerImpl:59] - Found row of collection: [com.vue_spring.demo.model.Product.imageFile#3]
 DEBUG 22-09-21 12:02:01[http-nio-3000-exec-2] [CollectionReferenceInitializerImpl:59] - Found row of collection: [com.vue_spring.demo.model.Product.imageFile#3]
-DEBUG 22-09-21 12:02:01[http-nio-3000-exec-2] [TwoPhaseLoad:171] - Resolving attributes for [com.vue_spring.demo.model.ProductImage#5]
+DEBUG 22-09-21 12:02:01[http-nio-3000-exec-2] [TwoPhaseLoad:171] - Resolving attributes for [com.vue_spring.demo.model.ProductFile#5]
 DEBUG 22-09-21 12:02:01[http-nio-3000-exec-2] [TwoPhaseLoad:184] - Processing attribute `createDate` : value = 2022-09-20 17:24:54.173
 DEBUG 22-09-21 12:02:01[http-nio-3000-exec-2] [TwoPhaseLoad:215] - Attribute (`createDate`)  - enhanced for lazy-loading? - false
 DEBUG 22-09-21 12:02:01[http-nio-3000-exec-2] [TwoPhaseLoad:184] - Processing attribute `imgFileName` : value = The 잇츄 꿀잠츄s_2024.01.12.jpg
@@ -13824,8 +13824,8 @@ DEBUG 22-09-21 12:02:01[http-nio-3000-exec-2] [TwoPhaseLoad:184] - Processing at
 DEBUG 22-09-21 12:02:01[http-nio-3000-exec-2] [TwoPhaseLoad:215] - Attribute (`imgFileSize`)  - enhanced for lazy-loading? - false
 DEBUG 22-09-21 12:02:01[http-nio-3000-exec-2] [TwoPhaseLoad:184] - Processing attribute `product` : value = 3
 DEBUG 22-09-21 12:02:01[http-nio-3000-exec-2] [TwoPhaseLoad:215] - Attribute (`product`)  - enhanced for lazy-loading? - false
-DEBUG 22-09-21 12:02:01[http-nio-3000-exec-2] [TwoPhaseLoad:352] - Done materializing entity [com.vue_spring.demo.model.ProductImage#5]
-DEBUG 22-09-21 12:02:01[http-nio-3000-exec-2] [TwoPhaseLoad:171] - Resolving attributes for [com.vue_spring.demo.model.ProductImage#6]
+DEBUG 22-09-21 12:02:01[http-nio-3000-exec-2] [TwoPhaseLoad:352] - Done materializing entity [com.vue_spring.demo.model.ProductFile#5]
+DEBUG 22-09-21 12:02:01[http-nio-3000-exec-2] [TwoPhaseLoad:171] - Resolving attributes for [com.vue_spring.demo.model.ProductFile#6]
 DEBUG 22-09-21 12:02:01[http-nio-3000-exec-2] [TwoPhaseLoad:184] - Processing attribute `createDate` : value = 2022-09-20 17:24:54.188
 DEBUG 22-09-21 12:02:01[http-nio-3000-exec-2] [TwoPhaseLoad:215] - Attribute (`createDate`)  - enhanced for lazy-loading? - false
 DEBUG 22-09-21 12:02:01[http-nio-3000-exec-2] [TwoPhaseLoad:184] - Processing attribute `imgFileName` : value = The 잇츄 옐로우s_2024.01.10.jpg
@@ -13836,7 +13836,7 @@ DEBUG 22-09-21 12:02:01[http-nio-3000-exec-2] [TwoPhaseLoad:184] - Processing at
 DEBUG 22-09-21 12:02:01[http-nio-3000-exec-2] [TwoPhaseLoad:215] - Attribute (`imgFileSize`)  - enhanced for lazy-loading? - false
 DEBUG 22-09-21 12:02:01[http-nio-3000-exec-2] [TwoPhaseLoad:184] - Processing attribute `product` : value = 3
 DEBUG 22-09-21 12:02:01[http-nio-3000-exec-2] [TwoPhaseLoad:215] - Attribute (`product`)  - enhanced for lazy-loading? - false
-DEBUG 22-09-21 12:02:01[http-nio-3000-exec-2] [TwoPhaseLoad:352] - Done materializing entity [com.vue_spring.demo.model.ProductImage#6]
+DEBUG 22-09-21 12:02:01[http-nio-3000-exec-2] [TwoPhaseLoad:352] - Done materializing entity [com.vue_spring.demo.model.ProductFile#6]
 DEBUG 22-09-21 12:02:01[http-nio-3000-exec-2] [CollectionLoadContext:394] - 1 collections were found in result set for role: com.vue_spring.demo.model.Product.imageFile
 DEBUG 22-09-21 12:02:01[http-nio-3000-exec-2] [CollectionLoadContext:303] - Collection fully initialized: [com.vue_spring.demo.model.Product.imageFile#3]
 DEBUG 22-09-21 12:02:01[http-nio-3000-exec-2] [CollectionLoadContext:394] - 1 collections initialized for role: com.vue_spring.demo.model.Product.imageFile

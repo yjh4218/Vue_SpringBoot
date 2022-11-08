@@ -26,7 +26,7 @@ public class ProductRepository2 {
         QProduct product = QProduct.product;
         QInspect inspect = QInspect.inspect;
         QProductChangeReply productChangeReply = QProductChangeReply.productChangeReply1;
-        QProductImage productImage = QProductImage.productImage;
+        QProductFile productFile = QProductFile.productFile;
 
         JPAQueryFactory queryFactory = new JPAQueryFactory(em);
 
@@ -44,7 +44,7 @@ public class ProductRepository2 {
 
         final JPAQuery<Product> productWithFetchProductImage =
                 queryFactory.selectFrom(product)
-                        .leftJoin(product.imageFile).fetchJoin()
+                        .leftJoin(product.productFile).fetchJoin()
                         .distinct();
 
         return productWithFetchProductImage.fetch();

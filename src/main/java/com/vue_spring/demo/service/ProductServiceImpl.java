@@ -21,7 +21,7 @@ public class ProductServiceImpl implements ProductService {
 
     private ProductRepository productRepository;
 //    private ProductRepository2 productRepository2;
-    private ProductImageRepository productImageRepository;
+    private ProductFileRepository productFileRepository;
     private InspectServiceImpl inspectServiceImpl;
     private SalesProductComponentRepository salesProductComponentRepository;
     private ProductChangeReplyRepository productChangeReplyRepository;
@@ -33,8 +33,8 @@ public class ProductServiceImpl implements ProductService {
      }
 
     @Autowired
-    public void setProductImageRepository(ProductImageRepository productImageRepository) {
-        this.productImageRepository = productImageRepository;
+    public void setProductImageRepository(ProductFileRepository productFileRepository) {
+        this.productFileRepository = productFileRepository;
     }
 
     @Autowired
@@ -62,16 +62,16 @@ public class ProductServiceImpl implements ProductService {
     }
 
     // 신규 상품 추가
-    public Boolean insertProduct(Product product, List<MultipartFile> imgFiles, String productChangeReply) throws Exception {
+    public Boolean insertProduct(Product product, List<MultipartFile> fileData, String productChangeReply) throws Exception {
         System.out.println("상품 추가 서비스 : " + product);
-        System.out.println("상품 추가 서비스222 : " + imgFiles);
+        System.out.println("상품 추가 서비스222 : " + fileData);
 
         // 이미지 파일 경로 지정
-        ProductImage tmpImage = new ProductImage();
-        List<ProductImage> productImageList = fileHandler.parseFileInfo(imgFiles, tmpImage);
+        ProductFile tmpImage = new ProductFile();
+        List<ProductFile> productFileList = fileHandler.parseFileInfo(fileData, tmpImage);
 
         System.out.println(product);
-        System.out.println(productImageList);
+        System.out.println(productFileList);
 
         // JPA에 저장되는지 확인. 기본 값은 저장 실패로 해놓는다.
         boolean check = false;
@@ -112,10 +112,10 @@ public class ProductServiceImpl implements ProductService {
             }
 
             // 이미지 파일이 있을 때만 실행함.
-            if(!productImageList.isEmpty()) {
-                for(ProductImage image : productImageList) {
+            if(!productFileList.isEmpty()) {
+                for(ProductFile image : productFileList) {
 
-                    System.out.println("검수 추가 서비스33333 : " + productImageList);
+                    System.out.println("검수 추가 서비스33333 : " + productFileList);
                     System.out.println("검수 추가 서비스44444 : " + image);
 
                     // 이미지 데이터가 존재할 경우 진행
@@ -129,7 +129,7 @@ public class ProductServiceImpl implements ProductService {
                         System.out.println("image : " + image);
 
                         // image DB에 저장
-                        productImageRepository.save(image);
+                        productFileRepository.save(image);
 
                         // DB에 저장된 검수 내용에 사진 정보 저장
                         productSel.addPhoto(image);
@@ -158,15 +158,15 @@ public class ProductServiceImpl implements ProductService {
     }
 
     // 상품 수정
-    public Boolean updateProduct(Product product, List<MultipartFile> imgFiles, List<Long> imgId, String productChangeReply) throws Exception {
+    public Boolean updateProduct(Product product, List<MultipartFile> fileData, List<Long> fileId, String productChangeReply) throws Exception {
         System.out.println("검수 수정 서비스 : " + product);
-        System.out.println("검수 수정 서비스222 : " + imgFiles);
+        System.out.println("검수 수정 서비스222 : " + fileData);
 
         boolean check = false;
 
         try{
             // 기존에 등록된 이미지가 있는지 확인
-            boolean existImg = productImageRepository.existsByProductId(product.getId());
+            boolean existImg = productFileRepository.existsByProductId(product.getId());
 
             // 상품 리플 정보 있는지 확인
             boolean existReply = productChangeReplyRepository.existsByProductId(product.getId());
@@ -181,7 +181,7 @@ public class ProductServiceImpl implements ProductService {
             }
 
             // 제품 변경내역이 있으면 제품 변경내역 저장
-            if(!productChangeReply.isEmpty()){
+            if(!productChangeReply.isEmpty() && productChangeReply != null){
                 ProductChangeReply tmpProductChangeReply = new ProductChangeReply();
 
                 // 현재 날짜 구하기 (시스템 시계, 시스템 타임존)
@@ -197,28 +197,32 @@ public class ProductServiceImpl implements ProductService {
 
             // 기존에 등록된 이미지 확인
             if(existImg){
-                Optional<List<ProductImage>> exiImg = productImageRepository.findByProductId(product.getId());
+                List<ProductFile> findFileData = productFileRepository.findByProductId(product.getId()).orElse(null);
 
                 // 사용자가 모든 파일 삭제했을 경우
-                if(imgId == null){
-                    for (ProductImage image : exiImg.get()) {
-                        File file = new File(image.getImgFilePath());
+                if(fileId == null){
+                    for (ProductFile tmpFile : findFileData) {
+                        File file = new File(tmpFile.getFilePath());
                         file.delete();
 
                         // DB의 파일 삭제
-                        productImageRepository.deleteById(image.getId());
+                        productFileRepository.deleteById(tmpFile.getId());
                     }
                 }
-                else if(exiImg.get().size() == imgId.size()){
-                    for(ProductImage image : exiImg.get()){
+                // 사용자가 파일을 삭제하지 않았을 경우
+                else if(findFileData.size() == fileId.size()){
+                    for(ProductFile image : findFileData){
                         product.addPhoto(image);
                     }
-                } else{
+                }
+                // 일부 파일만 삭제
+                else{
                     // 경로에 지정된 파일 삭제. 사용자가 삭제하지 않은 파일은 삭제 안 함
-                    for(ProductImage image : exiImg.get()){
+                    for(ProductFile tmpFile : findFileData){
                         boolean checkImg = false;
-                        for(long tempId : imgId){
-                            if(image.getId().equals(tempId)){
+
+                        for(long tempId : fileId){
+                            if(tmpFile.getId().equals(tempId)){
                                 checkImg = true;
                                 break;
                             }
@@ -227,38 +231,34 @@ public class ProductServiceImpl implements ProductService {
                         if(!checkImg){
                             // 경로에 있는 파일 삭제
                             System.out.println("사용자가 삭제한 이미지 삭제");
-                            System.out.println(image);
-                            File file = new File(image.getImgFilePath());
+                            System.out.println(tmpFile);
+                            File file = new File(tmpFile.getFilePath());
                             file.delete();
 
                             // DB의 파일 삭제
-                            productImageRepository.deleteById(image.getId());
+                            productFileRepository.deleteById(tmpFile.getId());
                         }
                         // 사용자가 삭제하지 않은 파일은 다시 저장
                         else{
-                            Optional<ProductImage> saveImg = productImageRepository.findById(image.getId());
-                            ProductImage tempImg = saveImg.get();
-                            tempImg.setProduct(product);
-                            product.addPhoto(tempImg);
+//                            tmpFile.setProduct(product);
+                            product.addPhoto(tmpFile);
                         }
                     }
                 }
-                // 저장 성공
-                check = true;
             }
 
             // 새로운 이미지 파일이 있다면
-            if(imgFiles != null){
+            if(fileData != null && !fileData.isEmpty()){
                 // 이미지 파일 지정
-                ProductImage tmpImage = new ProductImage();
-                List<ProductImage> productImageList = fileHandler.parseFileInfo(imgFiles, tmpImage);
+                ProductFile tmpImage = new ProductFile();
+                List<ProductFile> productFileList = fileHandler.parseFileInfo(fileData, tmpImage);
 
                 System.out.println("이미지 있음");
 
                 // 이미지 파일 저장.
-                for(ProductImage image : productImageList) {
+                for(ProductFile image : productFileList) {
 
-                    System.out.println("검수 추가 서비스33333 : " + productImageList);
+                    System.out.println("검수 추가 서비스33333 : " + productFileList);
 
                     image.setProduct(product);
                     product.addPhoto(image);
@@ -266,7 +266,7 @@ public class ProductServiceImpl implements ProductService {
                     System.out.println("image : " + image);
 
                     // image DB에 저장
-                    productImageRepository.save(image);
+                    productFileRepository.save(image);
                 }
 
             }
@@ -322,18 +322,18 @@ public class ProductServiceImpl implements ProductService {
             };
 
             // 기존에 등록된 이미지가 있는지 확인
-            boolean existImg = productImageRepository.existsByProductId(id);
+            boolean existImg = productFileRepository.existsByProductId(id);
 
             // 기존에 등록된 이미지가 있으면 삭제
             if(existImg){
-                Optional<List<ProductImage>> deleteImg = productImageRepository.findByProductId(id);
+                Optional<List<ProductFile>> deleteImg = productFileRepository.findByProductId(id);
                 // 경로에 지정된 파일 삭제
-                for(ProductImage image : deleteImg.get()){
-                    File file = new File(image.getImgFilePath());
+                for(ProductFile image : deleteImg.get()){
+                    File file = new File(image.getFilePath());
                     file.delete();
                 }
                 // DB의 파일 삭제
-                productImageRepository.deleteByProductId(id);
+                productFileRepository.deleteByProductId(id);
             }
 
             // 제품 변경 내역 삭제(리플)

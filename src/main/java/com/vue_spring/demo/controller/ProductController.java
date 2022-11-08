@@ -30,17 +30,17 @@ public class ProductController {
         @PostMapping(value = "/insertProduct", consumes = { MediaType.APPLICATION_JSON_VALUE, MediaType.MULTIPART_FORM_DATA_VALUE })
         public ResponseDto<Integer> insertProduct(@RequestPart("data") Product product,
                                                   @RequestPart("productChangeContent") String productChangeReply,
-                                                  @RequestPart(value = "image",required = false) List<MultipartFile> imgFiles
+                                                  @RequestPart(value = "file",required = false) List<MultipartFile> fileData
         ) throws Exception {
                 log.info("Controller 접근됨. /insertProduct");
                 log.info(String.valueOf(product));
                 productChangeReply = productChangeReply.replaceAll("\"","");
                 log.info("productChangeReply : " + productChangeReply);
-                log.info("imgFiles : " + imgFiles);
+                log.info("imgFiles : " + fileData);
 
                 int data = 0;
 
-                Boolean check = productServiceImpl.insertProduct(product, imgFiles, productChangeReply);
+                Boolean check = productServiceImpl.insertProduct(product, fileData, productChangeReply);
 
                 log.info("check : " + check);
 
@@ -58,20 +58,20 @@ public class ProductController {
         public ResponseDto<Integer> updateProduct(@RequestPart("data") Product product,
                                                   @RequestPart("productId") long productId,
                                                   @RequestPart("productChangeContent") String productChangeReply,
-                                                  @RequestPart(value = "image",required = false) List<MultipartFile> imgFiles,
-                                                  @RequestParam(value = "imgId",required = false) List<Long> imgId
+                                                  @RequestPart(value = "file",required = false) List<MultipartFile> fileData,
+                                                  @RequestParam(value = "fileId",required = false) List<Long> fileId
         ) throws Exception {
                 log.info("Controller 접근됨. /updateInspect");
-                log.info("imgFiles : " + imgFiles);
+                log.info("imgFiles : " + fileData);
                 log.info("productId : " + productId);
-                log.info("imgId : " + imgId);
+                log.info("imgId : " + fileId);
                 productChangeReply = productChangeReply.replaceAll("\"","");
                 log.info("productChangeReply : " + productChangeReply);
 
                 int data = 0;
 
                 // 검수 내용이 있으면 수정 진행
-                Boolean check = productServiceImpl.updateProduct(product, imgFiles, imgId, productChangeReply);
+                Boolean check = productServiceImpl.updateProduct(product, fileData, fileId, productChangeReply);
                 log.info("check : " + check);
 
                 // 저장 성공

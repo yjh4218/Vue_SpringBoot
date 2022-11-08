@@ -11,7 +11,6 @@ import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
-import lombok.Data;
 import org.hibernate.annotations.BatchSize;
 import org.hibernate.annotations.CreationTimestamp;
 
@@ -76,7 +75,7 @@ public class Product {
 //    @JsonBackReference //순환참조 방지
     @Builder.Default
     @BatchSize(size=10)
-    private List<ProductImage> imageFile = new ArrayList<>();
+    private List<ProductFile> productFile = new ArrayList<>();
 
     // 제품 중량(100g 기준)
     @Column(nullable = true, length = 100)
@@ -131,13 +130,13 @@ public class Product {
 
 
     // product에서 이미지 파일 처리 위함
-    public void addPhoto(ProductImage productImage) {
-        this.imageFile.add(productImage);
+    public void addPhoto(ProductFile productFile) {
+        this.productFile.add(productFile);
 
         // 게시글에 파일이 저장되어있지 않은 경우
-        if(productImage.getProduct() != this)
+        if(productFile.getProduct() != this)
             // 파일 저장
-            productImage.setProduct(this);
+            productFile.setProduct(this);
     }
 
     // product에서 제품 내용 변경 처리 위함
@@ -230,12 +229,12 @@ public class Product {
         this.expDate = expDate;
     }
 
-    public List<ProductImage> getImageFile() {
-        return imageFile;
+    public List<ProductFile> getProductFile() {
+        return productFile;
     }
 
-    public void setImageFile(List<ProductImage> imageFile) {
-        this.imageFile = imageFile;
+    public void setProductFile(List<ProductFile> imageFile) {
+        this.productFile = imageFile;
     }
 
     public String getProductWeight() {

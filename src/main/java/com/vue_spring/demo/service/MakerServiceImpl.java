@@ -1,16 +1,17 @@
 package com.vue_spring.demo.service;
 
 import com.vue_spring.demo.DTO.ReplyDTO;
+import com.vue_spring.demo.Repository.MakerAuditFileRepository;
+import com.vue_spring.demo.Repository.MakerAuditRepository;
 import com.vue_spring.demo.Repository.MakerChangeReplyRepository;
 import com.vue_spring.demo.Repository.MakerRepository;
-import com.vue_spring.demo.model.Maker;
-import com.vue_spring.demo.model.MakerChangeReply;
-import com.vue_spring.demo.model.Product;
-import com.vue_spring.demo.model.ProductChangeReply;
+import com.vue_spring.demo.component.FileHandler;
+import com.vue_spring.demo.model.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 import org.springframework.stereotype.Service;
 
+import java.io.File;
 import java.time.LocalDate;
 import java.util.List;
 import java.util.Optional;
@@ -23,6 +24,18 @@ public class MakerServiceImpl implements MakerService {
 
     private MakerRepository makerRepository;
     private MakerChangeReplyRepository makerChangeReplyRepository;
+    private MakerAuditRepository makerAuditRepository;
+    private MakerAuditFileRepository makerAuditFileRepository;
+
+    @Autowired
+    public void setMakerAuditRepository(MakerAuditRepository makerAuditRepository) {
+        this.makerAuditRepository = makerAuditRepository;
+    }
+
+    @Autowired
+    public void setMakerAuditFileRepository(MakerAuditFileRepository makerAuditFileRepository) {
+        this.makerAuditFileRepository = makerAuditFileRepository;
+    }
 
     @Autowired
     public void setMakerRepository(MakerRepository makerRepository) {
@@ -132,6 +145,21 @@ public class MakerServiceImpl implements MakerService {
             System.out.println("데이터 있음. 삭제 진행.");
             // 제조사 히스토리 삭제(리플)
             makerChangeReplyRepository.deleteByMakerId(id);
+
+            // 점검기록에 있는 기존에 등록된 파일 확인
+            List<MakerAuditFile> exiMakerAuditFile = makerAuditFileRepository.findByMakerAuditId(id).orElse(null);
+
+            // 파일 데이터들 삭제
+            for (MakerAuditFile tmpFile : exiMakerAuditFile) {
+                File file = new File(tmpFile.getFilePath());
+                file.delete();
+
+                // DB의 파일 삭제
+                makerAuditFileRepository.deleteById(tmpFile.getId());
+            }
+
+            // 제조사 점검 내역 삭제
+            makerAuditRepository.deleteById(id);
             // 제조사 정보 삭제
             makerRepository.deleteById(id);
             return true;

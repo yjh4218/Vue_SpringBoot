@@ -3,7 +3,8 @@ package com.vue_spring.demo.component;
 import com.vue_spring.demo.DTO.ImageDTO;
 import com.vue_spring.demo.model.ClaimImage;
 import com.vue_spring.demo.model.InspectImage;
-import com.vue_spring.demo.model.ProductImage;
+import com.vue_spring.demo.model.MakerAuditFile;
+import com.vue_spring.demo.model.ProductFile;
 import org.springframework.stereotype.Component;
 import org.springframework.util.CollectionUtils;
 import org.springframework.util.ObjectUtils;
@@ -62,14 +63,6 @@ public class FileHandler {
                 // 파일의 확장자 추출
                 String originalFileExtension;
                 String contentType = multipartFile.getContentType();
-//                application/vnd.ms-excel -> .xls
-//                application/vnd.openxmlformats-officedocument.spreadsheetml.sheet -> .xlsx
-//                application/vnd.ms-powerpoint -> .ppt
-//                application/vnd.openxmlformats-officedocument.presentationml.presentation -> .pptx
-//                application/vnd.openxmlformats-officedocument.wordprocessingml.document -> docx
-//                application/msword -> .doc
-//                application/haansofthwp -> hwp
-                // application/pdf
                 // 확장자명이 존재하지 않을 경우 처리 x
                 if(ObjectUtils.isEmpty(contentType)) {
                     break;
@@ -103,6 +96,9 @@ public class FileHandler {
                         case "application/haansofthwp":
                             originalFileExtension = ".hwp";
                             break;
+                        case "application/haansofthwpx":
+                            originalFileExtension = ".hwpx";
+                            break;
                         case "application/pdf":
                             originalFileExtension = ".pdf";
                             break;
@@ -133,27 +129,34 @@ public class FileHandler {
                         .imgFileSize(multipartFile.getSize())
                         .build();
 
-                if(t instanceof ProductImage){
-                    ProductImage image = new ProductImage(
+                if(t instanceof ProductFile){
+                    ProductFile fileData = new ProductFile(
                         photoDto.getImgFileName(),
                         photoDto.getImgFilePath(),
                         photoDto.getImgFileSize()
                     );
-                    fileList.add((T) image);
+                    fileList.add((T) fileData);
                 } else if(t instanceof InspectImage){
-                    InspectImage image = new InspectImage(
+                    InspectImage fileData = new InspectImage(
                             photoDto.getImgFileName(),
                             photoDto.getImgFilePath(),
                             photoDto.getImgFileSize()
                     );
-                    fileList.add((T) image);
+                    fileList.add((T) fileData);
                 } else if(t instanceof ClaimImage){
-                    ClaimImage image = new ClaimImage(
+                    ClaimImage fileData = new ClaimImage(
                             photoDto.getImgFileName(),
                             photoDto.getImgFilePath(),
                             photoDto.getImgFileSize()
                     );
-                    fileList.add((T) image);
+                    fileList.add((T) fileData);
+                } else if(t instanceof MakerAuditFile){
+                    MakerAuditFile fileData = new MakerAuditFile(
+                            photoDto.getImgFileName(),
+                            photoDto.getImgFilePath(),
+                            photoDto.getImgFileSize()
+                    );
+                    fileList.add((T) fileData);
                 }
 
                 System.out.println("555555555555555");

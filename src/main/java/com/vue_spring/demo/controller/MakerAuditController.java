@@ -1,23 +1,15 @@
 package com.vue_spring.demo.controller;
 
-import com.vue_spring.demo.DAO.MakerDAO;
-import com.vue_spring.demo.DTO.MakerDTO;
-import com.vue_spring.demo.DTO.ReplyDTO;
 import com.vue_spring.demo.DTO.ResponseDto;
-import com.vue_spring.demo.Repository.MakerRepository;
-import com.vue_spring.demo.model.Maker;
 import com.vue_spring.demo.model.MakerAudit;
-import com.vue_spring.demo.service.MakerAuditService;
 import com.vue_spring.demo.service.MakerAuditServiceImpl;
-import com.vue_spring.demo.service.MakerServiceImpl;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
-import java.io.UnsupportedEncodingException;
-import java.net.URLDecoder;
 import java.util.*;
 
 @Slf4j
@@ -40,7 +32,7 @@ public class MakerAuditController {
         System.out.println("Controller 접근됨. /insertMakerAudit");
         System.out.println(makerAudit);
 
-        boolean check = makerAuditServiceImpl.insertMaker(makerAudit, fileData, makerId);
+        boolean check = makerAuditServiceImpl.insertMakerAudit(makerAudit, fileData, makerId);
 
         int data = 0;
 
@@ -49,54 +41,46 @@ public class MakerAuditController {
 
         return new ResponseDto<Integer>(HttpStatus.OK.value(),data);
     }
-//
-//    // 제조사 수정하기
-//    @PutMapping("/updateMaker")
-//    public ResponseDto<Integer> updateMaker(@RequestBody MakerDTO makerDTO) {
-//        System.out.println("Controller 접근됨. /updateMaker");
-////        System.out.println(maker.getId());
-//
-//        Maker maker = Maker.builder()
-//                .id(makerDTO.getId())
-//                .makerName(makerDTO.getMakerName())
-//                .makerAddress(makerDTO.getMakerAddress())
-//                .className(makerDTO.getClassName())
-//                .process(makerDTO.getProcess())
-//                .importProduct(makerDTO.getImportProduct())
-//                .sales(makerDTO.getSales())
-//                .makerPerson(makerDTO.getMakerPerson())
-//                .makerPhone(makerDTO.getMakerPhone())
-//                .makerEmail(makerDTO.getMakerEmail())
-//                .note(makerDTO.getNote())
-//                .build();
-//
-//        boolean check = makerServicImpl.updateMaker(maker, makerDTO.getMakerChangeContent());
-//
-//        int data = 0;
-//
-//        if(check) data=1;
-//        else data=0;
-//
-//        return new ResponseDto<Integer>(HttpStatus.OK.value(),data);
-//    }
+
+    // 제조사 점검 수정하기
+    @PutMapping(value = "/updateMakerAudit",consumes = { MediaType.APPLICATION_JSON_VALUE, MediaType.MULTIPART_FORM_DATA_VALUE })
+    public ResponseDto<Integer> updateMakerAudit(@RequestPart("data") MakerAudit makerAudit,
+                                              @RequestPart(value = "file",required = false) List<MultipartFile> fileData,
+                                              @RequestPart("makerId") Long makerId,
+                                              @RequestParam(value = "fileId",required = false) List<Long> fileId
+    ) throws Exception {
+        log.info("Controller 접근됨. /updateMakerAudit");
+
+        int data = 0;
+
+        // 검수 내용이 있으면 수정 진행
+        Boolean check = makerAuditServiceImpl.updateMakerAudit(makerAudit, fileData, makerId, fileId);
+        log.info("check : " + check);
+
+        // 저장 성공
+        if (check) data = 1;
+            // 저장 실패
+        else data = 0;
+        return new ResponseDto<Integer>(HttpStatus.OK.value(),data);
+    }
 ////
-//    // 제조사 삭제하기
-//    @DeleteMapping("/deleteMaker")
-//    public ResponseDto<Integer> deleteMaker(@RequestParam(value = "id", required = false, defaultValue = "") long id) {
-//        System.out.println("Controller 접근됨. /deleteMaker");
-//        System.out.println(id);
-//
-//        boolean check = makerServicImpl.deleteMaker(id);
-//
-//        System.out.println("check : " + check );
-//
-//        int data = 0;
-//
-//        if(check) data=1;
-//        else data=0;
-//
-//        return new ResponseDto<Integer>(HttpStatus.OK.value(),data);
-//    }
+    // 제조사 삭제하기
+    @DeleteMapping("/deleteMakerAudit")
+    public ResponseDto<Integer> deleteMakerAudit(@RequestParam(value = "id", required = false, defaultValue = "") long id) {
+        System.out.println("Controller 접근됨. /deleteMakerAudit");
+        System.out.println(id);
+
+        boolean check = makerAuditServiceImpl.deleteMakerAudit(id);
+
+        System.out.println("check : " + check );
+
+        int data = 0;
+
+        if(check) data=1;
+        else data=0;
+
+        return new ResponseDto<Integer>(HttpStatus.OK.value(),data);
+    }
 //
 //    // 제조사 조회
 //    @GetMapping("/selectMakers")
