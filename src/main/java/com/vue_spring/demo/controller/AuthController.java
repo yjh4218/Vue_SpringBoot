@@ -30,9 +30,9 @@ public class AuthController {
     @PostMapping("/login")
     public ResponseEntity<?> login(@RequestBody MemberRequestDto memberRequestDto, Errors errors) {
 
-        System.out.println("AuthController login");
-        System.out.println(memberRequestDto.getEmail());
-        System.out.println(memberRequestDto.getPassword());
+        log.info("AuthController login");
+        log.info(memberRequestDto.getEmail());
+        log.info(memberRequestDto.getPassword());
 
         // validation check
         if (errors.hasErrors()) {

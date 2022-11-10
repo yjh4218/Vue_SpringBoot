@@ -3,6 +3,8 @@ package com.vue_spring.demo.DTO;
 import lombok.NoArgsConstructor;
 import org.springframework.validation.annotation.Validated;
 
+import javax.persistence.Column;
+
 @NoArgsConstructor
 public class MakerDTO {
 
@@ -37,6 +39,12 @@ public class MakerDTO {
 
     // 비고
     private String note;
+
+    // 제조사 정보
+    private String makerInfo;
+
+    // 제조사 평가점수
+    private Integer makerScore;
 
     // 제조사 변경 내역
     private String makerChangeContent;
@@ -135,5 +143,21 @@ public class MakerDTO {
 
     public void setMakerChangeContent(String makerChangeContent) {
         this.makerChangeContent = makerChangeContent;
+    }
+
+    public String getMakerInfo() {
+        return makerInfo;
+    }
+
+    public void setMakerInfo(String makerInfo) {
+        this.makerInfo = makerInfo;
+    }
+
+    public Integer getMakerScore() {
+        return makerScore;
+    }
+
+    public void setMakerScore(Integer makerScore) {
+        this.makerScore = makerScore;
     }
 }

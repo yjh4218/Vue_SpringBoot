@@ -13,8 +13,6 @@ import org.springframework.web.multipart.MultipartFile;
 
 import java.io.File;
 import java.util.List;
-import java.util.Optional;
-
 
 @Repository
 @Service
@@ -114,7 +112,7 @@ public class MakerAuditServiceImpl implements MakerAuditService {
             check = true;
 
         }catch (Exception e){
-            System.out.println(e.getMessage());
+            log.info(e.getMessage());
             //저장 실패
             check=false;
         }
@@ -182,8 +180,8 @@ public class MakerAuditServiceImpl implements MakerAuditService {
                     // 사용자가 삭제한 파일만 삭제
                     if(!checkFile){
                         // 경로에 있는 파일 삭제
-                        System.out.println("사용자가 삭제한 파일 삭제");
-                        System.out.println(tmpFile);
+                        log.info("사용자가 삭제한 파일 삭제");
+                        log.info("tmpFile : {}", tmpFile);
                         File file = new File(tmpFile.getFilePath());
                         file.delete();
 
@@ -243,18 +241,18 @@ public class MakerAuditServiceImpl implements MakerAuditService {
 
     // 제조사 점검 삭제하기
     public Boolean deleteMakerAudit(long id){
-        System.out.println("제조사 점검 삭제 서비스: " + id);
+        log.info("제조사 점검 삭제 서비스: " + id);
 
         // 제조사 점검 조회 확인
         boolean check = checkId(id);
 
         // 조회된 데이터 없을 경우
         if(!check){
-            System.out.println("데이터 없음. 삭제 불가");
+            log.info("데이터 없음. 삭제 불가");
             return false;
         }
         else{
-            System.out.println("데이터 있음. 삭제 진행.");
+            log.info("데이터 있음. 삭제 진행.");
 
             // 점검기록에 있는 기존에 등록된 파일 확인
             List<MakerAuditFile> exiMakerAuditFile = makerAuditFileRepository.findByMakerAuditId(id).orElse(null);
@@ -274,113 +272,10 @@ public class MakerAuditServiceImpl implements MakerAuditService {
             return true;
         }
     }
-//
-//    // 제조사 조회. 조건에 따른 검색 진행
-//    public Optional<List<Maker>> findMaker(String makerName,
-//                                           String makerAddress,
-//                                           String makerPerson,
-//                                           String makerPhone,
-//                                           Set<String> className){
-//
-//        System.out.println("MakerServiceImpl 제조사 조회");
-//        System.out.println("makerName : " + makerName );
-//        System.out.println("tempBusinessType : " + className );
-//
-//        // 분류 검색 구분에 따른 조회 방법을 다르게 함
-//        if(className.size() < 1){
-//            System.out.println("제품분류 없음.");
-//            // 분류 조회 하지 않을 경우
-//            return (Optional<List<Maker>>) makerRepository
-//                .findByMakerNameContainingAndMakerAddressContainingAndMakerPersonContainingAndMakerPhoneContainingIgnoreCase(
-//                        makerName, makerAddress, makerPerson, makerPhone);
-//        }else{
-//            System.out.println("제품분류 있음.");
-//            // 분류 조회할 경우
-//            return (Optional<List<Maker>>) makerRepository
-//                    .findByMakerNameContainingAndMakerAddressContainingAndMakerPersonContainingAndMakerPhoneContainingIgnoreCaseAndtempBusinessType(
-//                            makerName, makerAddress, makerPerson, makerPhone, className);
-//        }
-//    }
-//
+
     // 제품 중복 확인
     public Boolean checkId(long makerAuditId){
         boolean check = makerAuditRepository.existsById(makerAuditId);
         return check;
     }
-//
-//    // 제품 변경 리플 내용 수정
-//    public Boolean updateMakerReply(ReplyDTO replyDTO) throws Exception{
-//
-//        System.out.println("ProductServicrImpl");
-//        System.out.println("제품 변경 리플 내용 수정");
-//        Optional<Maker> optMaker = makerRepository.findById(replyDTO.getId());
-//        Maker maker = optMaker.get();
-//
-//        Optional<List<MakerChangeReply>> tmpMakerChangeReply = makerChangeReplyRepository.findByMakerId(replyDTO.getId());
-//
-//        List<MakerChangeReply> makerChangeReplyList = tmpMakerChangeReply.get();
-//
-//        int proReplySize = makerChangeReplyList.size();
-//        int chReplySize = replyDTO.getReplyDataList().size();
-//
-//        // 현재 날짜 구하기 (시스템 시계, 시스템 타임존)
-//        LocalDate now = LocalDate.now();
-//
-//        // 등록된 변경내역 리플들을 갖고옴
-//        for (MakerChangeReply makerChangeReply: makerChangeReplyList) {
-//            for(int j = 0; j<chReplySize; j++){
-//                // 수정된 리플의 데이터만 변경해서 저장함.
-//                if(makerChangeReply.getId().equals(replyDTO.getReplyDataList().get(j).getReplyId())){
-//                    makerChangeReply.setMaker(maker);
-//                    makerChangeReply.setReplyDate(now);
-//                    makerChangeReply.setMakerChangeReply(replyDTO.getReplyDataList().get(j).getChangeReplyData());
-//
-//                    break;
-//                }
-//            }
-//            maker.addReply(makerChangeReply);
-//            makerChangeReplyRepository.save(makerChangeReply);
-//        }
-//
-//        makerRepository.save(maker);
-//        return true;
-//    }
-//
-//
-//    // 제품 변경 리플 내용 삭제
-//    public Boolean deleteMakerReply(Long makerId, Long[] makerReplyId) throws Exception{
-//
-//        System.out.println("ProductServicrImpl");
-//        System.out.println("제품 변경 리플 내용 삭제");
-//        Optional<Maker> optMaker = makerRepository.findById(makerId);
-//        Maker maker = optMaker.get();
-//
-//        Optional<List<MakerChangeReply>> tmpMakerChangeReply = makerChangeReplyRepository.findByMakerId(makerId);
-//
-//        List<MakerChangeReply> makerChangeReplyList = tmpMakerChangeReply.get();
-//
-//        int chReplySize = makerReplyId.length;
-//
-//        // 등록된 변경내역 리플들을 갖고옴
-//        for (MakerChangeReply makerChangeReply: makerChangeReplyList) {
-//            boolean chkDelData = false;
-//            for(int j = 0; j<chReplySize; j++){
-//                // 수정된 리플의 데이터만 삭제
-//                if(makerChangeReply.getId().equals(makerReplyId[j])){
-//                    chkDelData = true;
-//                    makerChangeReplyRepository.deleteById(makerChangeReply.getId());
-//                    break;
-//                }
-//            }
-//
-//            // 삭제되지 않은 데이터 저장
-//            if(!chkDelData){
-//                maker.addReply(makerChangeReply);
-//                makerChangeReplyRepository.save(makerChangeReply);
-//            }
-//        }
-//
-//        makerRepository.save(maker);
-//        return true;
-//    }
 }

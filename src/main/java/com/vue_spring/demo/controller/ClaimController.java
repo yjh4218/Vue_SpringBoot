@@ -7,6 +7,7 @@ import com.vue_spring.demo.model.Claim;
 import com.vue_spring.demo.model.Product;
 import com.vue_spring.demo.service.ClaimServiceImpl;
 import com.vue_spring.demo.service.ProductServiceImpl;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.http.HttpStatus;
@@ -18,6 +19,7 @@ import java.io.UnsupportedEncodingException;
 import java.net.URLDecoder;
 import java.util.*;
 
+@Slf4j
 @RestController
 @RequestMapping("claim")
 public class ClaimController {
@@ -34,10 +36,10 @@ public class ClaimController {
                 @RequestPart(value = "image",required = false) List<MultipartFile> imgFiles
         ) throws Exception {
                 // @RequestParam(value = "skuNo") MultipartFile imgFiles,
-                System.out.println("Controller 접근됨. /insertClaim");
-                System.out.println(claim);
-                System.out.println("imgFiles : " + imgFiles);
-                System.out.println("productId : " + productId);
+                log.info("Controller 접근됨. /insertClaim");
+                log.info("claims : "+ claim);
+                log.info("imgFiles : " + imgFiles);
+                log.info("productId : " + productId);
 
                 int data = 0;
 
@@ -49,11 +51,11 @@ public class ClaimController {
                         Product tempProduct = prodct.get();
 
                         claim.setProduct(tempProduct);
-                        System.out.println("tempProduct : " + tempProduct);
+                        log.info("tempProduct : " + tempProduct);
 
                         Boolean check = claimServiceImpl.insertClaim(claim, imgFiles);
 
-                        System.out.println("check : " + check);
+                        log.info("check : " + check);
 
                         // 저장 성공
                         if(check) data=1;
@@ -62,7 +64,7 @@ public class ClaimController {
                         else data=0;
                 }
 
-                System.out.println("data : " + data);
+                log.info("data : " + data);
                 return new ResponseDto<Integer>(HttpStatus.OK.value(),data);
         }
 
@@ -73,10 +75,10 @@ public class ClaimController {
                                                   @RequestPart(value = "image",required = false) List<MultipartFile> imgFiles,
                                                 @RequestParam(value = "imgId",required = false) List<Long> imgId
         ) throws Exception {
-                System.out.println("Controller 접근됨. /updateClaim");
-                System.out.println(claim.getNote());
-                System.out.println("imgFiles : " + imgFiles);
-                System.out.println("productId : " + productId);
+                log.info("Controller 접근됨. /updateClaim");
+                log.info(claim.getNote());
+                log.info("imgFiles : " + imgFiles);
+                log.info("productId : " + productId);
 
                 int data = 0;
 
@@ -85,10 +87,10 @@ public class ClaimController {
 
                 claim.setProduct(product.get());
 
-                System.out.println("product : " + product.get());
+                log.info("product : " + product.get());
                 // 검수 내용이 있으면 수정 진행
                 Boolean check = claimServiceImpl.updateClaim(claim, imgFiles, imgId);
-                System.out.println("check : " + check);
+                log.info("check : " + check);
 
                 // 저장 성공
                 if (check) data = 1;
@@ -100,12 +102,12 @@ public class ClaimController {
         // 검수 삭제하기
         @DeleteMapping("/deleteClaim")
         public ResponseDto<Integer> deleteClaim(@RequestParam(value = "id", defaultValue = "") long id) {
-                System.out.println("Controller 접근됨. /deleteClaim");
-                System.out.println(id);
+                log.info("Controller 접근됨. /deleteClaim");
+                log.info("id : {}",id);
 
                 boolean check = claimServiceImpl.deleteClaim(id);
 
-                System.out.println("check : " + check );
+                log.info("check : " + check );
 
                 int data = 0;
 
@@ -118,11 +120,11 @@ public class ClaimController {
         // 모든 제품 조회
         @GetMapping("/selectAllClaim")
         public ClaimDAO<List<Claim>> selectAllClaim() {
-                System.out.println("Controller 접근됨. /selectAllClaim");
+                log.info("Controller 접근됨. /selectAllClaim");
 
                 Optional<List<Claim>> claims = Optional.ofNullable(claimServiceImpl.findProductAll());
-                System.out.println("Service 조회 완료");
-                System.out.println(claims);
+                log.info("Service 조회 완료");
+                log.info("claims : {}",claims);
 
                 return ClaimDAO.<List<Claim>>builder()
                                 .data(claims)
@@ -143,14 +145,14 @@ public class ClaimController {
 
                 List<String> tempClass = new ArrayList<>();
 
-                System.out.println("Controller 접근됨. /selectClaims");
-                System.out.println("skuNo : " + skuNo + ", productName : " + productName + ", brandName : " + brandName + ", maker : " + maker + ", beforeDate : " +
+                log.info("Controller 접근됨. /selectClaims");
+                log.info("skuNo : " + skuNo + ", productName : " + productName + ", brandName : " + brandName + ", maker : " + maker + ", beforeDate : " +
                         beforeDate + ", afterDate : " + afterDate);
 
                 // 제품 조회 조건이 없을 경우 날짜만 조회 진행
                 if(skuNo.isEmpty() && productName.isEmpty() && brandName.isEmpty() && maker.isEmpty() && className.isEmpty()){
                         Optional<List<Claim>> claim = claimServiceImpl.findClaim(beforeDate, afterDate);
-                        // System.out.println(products);
+                        // log.info(products);
                         return ClaimDAO.<List<Claim>>builder()
                                 .data(claim)
                                 .build();
@@ -160,7 +162,7 @@ public class ClaimController {
                         // 분류 디코더 진행
                         for(int i = 0; i< className.size(); i++){
                                 try {
-                                        System.out.println("selectChk : " + URLDecoder.decode(className.get(i), "UTF-8"));
+                                        log.info("selectChk : " + URLDecoder.decode(className.get(i), "UTF-8"));
                                         tempClass.add(URLDecoder.decode(className.get(i), "UTF-8"));
                                 } catch (UnsupportedEncodingException e) {
                                         e.printStackTrace();
@@ -168,17 +170,17 @@ public class ClaimController {
                         }
                         Set<String> tempClassName = new HashSet<>(tempClass);
 
-                        System.out.println("tempSelectChk : " + tempClassName );
+                        log.info("tempSelectChk : " + tempClassName );
 
-                        System.out.println("조건에 맞춰서 제품 조회");
+                        log.info("조건에 맞춰서 제품 조회");
                         // 조건에 맞춰서 제품 조회
                        List<Long> products = productServicrImpl.findAllProductId(skuNo, productName,
                                 brandName, maker, tempClassName);
 
                         Optional<List<Claim>> claims = claimServiceImpl.findClaim(products, beforeDate, afterDate);
-                        System.out.println("Service 조회 완료");
+                        log.info("Service 조회 완료");
 
-                        // System.out.println(products);
+                        // log.info(products);
                         return ClaimDAO.<List<Claim>>builder()
                                 .data(claims)
                                 .build();

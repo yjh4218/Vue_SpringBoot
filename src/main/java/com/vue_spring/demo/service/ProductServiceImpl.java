@@ -4,6 +4,7 @@ import com.vue_spring.demo.DTO.ReplyDTO;
 import com.vue_spring.demo.Repository.*;
 import com.vue_spring.demo.component.FileHandler;
 import com.vue_spring.demo.model.*;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 import org.springframework.stereotype.Service;
@@ -15,6 +16,7 @@ import java.util.List;
 import java.util.Optional;
 import java.util.Set;
 
+@Slf4j
 @Repository
 @Service
 public class ProductServiceImpl implements ProductService {
@@ -63,15 +65,15 @@ public class ProductServiceImpl implements ProductService {
 
     // 신규 상품 추가
     public Boolean insertProduct(Product product, List<MultipartFile> fileData, String productChangeReply) throws Exception {
-        System.out.println("상품 추가 서비스 : " + product);
-        System.out.println("상품 추가 서비스222 : " + fileData);
+        log.info("상품 추가 서비스 : " + product);
+        log.info("상품 추가 서비스222 : " + fileData);
 
         // 이미지 파일 경로 지정
         ProductFile tmpImage = new ProductFile();
         List<ProductFile> productFileList = fileHandler.parseFileInfo(fileData, tmpImage);
 
-        System.out.println(product);
-        System.out.println(productFileList);
+        log.info("product : {}", product);
+        log.info("productFileList : {}", productFileList);
 
         // JPA에 저장되는지 확인. 기본 값은 저장 실패로 해놓는다.
         boolean check = false;
@@ -95,7 +97,7 @@ public class ProductServiceImpl implements ProductService {
 
             salesProductComponentRepository.save(salesProductComponent);
 
-            System.out.println("111111111111" );
+            log.info("111111111111" );
 
             // 제품 변경내역이 있으면 제품 변경내역 저장
             if(!productChangeReply.isEmpty()){
@@ -115,18 +117,18 @@ public class ProductServiceImpl implements ProductService {
             if(!productFileList.isEmpty()) {
                 for(ProductFile image : productFileList) {
 
-                    System.out.println("검수 추가 서비스33333 : " + productFileList);
-                    System.out.println("검수 추가 서비스44444 : " + image);
+                    log.info("검수 추가 서비스33333 : " + productFileList);
+                    log.info("검수 추가 서비스44444 : " + image);
 
                     // 이미지 데이터가 존재할 경우 진행
                     if(!productTemp.isEmpty()){
 
-                        System.out.println("inspectTemp : " + productSel);
+                        log.info("inspectTemp : " + productSel);
 
                         // 이미지 파일들에 검수정보 저장(inspect_id)
                         image.setProduct(productSel);
 
-                        System.out.println("image : " + image);
+                        log.info("image : " + image);
 
                         // image DB에 저장
                         productFileRepository.save(image);
@@ -149,7 +151,7 @@ public class ProductServiceImpl implements ProductService {
                 check = true;
             }
         }catch (Exception e){
-            System.out.println(e.getMessage());
+            log.info(e.getMessage());
             //저장 실패
             check=false;
         }
@@ -159,8 +161,8 @@ public class ProductServiceImpl implements ProductService {
 
     // 상품 수정
     public Boolean updateProduct(Product product, List<MultipartFile> fileData, List<Long> fileId, String productChangeReply) throws Exception {
-        System.out.println("검수 수정 서비스 : " + product);
-        System.out.println("검수 수정 서비스222 : " + fileData);
+        log.info("검수 수정 서비스 : " + product);
+        log.info("검수 수정 서비스222 : " + fileData);
 
         boolean check = false;
 
@@ -230,8 +232,8 @@ public class ProductServiceImpl implements ProductService {
                         // 사용자가 삭제한 파일만 삭제
                         if(!checkImg){
                             // 경로에 있는 파일 삭제
-                            System.out.println("사용자가 삭제한 이미지 삭제");
-                            System.out.println(tmpFile);
+                            log.info("사용자가 삭제한 이미지 삭제");
+                            log.info("tmpFile : {}", tmpFile);
                             File file = new File(tmpFile.getFilePath());
                             file.delete();
 
@@ -253,17 +255,17 @@ public class ProductServiceImpl implements ProductService {
                 ProductFile tmpImage = new ProductFile();
                 List<ProductFile> productFileList = fileHandler.parseFileInfo(fileData, tmpImage);
 
-                System.out.println("이미지 있음");
+                log.info("이미지 있음");
 
                 // 이미지 파일 저장.
                 for(ProductFile image : productFileList) {
 
-                    System.out.println("검수 추가 서비스33333 : " + productFileList);
+                    log.info("검수 추가 서비스33333 : " + productFileList);
 
                     image.setProduct(product);
                     product.addPhoto(image);
 
-                    System.out.println("image : " + image);
+                    log.info("image : " + image);
 
                     // image DB에 저장
                     productFileRepository.save(image);
@@ -282,7 +284,7 @@ public class ProductServiceImpl implements ProductService {
             // 저장 성공
             check = true;
         }catch (Exception e){
-            System.out.println(e.getMessage());
+            log.info(e.getMessage());
             check=false;
         }
 
@@ -292,7 +294,7 @@ public class ProductServiceImpl implements ProductService {
 
     // 상품 삭제하기
     public Boolean deleteProduct(long id){
-        System.out.println("상품 삭제 서비스 : " + id);
+        log.info("상품 삭제 서비스 : " + id);
 
         // 상품 데이터 있는지 확인
         boolean check = checkId(id);
@@ -302,18 +304,18 @@ public class ProductServiceImpl implements ProductService {
 
         // 조회된 데이터 없을 경우
         if(!check){
-            System.out.println("데이터 없음. 삭제 불가");
+            log.info("데이터 없음. 삭제 불가");
             return false;
         }
         else{
-            System.out.println("데이터 있음. 삭제 진행.");
+            log.info("데이터 있음. 삭제 진행.");
 
             // 검수 데이터 먼저 삭제 처리.
             if(inspectServiceImpl.findProductInspect(id)){
-                System.out.println("검수 삭제.");
+                log.info("검수 삭제.");
                 Optional<List<Inspect>> tmpInspect = inspectServiceImpl.findInspectProductList(id);
 
-                System.out.println(tmpInspect);
+                log.info("tmpInspect : {}", tmpInspect);
 
                 List<Inspect> inspect = tmpInspect.get();
                 for(int i=0; i<inspect.size(); i++){
@@ -353,19 +355,19 @@ public class ProductServiceImpl implements ProductService {
 //    public Optional<List<Product>> findProduct(String skuNo, String productName,
 //                                               String brandName, String maker, Set<String> tempClassName, String page, long productCurseId) {
 //
-//        System.out.println("ProductServicrImpl");
-//        System.out.println("productName : " + productName );
-//        System.out.println("tempSelectChk : " + tempClassName );
+//        log.info("ProductServicrImpl");
+//        log.info("productName : " + productName );
+//        log.info("tempSelectChk : " + tempClassName );
 //
 //        // 모든 데이터 조회
 //        if(page.equals("0")){
-//            System.out.println("모든 데이터 조회");
+//            log.info("모든 데이터 조회");
 //            if(tempClassName.size() < 1){
 //                // 분류 조회 하지 않을 경우
 //                return (Optional<List<Product>>) productRepository.findByProductList(
 //                        skuNo, productName, brandName, maker);
 //            } else{
-//                System.out.println("제품분류 있음.");
+//                log.info("제품분류 있음.");
 //                // 분류 조회할 경우
 //                return (Optional<List<Product>>) productRepository.findByProductListAndClassName(
 //                        skuNo, productName, brandName, maker, tempClassName);
@@ -373,13 +375,13 @@ public class ProductServiceImpl implements ProductService {
 //        }
 //        // 처음 페이지 조회
 //        else if(page.equals("1")){
-//            System.out.println("모든 데이터 조회");
+//            log.info("모든 데이터 조회");
 //            if(tempClassName.size() < 1){
 //                // 분류 조회 하지 않을 경우
 //                return (Optional<List<Product>>) productRepository.findByProductListFirst(
 //                        skuNo, productName, brandName, maker);
 //            } else{
-//                System.out.println("제품분류 있음.");
+//                log.info("제품분류 있음.");
 //                // 분류 조회할 경우
 //                return (Optional<List<Product>>) productRepository.findByProductListAndClassNameFirst(
 //                        skuNo, productName, brandName, maker, tempClassName);
@@ -387,13 +389,13 @@ public class ProductServiceImpl implements ProductService {
 //        }
 //        // 커서에 맞춰 페이지 조회
 //        else{
-//            System.out.println("모든 데이터 조회");
+//            log.info("모든 데이터 조회");
 //            if(tempClassName.size() < 1){
 //                // 분류 조회 하지 않을 경우
 //                return (Optional<List<Product>>) productRepository.findByProductListCurse(
 //                        skuNo, productName, brandName, maker, productCurseId);
 //            } else{
-//                System.out.println("제품분류 있음.");
+//                log.info("제품분류 있음.");
 //                // 분류 조회할 경우
 //                return (Optional<List<Product>>) productRepository.findByProductListAndClassNameCurse(
 //                        skuNo, productName, brandName, maker, tempClassName, productCurseId);
@@ -402,7 +404,7 @@ public class ProductServiceImpl implements ProductService {
 //
 ////        // 분류 검색 구분에 따른 조회 방법을 다르게 함
 ////        if(tempClassName.size() < 1){
-////            System.out.println("제품분류 없음.");
+////            log.info("제품분류 없음.");
 ////            // 분류 조회 하지 않을 경우
 //////            return (Optional<List<Product>>) productRepository
 //////                .findBySkuNoContainingAndProductNameContainingAndBrandNameContainingAndMakerContainingIgnoreCase(
@@ -420,7 +422,7 @@ public class ProductServiceImpl implements ProductService {
 ////            //test 중 //9.6초 434개 조회
 //////            return Optional.ofNullable(productRepository2.findByProductList());
 ////        }else{
-////            System.out.println("제품분류 있음.");
+////            log.info("제품분류 있음.");
 ////            // 분류 조회할 경우
 ////            return (Optional<List<Product>>) productRepository
 ////                    .findByProductListAndClassName(skuNo, productName, brandName, maker, tempClassName);
@@ -432,16 +434,16 @@ public class ProductServiceImpl implements ProductService {
     public Optional<List<Product>> findProduct(String skuNo, String productName,
                                                String brandName, String maker, Set<String> tempClassName) {
 
-        System.out.println("ProductServicrImpl");
-        System.out.println("productName : " + productName );
-        System.out.println("tempSelectChk : " + tempClassName );
+        log.info("ProductServicrImpl");
+        log.info("productName : " + productName );
+        log.info("tempSelectChk : " + tempClassName );
 
         if(tempClassName.size() < 1){
             // 분류 조회 하지 않을 경우
             return (Optional<List<Product>>) productRepository.findByProductListFirst(
                     skuNo, productName, brandName, maker);
         } else{
-            System.out.println("제품분류 있음.");
+            log.info("제품분류 있음.");
             // 분류 조회할 경우
             return (Optional<List<Product>>) productRepository.findByProductListAndClassNameFirst(
                     skuNo, productName, brandName, maker, tempClassName);
@@ -452,16 +454,16 @@ public class ProductServiceImpl implements ProductService {
     public Optional<List<Product>> findProductExcel(String skuNo, String productName,
                                                String brandName, String maker, Set<String> tempClassName) {
 
-        System.out.println("ProductServicrImpl");
-        System.out.println("productName : " + productName );
-        System.out.println("tempSelectChk : " + tempClassName );
+        log.info("ProductServicrImpl");
+        log.info("productName : " + productName );
+        log.info("tempSelectChk : " + tempClassName );
 
         if(tempClassName.size() < 1){
             // 분류 조회 하지 않을 경우
             return (Optional<List<Product>>) productRepository.findByProductListExcel(
                     skuNo, productName, brandName, maker);
         } else{
-            System.out.println("제품분류 있음.");
+            log.info("제품분류 있음.");
             // 분류 조회할 경우
             return (Optional<List<Product>>) productRepository.findByProductListAndClassNameExcel(
                     skuNo, productName, brandName, maker, tempClassName);
@@ -478,9 +480,9 @@ public class ProductServiceImpl implements ProductService {
     public List<Long> findAllProductId(String skuNo, String productName,
                                                String brandName, String maker, Set<String> tempClassName) {
 
-        System.out.println("ProductServicrImpl");
-        System.out.println("productName : " + productName );
-        System.out.println("tempSelectChk : " + tempClassName );
+        log.info("ProductServicrImpl");
+        log.info("productName : " + productName );
+        log.info("tempSelectChk : " + tempClassName );
 
         // 모든 데이터 조회
         if(tempClassName.size() < 1){
@@ -488,7 +490,7 @@ public class ProductServiceImpl implements ProductService {
             return productRepository.findByProductList(
                     skuNo, productName, brandName, maker);
         } else {
-            System.out.println("제품분류 있음.");
+            log.info("제품분류 있음.");
             // 분류 조회할 경우
             return productRepository.findByProductListAndClassName(
                     skuNo, productName, brandName, maker, tempClassName);
@@ -499,14 +501,14 @@ public class ProductServiceImpl implements ProductService {
     public Long findSelectProductCnt(String skuNo, String productName,
                                      String brandName, String maker, Set<String> tempClassName) {
 
-        System.out.println("ProductServiceImpl, findSelectProductCnt");
+        log.info("ProductServiceImpl, findSelectProductCnt");
 
         if(tempClassName.size() < 1){
             // 분류 조회 하지 않을 경우
             return productRepository.findByProductCnt(
                     skuNo, productName, brandName, maker);
         } else{
-            System.out.println("제품분류 있음.");
+            log.info("제품분류 있음.");
             // 분류 조회할 경우
             return productRepository.findByProductCntClassName(
                     skuNo, productName, brandName, maker, tempClassName);
@@ -517,14 +519,14 @@ public class ProductServiceImpl implements ProductService {
     public List<Long> findSelectId(String skuNo, String productName,
                                      String brandName, String maker, Set<String> tempClassName) {
 
-        System.out.println("ProductServiceImpl, findSelectId");
+        log.info("ProductServiceImpl, findSelectId");
 
         if(tempClassName.size() < 1){
             // 분류 조회 하지 않을 경우
             return productRepository.findById(
                     skuNo, productName, brandName, maker);
         } else{
-            System.out.println("제품분류 있음.");
+            log.info("제품분류 있음.");
             // 분류 조회할 경우
             return productRepository.findByIdClassName(
                     skuNo, productName, brandName, maker, tempClassName);
@@ -534,12 +536,12 @@ public class ProductServiceImpl implements ProductService {
     // 1개 제품 조회
     public Optional<Product> findProduct(long productId) {
 
-        System.out.println("ProductServicrImpl");
-        System.out.println("productId : " + productId );
+        log.info("ProductServicrImpl");
+        log.info("productId : " + productId );
 
         boolean check = checkId(productId);
 
-        System.out.println("check : " + check );
+        log.info("check : " + check );
 
         if(check){
             return productRepository.findById(productId);
@@ -570,8 +572,8 @@ public class ProductServiceImpl implements ProductService {
     // 제품 변경 리플 내용 수정
     public Boolean updateProductReply(ReplyDTO productReplyDTO) throws Exception{
 
-        System.out.println("ProductServicrImpl");
-        System.out.println("제품 변경 리플 내용 수정");
+        log.info("ProductServicrImpl");
+        log.info("제품 변경 리플 내용 수정");
         Optional<Product> OptProduct = productRepository.findById(productReplyDTO.getId());
         Product product = OptProduct.get();
 
@@ -609,8 +611,8 @@ public class ProductServiceImpl implements ProductService {
     // 제품 변경 리플 내용 삭제
     public Boolean deleteProductReply(Long productId, Long[] productReplyId) throws Exception{
 
-        System.out.println("ProductServicrImpl");
-        System.out.println("제품 변경 리플 내용 삭제");
+        log.info("ProductServicrImpl");
+        log.info("제품 변경 리플 내용 삭제");
         Optional<Product> OptProduct = productRepository.findById(productId);
         Product product = OptProduct.get();
 

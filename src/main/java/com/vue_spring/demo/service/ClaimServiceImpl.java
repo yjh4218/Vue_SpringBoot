@@ -4,6 +4,7 @@ import com.vue_spring.demo.Repository.ClaimImageRepository;
 import com.vue_spring.demo.Repository.ClaimRepository;
 import com.vue_spring.demo.component.FileHandler;
 import com.vue_spring.demo.model.*;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 import org.springframework.stereotype.Service;
@@ -15,6 +16,7 @@ import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 
+@Slf4j
 @Repository
 @Service
 public class ClaimServiceImpl implements ClaimService {
@@ -37,15 +39,15 @@ public class ClaimServiceImpl implements ClaimService {
 
      // 클레임 추가
     public Boolean insertClaim(Claim claim, List<MultipartFile> imgFiles) throws Exception {
-        System.out.println("클레임 추가 서비스 : " + claim);
-        System.out.println("클레임 추가 서비스222 : " + imgFiles);
+        log.info("클레임 추가 서비스 : " + claim);
+        log.info("클레임 추가 서비스222 : " + imgFiles);
 
         // 이미지 파일 경로 지정
         ClaimImage tmpImage = new ClaimImage();
         List<ClaimImage> claimImageList = fileHandler.parseFileInfo(imgFiles, tmpImage);
 
-        System.out.println(claim);
-        System.out.println(claimImageList);
+        log.info("claim : {}",claim);
+        log.info("claimImageList : " + claimImageList);
 
         // JPA에 저장되는지 확인. 기본 값은 저장 실패로 해놓는다.
         boolean check = false;
@@ -88,7 +90,7 @@ public class ClaimServiceImpl implements ClaimService {
                 check = true;
             }
         }catch (Exception e){
-            System.out.println(e.getMessage());
+            log.info(e.getMessage());
             //저장 실패
             check=false;
         }
@@ -98,8 +100,8 @@ public class ClaimServiceImpl implements ClaimService {
 
     // 클레임 수정
     public Boolean updateClaim(Claim claim, List<MultipartFile> imgFiles, List<Long> imgId) throws Exception {
-        System.out.println("클레임 수정 서비스 : " + claim);
-        System.out.println("클레임 수정 서비스222 : " + imgFiles);
+        log.info("클레임 수정 서비스 : " + claim);
+        log.info("클레임 수정 서비스222 : " + imgFiles);
 
         boolean check = false;
 
@@ -112,7 +114,7 @@ public class ClaimServiceImpl implements ClaimService {
             ClaimImage tmpImage = new ClaimImage();
             List<ClaimImage> claimImageList = fileHandler.parseFileInfo(imgFiles, tmpImage);
 
-            System.out.println("이미지 있음");
+            log.info("이미지 있음");
 
             // 기존에 등록된 이미지가 있으면 삭제
             if(existImg){
@@ -129,8 +131,8 @@ public class ClaimServiceImpl implements ClaimService {
                     // 사용자가 삭제한 파일만 삭제
                     if(!checkImg){
                         // 경로에 있는 파일 삭제
-                        System.out.println("사용자가 삭제한 이미지 삭제");
-                        System.out.println(image);
+                        log.info("사용자가 삭제한 이미지 삭제");
+                        log.info("image : ", image);
                         File file = new File(image.getImgFilePath());
                         file.delete();
 
@@ -150,13 +152,13 @@ public class ClaimServiceImpl implements ClaimService {
                 // 이미지 파일 저장.
                 for(ClaimImage image : claimImageList) {
 
-                    System.out.println("클레임 수정 서비스33333 : " + claimImageList);
-                    System.out.println("클레임 수정 서비스44444 : " + claim);
+                    log.info("클레임 수정 서비스33333 : " + claimImageList);
+                    log.info("클레임 수정 서비스44444 : " + claim);
 
                     image.setClaim(claim);
                     claim.addPhoto(image);
 
-                    System.out.println("image : " + image);
+                    log.info("image : " + image);
 
                     // image DB에 저장
                     claimImageRepository.save(image);
@@ -168,7 +170,7 @@ public class ClaimServiceImpl implements ClaimService {
                 // 저장 성공
                 check = true;
             }catch (Exception e){
-                System.out.println(e.getMessage());
+                log.info(e.getMessage());
                 check=false;
             }
         }
@@ -192,18 +194,18 @@ public class ClaimServiceImpl implements ClaimService {
 
     // 클레임 삭제하기
     public Boolean deleteClaim(long id){
-        System.out.println("클레임 삭제 서비스 : " + id);
+        log.info("클레임 삭제 서비스 : " + id);
 
         // 클레임 데이터 있는지 확인
         boolean check = checkClaim(id);
 
         // 조회된 데이터 없을 경우
         if(!check){
-            System.out.println("데이터 없음. 삭제 불가");
+            log.info("데이터 없음. 삭제 불가");
             return false;
         }
         else{
-            System.out.println("데이터 있음. 삭제 진행.");
+            log.info("데이터 있음. 삭제 진행.");
 
             // 기존에 등록된 이미지가 있는지 확인
             boolean existImg = claimImageRepository.existsByClaimId(id);
@@ -232,7 +234,7 @@ public class ClaimServiceImpl implements ClaimService {
     // 일부 클레임 조회. 조건에 따른 검색 진행
     public Optional<List<Claim>> findClaim(List<Long> productId, Date beforeDate, Date afterDate) {
 
-        System.out.println("ClaimServicrImpl 클레임 조회");
+        log.info("ClaimServicrImpl 클레임 조회");
 
         // Optional 빈 객체 생성
         Optional<List<Claim>> tmpClaimList = Optional.empty();
@@ -241,7 +243,7 @@ public class ClaimServiceImpl implements ClaimService {
         // ProductId 값에 따라 데이터 조회
         for(int i = 0; i< productId.size(); i++){
             // Claim 테이블에 조회 및 저장
-            System.out.println("claim 테이블에 값이 있다면 데이터 저장");
+            log.info("claim 테이블에 값이 있다면 데이터 저장");
             tmpClaimList = claimRepository.findByProductIdAndClaimDateBetween(productId.get(i), beforeDate, afterDate);
 
             claimList.addAll(tmpClaimList.orElse(null));
@@ -253,7 +255,7 @@ public class ClaimServiceImpl implements ClaimService {
     // 일부 상품 조회. 날짜만 진행
     public Optional<List<Claim>> findClaim(Date beforeDate, Date afterDate) {
 
-        System.out.println("Clai,ServicrImpl 클레임 조회");
+        log.info("Clai,ServicrImpl 클레임 조회");
 
         return claimRepository.findByClaimDateBetween(beforeDate, afterDate);
     }

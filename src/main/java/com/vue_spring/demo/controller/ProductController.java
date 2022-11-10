@@ -153,7 +153,7 @@ public class ProductController {
                 log.info("tempChk : " + tempClass );
 
                 long start = System.currentTimeMillis();
-                System.out.println("@@@ Service 시작");
+                log.info("@@@ Service 시작");
 
                 Set<String> tempClassName = new HashSet<>(tempClass);
                 log.info("tempSelectChk : " + tempClassName );
@@ -165,7 +165,7 @@ public class ProductController {
                         Optional<List<Product>> products = (Optional<List<Product>>) productServiceImpl.findProductExcel(
                                 skuNo, productName,brandName, maker, tempClassName);
 
-                        // System.out.println(products);
+                        // log.info(products);
                         return ResponseDAO.<List<Product>>builder()
                                 .data(products)
                                 .build();
@@ -211,9 +211,9 @@ public class ProductController {
 
                         log.info("Service 조회 완료");
                         long end = System.currentTimeMillis();
-                        System.out.println("@@@ Service 완료 실행 시간 : " + (end - start) / 1000.0);
+                        log.info("@@@ Service 완료 실행 시간 : " + (end - start) / 1000.0);
 
-                        // System.out.println(products);
+                        // log.info(products);
                         return ResponseDAO.<List<Product>>builder()
                                 .data(products)
                                 .selectCnt(productSelectCnt)
@@ -241,8 +241,8 @@ public class ProductController {
         // 제품 변경 리플 수정하기
         @PutMapping("/updateProductReply")
         public ResponseDto<Integer> updateProductReply(@RequestBody ReplyDTO productReplyDTO) throws Exception {
-                System.out.println("Controller 접근됨. /updateProductReply");
-                System.out.println(productReplyDTO);
+                log.info("Controller 접근됨. /updateProductReply");
+                log.info("productReplyDTO : " + productReplyDTO);
 
                 int data = 0;
 

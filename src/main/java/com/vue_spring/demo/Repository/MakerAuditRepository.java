@@ -33,7 +33,8 @@ public interface MakerAuditRepository extends JpaRepository<MakerAudit, Long> {
                 String makerName, String makerAddress, String makerPerson, String makerPhone);
 
         Optional<List<MakerAudit>> findByMakerId(Long makerId);
-//
+
+        void deleteByMakerId(Long makerId);
 //        // sku-no로 조회
 //        Product findBySkuNo(String SkuNo);
 //

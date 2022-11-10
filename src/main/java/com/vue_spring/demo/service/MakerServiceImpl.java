@@ -7,6 +7,7 @@ import com.vue_spring.demo.Repository.MakerChangeReplyRepository;
 import com.vue_spring.demo.Repository.MakerRepository;
 import com.vue_spring.demo.component.FileHandler;
 import com.vue_spring.demo.model.*;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 import org.springframework.stereotype.Service;
@@ -17,7 +18,7 @@ import java.util.List;
 import java.util.Optional;
 import java.util.Set;
 
-
+@Slf4j
 @Repository
 @Service
 public class MakerServiceImpl implements MakerService {
@@ -49,7 +50,7 @@ public class MakerServiceImpl implements MakerService {
 
     // 신규 제조사 추가
     public Boolean insertMaker(Maker maker, String makerChangeContent) {
-        System.out.println("제조사 추가 서비스 : " + maker);
+        log.info("제조사 추가 서비스 : " + maker);
 
         try{
             // 제품 변경내역이 있으면 제품 변경내역 저장
@@ -85,18 +86,18 @@ public class MakerServiceImpl implements MakerService {
 
     // 제조사 정보 수정
     public Boolean updateMaker(Maker maker, String makerChangeContent){
-        System.out.println("제조사 정보 수정 서비스 : " + maker);
+        log.info("제조사 정보 수정 서비스 : " + maker);
 
         // 제조사 조회 확인
         boolean check = checkId(maker.getId());
 
         // 조회된 데이터 없을 경우
         if(!check){
-            System.out.println("데이터 없음. 수정 불가");
+            log.info("데이터 없음. 수정 불가");
             return false;
         }
         else{
-            System.out.println("데이터 있음. 수정 진행.");
+            log.info("데이터 있음. 수정 진행.");
 
             // 상품 리플 정보 있는지 확인
             boolean existReply = makerChangeReplyRepository.existsByMakerId(maker.getId());
@@ -131,18 +132,18 @@ public class MakerServiceImpl implements MakerService {
 
     // 제조사 삭제하기
     public Boolean deleteMaker(long id){
-        System.out.println("제조사 삭제 서비스: " + id);
+        log.info("제조사 삭제 서비스: " + id);
 
         // 제조사 조회 확인
         boolean check = checkId(id);
 
         // 조회된 데이터 없을 경우
         if(!check){
-            System.out.println("데이터 없음. 삭제 불가");
+            log.info("데이터 없음. 삭제 불가");
             return false;
         }
         else{
-            System.out.println("데이터 있음. 삭제 진행.");
+            log.info("데이터 있음. 삭제 진행.");
             // 제조사 히스토리 삭제(리플)
             makerChangeReplyRepository.deleteByMakerId(id);
 
@@ -159,7 +160,7 @@ public class MakerServiceImpl implements MakerService {
             }
 
             // 제조사 점검 내역 삭제
-            makerAuditRepository.deleteById(id);
+            makerAuditRepository.deleteByMakerId(id);
             // 제조사 정보 삭제
             makerRepository.deleteById(id);
             return true;
@@ -173,19 +174,19 @@ public class MakerServiceImpl implements MakerService {
                                            String makerPhone,
                                            Set<String> className){
 
-        System.out.println("MakerServiceImpl 제조사 조회");
-        System.out.println("makerName : " + makerName );
-        System.out.println("tempBusinessType : " + className );
+        log.info("MakerServiceImpl 제조사 조회");
+        log.info("makerName : " + makerName );
+        log.info("tempBusinessType : " + className );
 
         // 분류 검색 구분에 따른 조회 방법을 다르게 함
         if(className.size() < 1){
-            System.out.println("제품분류 없음.");
+            log.info("제품분류 없음.");
             // 분류 조회 하지 않을 경우
             return (Optional<List<Maker>>) makerRepository
                 .findByMakerNameContainingAndMakerAddressContainingAndMakerPersonContainingAndMakerPhoneContainingIgnoreCase(
                         makerName, makerAddress, makerPerson, makerPhone);
         }else{
-            System.out.println("제품분류 있음.");
+            log.info("제품분류 있음.");
             // 분류 조회할 경우
             return (Optional<List<Maker>>) makerRepository
                     .findByMakerNameContainingAndMakerAddressContainingAndMakerPersonContainingAndMakerPhoneContainingIgnoreCaseAndtempBusinessType(
@@ -202,8 +203,8 @@ public class MakerServiceImpl implements MakerService {
     // 제품 변경 리플 내용 수정
     public Boolean updateMakerReply(ReplyDTO replyDTO) throws Exception{
 
-        System.out.println("ProductServicrImpl");
-        System.out.println("제품 변경 리플 내용 수정");
+        log.info("ProductServicrImpl");
+        log.info("제품 변경 리플 내용 수정");
         Optional<Maker> optMaker = makerRepository.findById(replyDTO.getId());
         Maker maker = optMaker.get();
 
@@ -241,8 +242,8 @@ public class MakerServiceImpl implements MakerService {
     // 제품 변경 리플 내용 삭제
     public Boolean deleteMakerReply(Long makerId, Long[] makerReplyId) throws Exception{
 
-        System.out.println("ProductServicrImpl");
-        System.out.println("제품 변경 리플 내용 삭제");
+        log.info("ProductServicrImpl");
+        log.info("제품 변경 리플 내용 삭제");
         Optional<Maker> optMaker = makerRepository.findById(makerId);
         Maker maker = optMaker.get();
 
