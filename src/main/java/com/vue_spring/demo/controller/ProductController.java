@@ -2,67 +2,96 @@ package com.vue_spring.demo.controller;
 
 import java.io.UnsupportedEncodingException;
 import java.net.URLDecoder;
-import java.nio.charset.StandardCharsets;
 import java.util.*;
 
-import com.vue_spring.demo.DAO.ProductDAO;
+import com.vue_spring.demo.DAO.ResponseDAO;
+import com.vue_spring.demo.DTO.ReplyDTO;
 import com.vue_spring.demo.DTO.ResponseDto;
 import com.vue_spring.demo.model.Product;
-import com.vue_spring.demo.service.ProductServicrImpl;
 
-import org.springframework.beans.factory.annotation.Autowired;
+import com.vue_spring.demo.service.ProductServiceImpl;
+import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
+
 
 @RestController
 @RequestMapping("product")
+@RequiredArgsConstructor
+@Slf4j
 public class ProductController {
 
-        @Autowired
-        private ProductServicrImpl productServicrImpl;
+        private final ProductServiceImpl productServiceImpl;
 
         // 제품 추가하기
-        @PostMapping("/insertProduct")
-        public ResponseDto<Integer> insertProduct(@RequestBody Product product) {
-                System.out.println("Controller 접근됨. /insertProduct");
-                System.out.println(product);
-
-                boolean check = productServicrImpl.insertProduct(product);
+        @PostMapping(value = "/insertProduct", consumes = { MediaType.APPLICATION_JSON_VALUE, MediaType.MULTIPART_FORM_DATA_VALUE })
+        public ResponseDto<Integer> insertProduct(@RequestPart("data") Product product,
+                                                  @RequestPart("productChangeContent") String productChangeReply,
+                                                  @RequestPart(value = "image",required = false) List<MultipartFile> imgFiles
+        ) throws Exception {
+                log.info("Controller 접근됨. /insertProduct");
+                log.info(String.valueOf(product));
+                productChangeReply = productChangeReply.replaceAll("\"","");
+                log.info("productChangeReply : " + productChangeReply);
+                log.info("imgFiles : " + imgFiles);
 
                 int data = 0;
 
+                Boolean check = productServiceImpl.insertProduct(product, imgFiles, productChangeReply);
+
+                log.info("check : " + check);
+
+                // 저장 성공
                 if(check) data=1;
+                // 저장 실패
                 else data=0;
 
+                log.info("data : " + data);
                 return new ResponseDto<Integer>(HttpStatus.OK.value(),data);
         }
 
         // 제품 수정하기
-        @PutMapping("/updateProduct")
-        public ResponseDto<Integer> updateProduct(@RequestBody Product product) {
-                System.out.println("Controller 접근됨. /updateProduct");
-                System.out.println(product.getId());
-
-                boolean check = productServicrImpl.updateProduct(product);
+        @PutMapping(value = "/updateProduct",consumes = { MediaType.APPLICATION_JSON_VALUE, MediaType.MULTIPART_FORM_DATA_VALUE })
+        public ResponseDto<Integer> updateProduct(@RequestPart("data") Product product,
+                                                  @RequestPart("productId") long productId,
+                                                  @RequestPart("productChangeContent") String productChangeReply,
+                                                  @RequestPart(value = "image",required = false) List<MultipartFile> imgFiles,
+                                                  @RequestParam(value = "imgId",required = false) List<Long> imgId
+        ) throws Exception {
+                log.info("Controller 접근됨. /updateInspect");
+                log.info("imgFiles : " + imgFiles);
+                log.info("productId : " + productId);
+                log.info("imgId : " + imgId);
+                productChangeReply = productChangeReply.replaceAll("\"","");
+                log.info("productChangeReply : " + productChangeReply);
 
                 int data = 0;
 
-                if(check) data=1;
-                else data=0;
+                // 검수 내용이 있으면 수정 진행
+                Boolean check = productServiceImpl.updateProduct(product, imgFiles, imgId, productChangeReply);
+                log.info("check : " + check);
 
+                // 저장 성공
+                if (check) data = 1;
+                        // 저장 실패
+                else data = 0;
                 return new ResponseDto<Integer>(HttpStatus.OK.value(),data);
         }
+
 
         // 제품 삭제하기
         @DeleteMapping("/deleteProduct")
         public ResponseDto<Integer> deleteProduct(@RequestParam(value = "id", required = false, defaultValue = "") long id,
                                                   @RequestParam(value = "skuNo", required = false, defaultValue = "") String skuNo) {
-                System.out.println("Controller 접근됨. /deleteProduct");
-                System.out.println(skuNo);
+                log.info("Controller 접근됨. /deleteProduct");
+                log.info(skuNo);
 
-                boolean check = productServicrImpl.deleteProduct(id, skuNo);
+                boolean check = productServiceImpl.deleteProduct(id);
 
-                System.out.println("check : " + check );
+                log.info("check : " + check );
 
                 int data = 0;
 
@@ -75,12 +104,13 @@ public class ProductController {
         // 제품 중복 조회
         @GetMapping("/checkProduct")
         public ResponseDto<Integer> checkProduct(@RequestParam(value = "skuNo", required = true, defaultValue = "") String skuNo) {
-                System.out.println("Controller 접근됨. /checkProduct");
-                System.out.println(skuNo);
+                log.info("Controller 접근됨. /checkProduct");
+                log.info(skuNo);
 
-                boolean check = productServicrImpl.checkSkuNo(skuNo);
+                boolean check = productServiceImpl.checkSkuNo(skuNo);
 
-                System.out.println(check);
+                log.info("check : " + check );
+
                 int data = 0;
 
                 if(check) data=1;
@@ -91,53 +121,155 @@ public class ProductController {
                 return new ResponseDto<Integer>(HttpStatus.OK.value(),data);
         }
 
-//        // 모든 제품 조회
-//        @GetMapping("/selectAllProducts")
-//        public ProductDAO<List<Product>> selectAllProductlist() {
-//                System.out.println("Controller 접근됨. /selectAllProducts");
-//                Optional<List<Product>> products = Optional.ofNullable(productServicrImpl.findProductAll());
-//                System.out.println("Service 조회 완료");
-//                // System.out.println(products);
-//                return ProductDAO.<List<Product>>builder()
-//                                .data(products)
-//                                .build();
-//        }
 
-        // 일부 제품 조회
+        // 일부 제품 조회. 처음 조회했을 때 진행됨.
         @GetMapping("/selectProducts")
-        public ProductDAO<List<Product>> selectProductlist(
+        public ResponseDAO<List<Product>> selectProducts(
                 @RequestParam(value = "skuNo", required = false, defaultValue = "") String skuNo,
                 @RequestParam(value = "productName", required = false, defaultValue = "") String productName,
                 @RequestParam(value = "brandName", required = false, defaultValue = "") String brandName,
                 @RequestParam(value = "maker", required = false, defaultValue = "") String maker,
-                @RequestParam(value = "className", required = false, defaultValue = "") List<String> className) {
+                @RequestParam(value = "className", required = false, defaultValue = "") List<String> className,
+                @RequestParam(value = "downExcel", required = false, defaultValue = "") String downExcel) {
 
+//                @RequestParam(value = "page", defaultValue = "") String page,
+//
                 List<String> tempClass = new ArrayList<>();
 
-                System.out.println("Controller 접근됨. /selectProducts");
-                System.out.println("skuNo : " + skuNo + ", productName : " + productName + ", brandName : " + brandName + ", maker : " + maker );
-
-
+                log.info("Controller 접근됨. /selectProducts");
+                log.info("skuNo : " + skuNo + ", productName : " + productName + ", brandName : " + brandName + ", maker : " + maker );
+                log.info("downExcel : {}", downExcel);
+//                log.info("page : " + page + ", productCurseId : " + productCurseId);
+                // 분류 디코딩
                 for(int i = 0; i< className.size(); i++){
                         try {
-                                System.out.println("selectChk : " + URLDecoder.decode(className.get(i), "UTF-8"));
+                                log.info("selectChk : " + URLDecoder.decode(className.get(i), "UTF-8"));
                                 tempClass.add(URLDecoder.decode(className.get(i), "UTF-8"));
                         } catch (UnsupportedEncodingException e) {
                                 e.printStackTrace();
                         }
                 }
 
-                System.out.println("tempChk : " + tempClass );
+                log.info("tempChk : " + tempClass );
+
+                long start = System.currentTimeMillis();
+                System.out.println("@@@ Service 시작");
 
                 Set<String> tempClassName = new HashSet<>(tempClass);
-                System.out.println("tempSelectChk : " + tempClassName );
-                Optional<List<Product>> products = (Optional<List<Product>>) productServicrImpl.findProduct(skuNo,
-                                productName,
-                                brandName, maker, tempClassName);
-                System.out.println("Service 조회 완료");
-                // System.out.println(products);
-                return ProductDAO.<List<Product>>builder()
+                log.info("tempSelectChk : " + tempClassName );
+
+                // excel 다운 일경우
+                if(downExcel.equals("excel")){
+
+                        // excel 다운
+                        Optional<List<Product>> products = (Optional<List<Product>>) productServiceImpl.findProductExcel(
+                                skuNo, productName,brandName, maker, tempClassName);
+
+                        // System.out.println(products);
+                        return ResponseDAO.<List<Product>>builder()
                                 .data(products)
                                 .build();
+                }
+
+                // 제품 조회 일 경우
+                else{
+                        // 처음 15번만 조회
+                        Optional<List<Product>> products = (Optional<List<Product>>) productServiceImpl.findProduct(
+                                skuNo, productName,brandName, maker, tempClassName);
+
+                        // 제품 개수 조회, id 리스트 조회
+                        int productSelectCnt = 0;
+                        List<Long> listId = new ArrayList<>();
+                        List<List<Long>> pageListId = new ArrayList<>();
+
+                        // id들 모두 조회
+                        List<Long> tmpId = new ArrayList<>();
+                        tmpId = productServiceImpl.findSelectId(skuNo, productName,brandName, maker, tempClassName);
+                        // 처음 조회 시 진행(총 검색 수량 확인. vue의 페이지 처리를 위함)
+                        productSelectCnt = tmpId.size();
+
+                        int cnt = 0;
+                        int len = tmpId.size();
+                        int last = len - 1;
+
+                        // 15개씩 정리해서 데이터를 넘김
+                        for(int i = 0; i < len; i++){
+                                if(cnt != 15){
+                                        cnt++;
+                                        listId.add(tmpId.get(i));
+                                } else{
+                                        pageListId.add(listId);
+                                        listId = new ArrayList<>();
+                                        i--;
+                                        cnt = 0;
+                                }
+
+                                if(i == last){
+                                        pageListId.add(listId);
+                                }
+                        }
+
+                        log.info("Service 조회 완료");
+                        long end = System.currentTimeMillis();
+                        System.out.println("@@@ Service 완료 실행 시간 : " + (end - start) / 1000.0);
+
+                        // System.out.println(products);
+                        return ResponseDAO.<List<Product>>builder()
+                                .data(products)
+                                .selectCnt(productSelectCnt)
+                                .idList(pageListId)
+                                .build();
+                }
+
+
         }
+
+        // page에 따라 데이터 조회
+        @GetMapping("/selectPageProduct")
+        public ResponseDAO<List<Product>> selectPageProduct(
+        @RequestParam(value = "productCurseId", defaultValue = "") Long[] productCurseId){
+
+//                @RequestParam(value = "productCurseId", defaultValue = "0") List<Long> productCurseId
+
+                Optional<List<Product>> products = (Optional<List<Product>>) productServiceImpl.findCurseProduct(productCurseId);
+
+                return ResponseDAO.<List<Product>>builder()
+                        .data(products)
+                        .build();
+        }
+
+        // 제품 변경 리플 수정하기
+        @PutMapping("/updateProductReply")
+        public ResponseDto<Integer> updateProductReply(@RequestBody ReplyDTO productReplyDTO) throws Exception {
+                System.out.println("Controller 접근됨. /updateProductReply");
+                System.out.println(productReplyDTO);
+
+                int data = 0;
+
+                boolean check = productServiceImpl.updateProductReply(productReplyDTO);
+
+                if (check) data = 1;
+                else data = 0;
+
+                return new ResponseDto<Integer>(HttpStatus.OK.value(),data);
+        }
+
+        // 제품 삭제하기
+        @DeleteMapping("/deleteProductReply")
+        public ResponseDto<Integer> deleteProductReply(@RequestParam(value = "productId", defaultValue = "") Long productId,
+                                                       @RequestParam(value = "productReplyId", defaultValue = "") Long[] productReplyId) throws Exception {
+                log.info("Controller 접근됨. /deleteProductReply");
+
+                boolean check = productServiceImpl.deleteProductReply(productId, productReplyId);
+
+                log.info("check : " + check );
+
+                int data = 0;
+
+                if(check) data=1;
+                else data=0;
+
+                return new ResponseDto<Integer>(HttpStatus.OK.value(),data);
+        }
+
 }

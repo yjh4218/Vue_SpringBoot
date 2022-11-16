@@ -1,9 +1,12 @@
 package com.vue_spring.demo.controller;
 
 import com.vue_spring.demo.DAO.MakerDAO;
+import com.vue_spring.demo.DTO.MakerDTO;
+import com.vue_spring.demo.DTO.ReplyDTO;
 import com.vue_spring.demo.DTO.ResponseDto;
 import com.vue_spring.demo.model.Maker;
 import com.vue_spring.demo.service.MakerServiceImpl;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
@@ -12,6 +15,7 @@ import java.io.UnsupportedEncodingException;
 import java.net.URLDecoder;
 import java.util.*;
 
+@Slf4j
 @RestController
 @RequestMapping("maker")
 public class MakerController {
@@ -20,11 +24,24 @@ public class MakerController {
 
     // 제조사 추가하기
     @PostMapping("/insertMaker")
-    public ResponseDto<Integer> insertMaker(@RequestBody Maker maker) {
+    public ResponseDto<Integer> insertMaker(@RequestBody MakerDTO makerDTO) {
         System.out.println("Controller 접근됨. /insertMaker");
-        System.out.println(maker);
+        System.out.println(makerDTO);
 
-        boolean check = makerServicImpl.insertMaker(maker);
+        Maker maker = Maker.builder()
+                .makerName(makerDTO.getMakerName())
+                .makerAddress(makerDTO.getMakerAddress())
+                .className(makerDTO.getClassName())
+                .process(makerDTO.getProcess())
+                .importProduct(makerDTO.getImportProduct())
+                .sales(makerDTO.getSales())
+                .makerPerson(makerDTO.getMakerPerson())
+                .makerPhone(makerDTO.getMakerPhone())
+                .makerEmail(makerDTO.getMakerEmail())
+                .note(makerDTO.getNote())
+                .build();
+
+        boolean check = makerServicImpl.insertMaker(maker, makerDTO.getMakerChangeContent());
 
         int data = 0;
 
@@ -36,11 +53,25 @@ public class MakerController {
 //
     // 제조사 수정하기
     @PutMapping("/updateMaker")
-    public ResponseDto<Integer> updateMaker(@RequestBody Maker maker) {
+    public ResponseDto<Integer> updateMaker(@RequestBody MakerDTO makerDTO) {
         System.out.println("Controller 접근됨. /updateMaker");
-        System.out.println(maker.getId());
+//        System.out.println(maker.getId());
 
-        boolean check = makerServicImpl.updateMaker(maker);
+        Maker maker = Maker.builder()
+                .id(makerDTO.getId())
+                .makerName(makerDTO.getMakerName())
+                .makerAddress(makerDTO.getMakerAddress())
+                .className(makerDTO.getClassName())
+                .process(makerDTO.getProcess())
+                .importProduct(makerDTO.getImportProduct())
+                .sales(makerDTO.getSales())
+                .makerPerson(makerDTO.getMakerPerson())
+                .makerPhone(makerDTO.getMakerPhone())
+                .makerEmail(makerDTO.getMakerEmail())
+                .note(makerDTO.getNote())
+                .build();
+
+        boolean check = makerServicImpl.updateMaker(maker, makerDTO.getMakerChangeContent());
 
         int data = 0;
 
@@ -75,7 +106,8 @@ public class MakerController {
             @RequestParam(value = "makerAddress", required = false, defaultValue = "") String makerAddress,
             @RequestParam(value = "makerPerson", required = false, defaultValue = "") String makerPerson,
             @RequestParam(value = "makerPhone", required = false, defaultValue = "") String makerPhone,
-            @RequestParam(value = "businessType", required = false, defaultValue = "") List<String> businessType) {
+            @RequestParam(value = "className", required = false, defaultValue = "") List<String> className,
+            @RequestParam(value = "newProduct", required = false, defaultValue = "") String newProduct) {
 
         List<String> tempType = new ArrayList<>();
 
@@ -84,10 +116,10 @@ public class MakerController {
                 ", makerPerson : " + makerPerson + ", makerPhone : " + makerPhone );
 
 
-        for(int i = 0; i< businessType.size(); i++){
+        for(int i = 0; i< className.size(); i++){
             try {
-                System.out.println("selectChk : " + URLDecoder.decode(businessType.get(i), "UTF-8"));
-                tempType.add(URLDecoder.decode(businessType.get(i), "UTF-8"));
+                System.out.println("selectChk : " + URLDecoder.decode(className.get(i), "UTF-8"));
+                tempType.add(URLDecoder.decode(className.get(i), "UTF-8"));
             } catch (UnsupportedEncodingException e) {
                 e.printStackTrace();
             }
@@ -95,15 +127,61 @@ public class MakerController {
 
         System.out.println("tempType : " + tempType );
 
-        Set<String> tempBusinessType = new HashSet<>(tempType);
-        System.out.println("tempSelectChk : " + tempBusinessType );
-        Optional<List<Maker>> products = (Optional<List<Maker>>) makerServicImpl.findMaker(makerName,
-                makerAddress, makerPerson, makerPhone, tempBusinessType);
+        Set<String> tempClassName = new HashSet<>(tempType);
+        System.out.println("tempSelectChk : " + tempClassName );
+        Optional<List<Maker>> makerList = (Optional<List<Maker>>) makerServicImpl.findMaker(makerName,
+                makerAddress, makerPerson, makerPhone, tempClassName);
         System.out.println("Service 조회 완료");
-        // System.out.println(products);
-        return MakerDAO.<List<Maker>>builder()
-                .data(products)
-                .build();
+
+        log.info("newProduct : {}", newProduct);
+
+        if(newProduct.equals("product")){
+            return MakerDAO.<List<Maker>>builder()
+                    .data(makerList)
+                    .message("product")
+                    .build();
+        } else{
+            return MakerDAO.<List<Maker>>builder()
+                    .data(makerList)
+                    .build();
+        }
+
     }
+
+
+    // 제품 변경 리플 수정하기
+    @PutMapping("/updateMakerReply")
+    public ResponseDto<Integer> updateProductReply(@RequestBody ReplyDTO productReplyDTO) throws Exception {
+        System.out.println("Controller 접근됨. /updateProductReply");
+        System.out.println(productReplyDTO);
+
+        int data = 0;
+
+        boolean check = makerServicImpl.updateMakerReply(productReplyDTO);
+
+        if (check) data = 1;
+        else data = 0;
+
+        return new ResponseDto<Integer>(HttpStatus.OK.value(),data);
+    }
+
+    // 제품 삭제하기
+    @DeleteMapping("/deleteMakerReply")
+    public ResponseDto<Integer> deleteProductReply(@RequestParam(value = "makerId", defaultValue = "") Long makerId,
+                                                   @RequestParam(value = "makerReplyId", defaultValue = "") Long[] makerReplyId) throws Exception {
+        log.info("Controller 접근됨. /deleteProductReply");
+
+        boolean check = makerServicImpl.deleteMakerReply(makerId, makerReplyId);
+
+        log.info("check : " + check );
+
+        int data = 0;
+
+        if(check) data=1;
+        else data=0;
+
+        return new ResponseDto<Integer>(HttpStatus.OK.value(),data);
+    }
+
 
 }

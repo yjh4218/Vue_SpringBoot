@@ -14,15 +14,22 @@ import java.util.Set;
 public interface InspectService {
 
 
-    public Optional<List<Inspect>> findInspect(List<Long> productId, Date beforeDate, Date afterDate);
+    public List<Long> findInspect(List<Long> productId, Date beforeDate, Date afterDate);
+
+    public Optional<List<Inspect>> findInspect(Date beforeDate, Date afterDate);
+
+    public Optional<List<Inspect>> findInspect(Long[] inspectCurseId);
 
     public Boolean insertInspect(Inspect inspect, List<MultipartFile> imgFiles) throws Exception;
 
-    public Boolean updateInspect(Inspect inspect, List<MultipartFile> imgFiles) throws Exception;
+    public Boolean updateInspect(Inspect inspect, List<MultipartFile> imgFiles, List<Long> imgId) throws Exception;
 
     public Boolean checkInspect(long id);
 
     public Boolean checkInspect(Product product, Date inspectDate);
 
     public Boolean deleteInspect(long id);
+
+    public Boolean findProductInspect(long id);
+
 }
