@@ -107,7 +107,9 @@ public class InspectServiceImpl implements InspectService {
                 // 사용자가 모든 파일 삭제했을 경우
                 if(imgId == null){
                     for (InspectImage image : exiImg.get()) {
-                        File file = new File(image.getImgFilePath());
+                        File file = new File(image.getImgFileInPath());
+                        file.delete();
+                        file = new File(image.getImgFileOutPath());
                         file.delete();
 
                         // DB의 파일 삭제
@@ -134,7 +136,9 @@ public class InspectServiceImpl implements InspectService {
                             // 경로에 있는 파일 삭제
                             log.info("사용자가 삭제한 이미지 삭제");
                             log.info("image : {}",image);
-                            File file = new File(image.getImgFilePath());
+                            File file = new File(image.getImgFileInPath());
+                            file.delete();
+                            file = new File(image.getImgFileOutPath());
                             file.delete();
 
                             // DB의 파일 삭제
@@ -211,7 +215,9 @@ public class InspectServiceImpl implements InspectService {
                 Optional<List<InspectImage>> deleteImg = inspectImageRepository.findByInspectId(id);
                 // 경로에 지정된 파일 삭제
                 for(InspectImage image : deleteImg.get()){
-                    File file = new File(image.getImgFilePath());
+                    File file = new File(image.getImgFileInPath());
+                    file.delete();
+                    file = new File(image.getImgFileOutPath());
                     file.delete();
                 }
                 // DB의 파일 삭제

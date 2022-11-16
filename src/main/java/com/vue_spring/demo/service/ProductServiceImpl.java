@@ -204,7 +204,9 @@ public class ProductServiceImpl implements ProductService {
                 // 사용자가 모든 파일 삭제했을 경우
                 if(fileId == null){
                     for (ProductFile tmpFile : findFileData) {
-                        File file = new File(tmpFile.getFilePath());
+                        File file = new File(tmpFile.getFileInPath());
+                        file.delete();
+                        file = new File(tmpFile.getFileOutPath());
                         file.delete();
 
                         // DB의 파일 삭제
@@ -234,7 +236,9 @@ public class ProductServiceImpl implements ProductService {
                             // 경로에 있는 파일 삭제
                             log.info("사용자가 삭제한 이미지 삭제");
                             log.info("tmpFile : {}", tmpFile);
-                            File file = new File(tmpFile.getFilePath());
+                            File file = new File(tmpFile.getFileInPath());
+                            file.delete();
+                            file = new File(tmpFile.getFileOutPath());
                             file.delete();
 
                             // DB의 파일 삭제
@@ -331,7 +335,9 @@ public class ProductServiceImpl implements ProductService {
                 Optional<List<ProductFile>> deleteImg = productFileRepository.findByProductId(id);
                 // 경로에 지정된 파일 삭제
                 for(ProductFile image : deleteImg.get()){
-                    File file = new File(image.getFilePath());
+                    File file = new File(image.getFileInPath());
+                    file.delete();
+                    file = new File(image.getFileOutPath());
                     file.delete();
                 }
                 // DB의 파일 삭제

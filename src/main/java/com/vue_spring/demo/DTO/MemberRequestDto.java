@@ -19,11 +19,15 @@ public class MemberRequestDto {
     @JsonProperty("password")
     private String password;
 
+
+    @JsonProperty("role")
+    private Role role;
+
     public Member toMember(PasswordEncoder passwordEncoder) {
         return Member.builder()
                 .email(email)
                 .password(passwordEncoder.encode(password))
-                .role(Role.USER)
+                .role(role)
                 .build();
     }
 
@@ -41,6 +45,14 @@ public class MemberRequestDto {
 
     public void setPassword(String password) {
         this.password = password;
+    }
+
+    public Role getRole() {
+        return role;
+    }
+
+    public void setRole(Role role) {
+        this.role = role;
     }
 
     public UsernamePasswordAuthenticationToken toAuthentication() {

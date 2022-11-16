@@ -1,6 +1,6 @@
 package com.vue_spring.demo.component;
 
-import com.vue_spring.demo.DTO.ImageDTO;
+import com.vue_spring.demo.DTO.FileDTO;
 import com.vue_spring.demo.model.ClaimImage;
 import com.vue_spring.demo.model.InspectImage;
 import com.vue_spring.demo.model.MakerAuditFile;
@@ -12,6 +12,8 @@ import org.springframework.util.ObjectUtils;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.File;
+import java.nio.file.Files;
+import java.nio.file.StandardCopyOption;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
@@ -42,21 +44,38 @@ public class FileHandler {
 //            String absolutePath = new File("").getAbsolutePath() + "/";
 
             // 파일을 저장할 세부 경로 지정
-//            String path = "vue_front/src/assets/images" + File.separator + current_date;
+//            String inPath = "vue_front\\src\\assets\\fileData" + File.separator + current_date;
 
-            String path = "E:\\fileImage\\" + current_date;
+            String inPath = "vue_front\\public\\fileData" + File.separator + current_date;
+
+            String outPath = "E:\\fileData\\" + current_date;
+
+            // 서버 파일용
+//            String path = "C:\\QCFolder\\fileData\\" + current_date;
+
 //            String path = "vue_front" + File.separator + "src" + File.separator + "assets" + File.separator + "images" + File.separator + current_date;
-            File file = new File(path);
+            File outFile = new File(outPath);
+            File inFile = new File(inPath);
 
             // 디렉터리가 존재하지 않을 경우
             log.info("파일 디렉토리 확인");
-            if(!file.exists()) {
-                boolean wasSuccessful = file.mkdirs();
+            if(!outFile.exists()) {
+                boolean wasSuccessful = outFile.mkdirs();
 
                 // 디렉터리 생성에 실패했을 경우
                 if(!wasSuccessful)
                     System.out.println("file: was not successful");
             }
+
+            log.info("파일 디렉토리 확인");
+            if(!inFile.exists()) {
+                boolean wasSuccessful = inFile.mkdirs();
+
+                // 디렉터리 생성에 실패했을 경우
+                if(!wasSuccessful)
+                    System.out.println("file: was not successful");
+            }
+
 
             // 다중 파일 처리
             for(MultipartFile multipartFile : multipartFiles) {
@@ -117,51 +136,63 @@ public class FileHandler {
                 String new_file_name = System.nanoTime() + originalFileExtension;
 
                 // 파일 DTO 생성
-                ImageDTO photoDto = ImageDTO.builder()
-                        .imgFileName(multipartFile.getOriginalFilename())
-                        .imgFilePath(path + File.separator + new_file_name)
-                        .imgFileSize(multipartFile.getSize())
+                FileDTO fileDTO = FileDTO.builder()
+                        .fileName(multipartFile.getOriginalFilename())
+                        .fileOutPath(outPath + File.separator + new_file_name)
+                        .fileInPath(inPath + File.separator + new_file_name)
+                        .fileSize(multipartFile.getSize())
                         .build();
 
                 if(t instanceof ProductFile){
-                    ProductFile fileData = new ProductFile(
-                        photoDto.getImgFileName(),
-                        photoDto.getImgFilePath(),
-                        photoDto.getImgFileSize()
-                    );
+                    ProductFile fileData = ProductFile.builder()
+                            .fileName(fileDTO.getFileName())
+                            .fileInPath(fileDTO.getFileInPath())
+                            .fileOutPath(fileDTO.getFileOutPath())
+                            .fileSize(fileDTO.getFileSize())
+                            .build();
+
                     fileList.add((T) fileData);
                 } else if(t instanceof InspectImage){
-                    InspectImage fileData = new InspectImage(
-                            photoDto.getImgFileName(),
-                            photoDto.getImgFilePath(),
-                            photoDto.getImgFileSize()
-                    );
+                    InspectImage fileData = InspectImage.builder()
+                            .imgFileName(fileDTO.getFileName())
+                            .imgFileInPath(fileDTO.getFileInPath())
+                            .imgFileOutPath(fileDTO.getFileOutPath())
+                            .imgFileSize(fileDTO.getFileSize())
+                            .build();
                     fileList.add((T) fileData);
                 } else if(t instanceof ClaimImage){
-                    ClaimImage fileData = new ClaimImage(
-                            photoDto.getImgFileName(),
-                            photoDto.getImgFilePath(),
-                            photoDto.getImgFileSize()
-                    );
+                    ClaimImage fileData = ClaimImage.builder()
+                            .imgFileName(fileDTO.getFileName())
+                            .imgFileInPath(fileDTO.getFileInPath())
+                            .imgFileOutPath(fileDTO.getFileOutPath())
+                            .imgFileSize(fileDTO.getFileSize())
+                            .build();
                     fileList.add((T) fileData);
                 } else if(t instanceof MakerAuditFile){
-                    MakerAuditFile fileData = new MakerAuditFile(
-                            photoDto.getImgFileName(),
-                            photoDto.getImgFilePath(),
-                            photoDto.getImgFileSize()
-                    );
+                    MakerAuditFile fileData = MakerAuditFile.builder()
+                            .fileName(fileDTO.getFileName())
+                            .fileInPath(fileDTO.getFileInPath())
+                            .fileOutPath(fileDTO.getFileOutPath())
+                            .fileSize(fileDTO.getFileSize())
+                            .build();
                     fileList.add((T) fileData);
                 }
 
                 log.info("파일 데이터 저장");
                 // 업로드 한 파일 데이터를 지정한 파일에 저장
 //                file = new File(absolutePath + path + File.separator + new_file_name);
-                file = new File(  path +  "\\" + new_file_name);
-                multipartFile.transferTo(file);
+                outFile = new File(  outPath +  "\\" + new_file_name);
+                multipartFile.transferTo(outFile);
 
                 // 파일 권한 설정(쓰기, 읽기)
-                file.setWritable(true);
-                file.setReadable(true);
+                outFile.setWritable(true);
+                outFile.setReadable(true);
+
+                inFile = new File(  inPath +  "\\" + new_file_name);
+                Files.copy(outFile.toPath(), inFile.toPath(), StandardCopyOption.REPLACE_EXISTING);
+                // 파일 권한 설정(쓰기, 읽기)
+                inFile.setWritable(true);
+                inFile.setReadable(true);
             }
         }
         return fileList;

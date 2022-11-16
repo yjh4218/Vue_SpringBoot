@@ -153,7 +153,9 @@ public class MakerAuditServiceImpl implements MakerAuditService {
             // 사용자가 모든 파일 삭제했을 경우
             if(fileId == null){
                 for (MakerAuditFile tmpFile : exiMakerAuditFile) {
-                    File file = new File(tmpFile.getFilePath());
+                    File file = new File(tmpFile.getFileInPath());
+                    file.delete();
+                    file = new File(tmpFile.getFileOutPath());
                     file.delete();
 
                     // DB의 파일 삭제
@@ -182,7 +184,9 @@ public class MakerAuditServiceImpl implements MakerAuditService {
                         // 경로에 있는 파일 삭제
                         log.info("사용자가 삭제한 파일 삭제");
                         log.info("tmpFile : {}", tmpFile);
-                        File file = new File(tmpFile.getFilePath());
+                        File file = new File(tmpFile.getFileInPath());
+                        file.delete();
+                        file = new File(tmpFile.getFileOutPath());
                         file.delete();
 
                         // DB의 파일 삭제
@@ -259,7 +263,9 @@ public class MakerAuditServiceImpl implements MakerAuditService {
 
             // 파일 데이터들 삭제
             for (MakerAuditFile tmpFile : exiMakerAuditFile) {
-                File file = new File(tmpFile.getFilePath());
+                File file = new File(tmpFile.getFileInPath());
+                file.delete();
+                file = new File(tmpFile.getFileOutPath());
                 file.delete();
 
                 // DB의 파일 삭제

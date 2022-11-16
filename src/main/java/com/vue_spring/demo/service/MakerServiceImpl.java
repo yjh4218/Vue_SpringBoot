@@ -152,7 +152,9 @@ public class MakerServiceImpl implements MakerService {
 
             // 파일 데이터들 삭제
             for (MakerAuditFile tmpFile : exiMakerAuditFile) {
-                File file = new File(tmpFile.getFilePath());
+                File file = new File(tmpFile.getFileInPath());
+                file.delete();
+                file = new File(tmpFile.getFileOutPath());
                 file.delete();
 
                 // DB의 파일 삭제

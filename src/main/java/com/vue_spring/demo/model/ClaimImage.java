@@ -31,7 +31,11 @@ public class ClaimImage {
 
     // 파일 저장 경로
     @Column(nullable = true)
-    private String imgFilePath;
+    private String imgFileOutPath;
+
+    // 파일 저장 경로
+    @Column(nullable = true)
+    private String imgFileInPath;
 
     // 파일 사이즈
     @Column(nullable = true)
@@ -41,10 +45,11 @@ public class ClaimImage {
     @CreationTimestamp
     private Timestamp createDate;
 
-     @Builder
-    public ClaimImage(String imgFileName, String imgFilePath, Long imgFileSize){
+    @Builder
+    public ClaimImage(String imgFileName, String imgFileOutPath, String imgFileInPath, Long imgFileSize) {
         this.imgFileName = imgFileName;
-        this.imgFilePath = imgFilePath;
+        this.imgFileOutPath = imgFileOutPath;
+        this.imgFileInPath = imgFileInPath;
         this.imgFileSize = imgFileSize;
     }
 
@@ -72,12 +77,20 @@ public class ClaimImage {
         this.imgFileName = imgFileName;
     }
 
-    public String getImgFilePath() {
-        return imgFilePath;
+    public String getImgFileOutPath() {
+        return imgFileOutPath;
     }
 
-    public void setImgFilePath(String imgFilePath) {
-        this.imgFilePath = imgFilePath;
+    public void setImgFileOutPath(String imgFileOutPath) {
+        this.imgFileOutPath = imgFileOutPath;
+    }
+
+    public String getImgFileInPath() {
+        return imgFileInPath;
+    }
+
+    public void setImgFileInPath(String imgFileInPath) {
+        this.imgFileInPath = imgFileInPath;
     }
 
     public Long getImgFileSize() {
