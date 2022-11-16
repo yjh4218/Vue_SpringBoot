@@ -7,6 +7,7 @@ import com.vue_spring.demo.component.FileHandler;
 import com.vue_spring.demo.model.Inspect;
 import com.vue_spring.demo.model.InspectImage;
 import com.vue_spring.demo.model.Product;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 import org.springframework.stereotype.Service;
@@ -15,6 +16,7 @@ import org.springframework.web.multipart.MultipartFile;
 import java.io.File;
 import java.util.*;
 
+@Slf4j
 @Repository
 @Service
 public class InspectServiceImpl implements InspectService {
@@ -37,15 +39,15 @@ public class InspectServiceImpl implements InspectService {
 
      // 신규 검수 추가
     public Boolean insertInspect(Inspect inspect, List<MultipartFile> imgFiles) throws Exception {
-        System.out.println("검수 추가 서비스 : " + inspect);
-        System.out.println("검수 추가 서비스222 : " + imgFiles);
+        log.info("검수 추가 서비스 : " + inspect);
+        log.info("검수 추가 서비스222 : " + imgFiles);
 
         // 이미지 파일 경로 지정
         InspectImage tmpImage = new InspectImage();
         List<InspectImage> inspectList = fileHandler.parseFileInfo(imgFiles, tmpImage);
 
-        System.out.println(inspect);
-        System.out.println(inspectList);
+        log.info("inspect : {}", inspect);
+        log.info("inspectList : {}", inspectList);
 
         // JPA에 저장되는지 확인. 기본 값은 저장 실패로 해놓는다.
         boolean check = false;
@@ -79,7 +81,7 @@ public class InspectServiceImpl implements InspectService {
             }
 
         }catch (Exception e){
-            System.out.println(e.getMessage());
+            log.info(e.getMessage());
             //저장 실패
             check=false;
         }
@@ -89,8 +91,8 @@ public class InspectServiceImpl implements InspectService {
 
     // 검수 수정
     public Boolean updateInspect(Inspect inspect, List<MultipartFile> imgFiles, List<Long> imgId) throws Exception {
-        System.out.println("검수 수정 서비스 : " + inspect);
-        System.out.println("검수 수정 서비스222 : " + imgFiles);
+        log.info("검수 수정 서비스 : " + inspect);
+        log.info("검수 수정 서비스222 : " + imgFiles);
 
         boolean check = false;
 
@@ -130,8 +132,8 @@ public class InspectServiceImpl implements InspectService {
                         // 사용자가 삭제한 파일만 삭제
                         if (!checkImg) {
                             // 경로에 있는 파일 삭제
-                            System.out.println("사용자가 삭제한 이미지 삭제");
-                            System.out.println(image);
+                            log.info("사용자가 삭제한 이미지 삭제");
+                            log.info("image : {}",image);
                             File file = new File(image.getImgFilePath());
                             file.delete();
 
@@ -155,18 +157,18 @@ public class InspectServiceImpl implements InspectService {
                 InspectImage tmpImage = new InspectImage();
                 List<InspectImage> inspectList = fileHandler.parseFileInfo(imgFiles, tmpImage);
 
-                System.out.println("이미지 있음");
+                log.info("이미지 있음");
 
                 // 이미지 파일 저장.
                 for(InspectImage image : inspectList) {
 
-                    System.out.println("검수 추가 서비스33333 : " + inspectList);
-                    System.out.println("검수 추가 서비스44444 : " + inspect);
+                    log.info("검수 추가 서비스33333 : " + inspectList);
+                    log.info("검수 추가 서비스44444 : " + inspect);
 
                     image.setInspect(inspect);
                     inspect.addPhoto(image);
 
-                    System.out.println("image : " + image);
+                    log.info("image : " + image);
 
                     // image DB에 저장
                     inspectImageRepository.save(image);
@@ -179,7 +181,7 @@ public class InspectServiceImpl implements InspectService {
             // 저장 성공
             check = true;
         }catch (Exception e){
-            System.out.println(e.getMessage());
+            log.info(e.getMessage());
             check=false;
         }
 
@@ -188,18 +190,18 @@ public class InspectServiceImpl implements InspectService {
 
     // 검수 삭제하기
     public Boolean deleteInspect(long id){
-        System.out.println("검수 삭제 서비스 : " + id);
+        log.info("검수 삭제 서비스 : " + id);
 
         // 검수 데이터 있는지 확인
         boolean check = checkInspect(id);
 
         // 조회된 데이터 없을 경우
         if(!check){
-            System.out.println("데이터 없음. 삭제 불가");
+            log.info("데이터 없음. 삭제 불가");
             return false;
         }
         else{
-            System.out.println("데이터 있음. 삭제 진행.");
+            log.info("데이터 있음. 삭제 진행.");
 
             // 기존에 등록된 이미지가 있는지 확인
             boolean existImg = inspectImageRepository.existsByInspectId(id);
@@ -239,7 +241,7 @@ public class InspectServiceImpl implements InspectService {
     // 일부 상품 조회. 조건에 따른 검색 진행
     public List<Long> findInspect(List<Long> productId, Date beforeDate, Date afterDate) {
 
-        System.out.println("InspectServicrImpl 검수 조회");
+        log.info("InspectServicrImpl 검수 조회");
 
         // Optional 빈 객체 생성
         List<Long> inspectList = new ArrayList<>();
@@ -247,7 +249,7 @@ public class InspectServiceImpl implements InspectService {
         // ProductId 값에 따라 데이터 조회
         for(int i = 0; i< productId.size(); i++){
             // Inspect 테이블에 조회 및 저장
-            System.out.println("Inspect 테이블에 값이 있다면 id 값들 가져옴 저장");
+            log.info("Inspect 테이블에 값이 있다면 id 값들 가져옴 저장");
             List<Long> tmpInspectList = inspectRepository.findByProductIdInspectList(productId.get(i), beforeDate, afterDate);
 
             for(int j = 0; j < tmpInspectList.size(); j++){
@@ -261,7 +263,7 @@ public class InspectServiceImpl implements InspectService {
     // 일부 상품 조회. 날짜만 진행(처음 조회)
     public Optional<List<Inspect>> findInspect(Date beforeDate, Date afterDate) {
 
-        System.out.println("처음 조회. 15개만 검수 조회");
+        log.info("처음 조회. 15개만 검수 조회");
 
         return inspectRepository.findByInspectListAndClassNameFirst(beforeDate, afterDate);
     }
@@ -269,7 +271,7 @@ public class InspectServiceImpl implements InspectService {
     // 조건에 맞는 상품 조회
     public Optional<List<Inspect>> findInspect(Long[] inspectCurseId) {
 
-        System.out.println("15개만 검수 조회");
+        log.info("15개만 검수 조회");
 
         return inspectRepository.findByInspectCurseId(inspectCurseId);
     }

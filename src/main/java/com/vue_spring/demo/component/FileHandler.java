@@ -3,7 +3,9 @@ package com.vue_spring.demo.component;
 import com.vue_spring.demo.DTO.ImageDTO;
 import com.vue_spring.demo.model.ClaimImage;
 import com.vue_spring.demo.model.InspectImage;
-import com.vue_spring.demo.model.ProductImage;
+import com.vue_spring.demo.model.MakerAuditFile;
+import com.vue_spring.demo.model.ProductFile;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
 import org.springframework.util.CollectionUtils;
 import org.springframework.util.ObjectUtils;
@@ -15,6 +17,7 @@ import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
 
+@Slf4j
 @Component
 public class FileHandler {
 
@@ -45,8 +48,8 @@ public class FileHandler {
 //            String path = "vue_front" + File.separator + "src" + File.separator + "assets" + File.separator + "images" + File.separator + current_date;
             File file = new File(path);
 
-            System.out.println("22222222222222");
             // 디렉터리가 존재하지 않을 경우
+            log.info("파일 디렉토리 확인");
             if(!file.exists()) {
                 boolean wasSuccessful = file.mkdirs();
 
@@ -55,21 +58,13 @@ public class FileHandler {
                     System.out.println("file: was not successful");
             }
 
-            System.out.println("3333333333333333");
             // 다중 파일 처리
             for(MultipartFile multipartFile : multipartFiles) {
 
                 // 파일의 확장자 추출
                 String originalFileExtension;
                 String contentType = multipartFile.getContentType();
-//                application/vnd.ms-excel -> .xls
-//                application/vnd.openxmlformats-officedocument.spreadsheetml.sheet -> .xlsx
-//                application/vnd.ms-powerpoint -> .ppt
-//                application/vnd.openxmlformats-officedocument.presentationml.presentation -> .pptx
-//                application/vnd.openxmlformats-officedocument.wordprocessingml.document -> docx
-//                application/msword -> .doc
-//                application/haansofthwp -> hwp
-                // application/pdf
+                log.info("파일 확장자 저장");
                 // 확장자명이 존재하지 않을 경우 처리 x
                 if(ObjectUtils.isEmpty(contentType)) {
                     break;
@@ -103,6 +98,9 @@ public class FileHandler {
                         case "application/haansofthwp":
                             originalFileExtension = ".hwp";
                             break;
+                        case "application/haansofthwpx":
+                            originalFileExtension = ".hwpx";
+                            break;
                         case "application/pdf":
                             originalFileExtension = ".pdf";
                             break;
@@ -113,15 +111,7 @@ public class FileHandler {
                     if(originalFileExtension.equals(null)){
                         break;
                     }
-//                    if(contentType.contains("image/jpeg"))
-//                        originalFileExtension = ".jpg";
-//                    else if(contentType.contains("image/png"))
-//                        originalFileExtension = ".png";
-//                    else  // 다른 확장자일 경우 처리 x
-//                        break;
-
                 }
-                System.out.println("4444444444444444");
 
                 // 파일명 중복 피하고자 나노초까지 얻어와 지정
                 String new_file_name = System.nanoTime() + originalFileExtension;
@@ -133,36 +123,41 @@ public class FileHandler {
                         .imgFileSize(multipartFile.getSize())
                         .build();
 
-                if(t instanceof ProductImage){
-                    ProductImage image = new ProductImage(
+                if(t instanceof ProductFile){
+                    ProductFile fileData = new ProductFile(
                         photoDto.getImgFileName(),
                         photoDto.getImgFilePath(),
                         photoDto.getImgFileSize()
                     );
-                    fileList.add((T) image);
+                    fileList.add((T) fileData);
                 } else if(t instanceof InspectImage){
-                    InspectImage image = new InspectImage(
+                    InspectImage fileData = new InspectImage(
                             photoDto.getImgFileName(),
                             photoDto.getImgFilePath(),
                             photoDto.getImgFileSize()
                     );
-                    fileList.add((T) image);
+                    fileList.add((T) fileData);
                 } else if(t instanceof ClaimImage){
-                    ClaimImage image = new ClaimImage(
+                    ClaimImage fileData = new ClaimImage(
                             photoDto.getImgFileName(),
                             photoDto.getImgFilePath(),
                             photoDto.getImgFileSize()
                     );
-                    fileList.add((T) image);
+                    fileList.add((T) fileData);
+                } else if(t instanceof MakerAuditFile){
+                    MakerAuditFile fileData = new MakerAuditFile(
+                            photoDto.getImgFileName(),
+                            photoDto.getImgFilePath(),
+                            photoDto.getImgFileSize()
+                    );
+                    fileList.add((T) fileData);
                 }
 
-                System.out.println("555555555555555");
+                log.info("파일 데이터 저장");
                 // 업로드 한 파일 데이터를 지정한 파일에 저장
 //                file = new File(absolutePath + path + File.separator + new_file_name);
                 file = new File(  path +  "\\" + new_file_name);
                 multipartFile.transferTo(file);
-
-                System.out.println("6666666666666");
 
                 // 파일 권한 설정(쓰기, 읽기)
                 file.setWritable(true);

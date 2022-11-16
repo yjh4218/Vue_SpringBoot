@@ -8,6 +8,7 @@ import com.vue_spring.demo.model.Inspect;
 import com.vue_spring.demo.model.Product;
 import com.vue_spring.demo.service.InspectServiceImpl;
 import com.vue_spring.demo.service.ProductServiceImpl;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.http.HttpStatus;
@@ -19,6 +20,7 @@ import java.io.UnsupportedEncodingException;
 import java.net.URLDecoder;
 import java.util.*;
 
+@Slf4j
 @RestController
 @RequestMapping("inspect")
 public class InspectController {
@@ -35,10 +37,10 @@ public class InspectController {
                 @RequestPart(value = "image",required = false) List<MultipartFile> imgFiles
         ) throws Exception {
                 // @RequestParam(value = "skuNo") MultipartFile imgFiles,
-                System.out.println("Controller 접근됨. /insertInspect");
-                System.out.println(inspect);
-                System.out.println("imgFiles : " + imgFiles);
-                System.out.println("productId : " + productId);
+                log.info("Controller 접근됨. /insertInspect");
+                log.info("inspect : " + inspect);
+                log.info("imgFiles : " + imgFiles);
+                log.info("productId : " + productId);
 
                 int data = 0;
 
@@ -55,11 +57,11 @@ public class InspectController {
                         if(!checkSelectInspect){
 
                                 inspect.setProduct(tempProduct);
-                                System.out.println("tempProduct : " + tempProduct);
+                                log.info("tempProduct : " + tempProduct);
 
                                 Boolean check = inspectServiceImpl.insertInspect(inspect, imgFiles);
 
-                                System.out.println("check : " + check);
+                                log.info("check : " + check);
 
                                 // 저장 성공
                                 if(check) data=1;
@@ -73,7 +75,7 @@ public class InspectController {
                         }
                 }
 
-                System.out.println("data : " + data);
+                log.info("data : " + data);
                 return new ResponseDto<Integer>(HttpStatus.OK.value(),data);
         }
 
@@ -84,9 +86,9 @@ public class InspectController {
                                                   @RequestPart(value = "image",required = false) List<MultipartFile> imgFiles,
                                                   @RequestParam(value = "imgId",required = false) List<Long> imgId
         ) throws Exception {
-                System.out.println("Controller 접근됨. /updateInspect");
-                System.out.println("imgFiles : " + imgFiles);
-                System.out.println("productId : " + productId);
+                log.info("Controller 접근됨. /updateInspect");
+                log.info("imgFiles : " + imgFiles);
+                log.info("productId : " + productId);
 
                 int data = 0;
 
@@ -95,10 +97,10 @@ public class InspectController {
 
                 inspect.setProduct(product.get());
 
-                System.out.println("product : " + product.get());
+                log.info("product : " + product.get());
                 // 검수 내용이 있으면 수정 진행
                 Boolean check = inspectServiceImpl.updateInspect(inspect, imgFiles, imgId);
-                System.out.println("check : " + check);
+                log.info("check : " + check);
 
                 // 저장 성공
                 if (check) data = 1;
@@ -111,12 +113,12 @@ public class InspectController {
         // 검수 삭제하기
         @DeleteMapping("/deleteInspect")
         public ResponseDto<Integer> deleteInspect(@RequestParam(value = "id", defaultValue = "") long id) {
-                System.out.println("Controller 접근됨. /deleteInspect");
-                System.out.println(id);
+                log.info("Controller 접근됨. /deleteInspect");
+                log.info("id: ", id);
 
                 boolean check = inspectServiceImpl.deleteInspect(id);
 
-                System.out.println("check : " + check );
+                log.info("check : " + check );
 
                 int data = 0;
 
@@ -129,11 +131,11 @@ public class InspectController {
         // 모든 제품 조회
         @GetMapping("/selectAllInspect")
         public ResponseDAO<List<Inspect>> selectAllInspectlist() {
-                System.out.println("Controller 접근됨. /selectAllInspectlist");
+                log.info("Controller 접근됨. /selectAllInspectlist");
 
                 Optional<List<Inspect>> inspects = Optional.ofNullable(inspectServiceImpl.findProductAll());
-                System.out.println("Service 조회 완료");
-                System.out.println(inspects);
+                log.info("Service 조회 완료");
+                log.info("inspects : " , inspects);
 
                 return ResponseDAO.<List<Inspect>>builder()
                                 .data(inspects)
@@ -155,14 +157,14 @@ public class InspectController {
 
                 List<String> tempClass = new ArrayList<>();
 
-                System.out.println("Controller 접근됨. /selectInspects");
-                System.out.println("skuNo : " + skuNo + ", productName : " + productName + ", brandName : " + brandName + ", maker : " + maker + ", beforeDate : " +
+                log.info("Controller 접근됨. /selectInspects");
+                log.info("skuNo : " + skuNo + ", productName : " + productName + ", brandName : " + brandName + ", maker : " + maker + ", beforeDate : " +
                         beforeDate + ", afterDate : " + afterDate);
 
 //                Optional<List<Inspect>> inspect = Optional.empty()
 
                 long start = System.currentTimeMillis();
-                System.out.println("@@@ Service 시작");
+                log.info("@@@ Service 시작");
 
                 Optional<List<InspectExcelInterfaceDAO>> inspectExcelInterfaceDAO = Optional.empty();
 
@@ -177,7 +179,7 @@ public class InspectController {
                         // 분류 디코더 진행
                         for (int i = 0; i < className.size(); i++) {
                                 try {
-                                        System.out.println("selectChk : " + URLDecoder.decode(className.get(i), "UTF-8"));
+                                        log.info("selectChk : " + URLDecoder.decode(className.get(i), "UTF-8"));
                                         tempClass.add(URLDecoder.decode(className.get(i), "UTF-8"));
                                 } catch (UnsupportedEncodingException e) {
                                         e.printStackTrace();
@@ -185,9 +187,9 @@ public class InspectController {
                         }
                         Set<String> tempClassName = new HashSet<>(tempClass);
 
-                        System.out.println("tempSelectChk : " + tempClassName);
+                        log.info("tempSelectChk : " + tempClassName);
 
-                        System.out.println("조건에 맞춰서 제품 조회");
+                        log.info("조건에 맞춰서 제품 조회");
                         // 조건에 맞춰서 제품 id 조회
                         List<Long> products = productServiceImpl.findAllProductId(skuNo, productName,
                                 brandName, maker, tempClassName);
@@ -215,14 +217,14 @@ public class InspectController {
 
                 List<String> tempClass = new ArrayList<>();
 
-                System.out.println("Controller 접근됨. /selectInspects");
-                System.out.println("skuNo : " + skuNo + ", productName : " + productName + ", brandName : " + brandName + ", maker : " + maker + ", beforeDate : " +
+                log.info("Controller 접근됨. /selectInspects");
+                log.info("skuNo : " + skuNo + ", productName : " + productName + ", brandName : " + brandName + ", maker : " + maker + ", beforeDate : " +
                         beforeDate + ", afterDate : " + afterDate);
 
 //                Optional<List<Inspect>> inspect = Optional.empty()
 
                 long start = System.currentTimeMillis();
-                System.out.println("@@@ Service 시작");
+                log.info("@@@ Service 시작");
 
                 // 제품의 총 개수
                 int inspectSelectCnt = 0;
@@ -275,7 +277,7 @@ public class InspectController {
                         // 분류 디코더 진행
                         for (int i = 0; i < className.size(); i++) {
                                 try {
-                                        System.out.println("selectChk : " + URLDecoder.decode(className.get(i), "UTF-8"));
+                                        log.info("selectChk : " + URLDecoder.decode(className.get(i), "UTF-8"));
                                         tempClass.add(URLDecoder.decode(className.get(i), "UTF-8"));
                                 } catch (UnsupportedEncodingException e) {
                                         e.printStackTrace();
@@ -283,20 +285,20 @@ public class InspectController {
                         }
                         Set<String> tempClassName = new HashSet<>(tempClass);
 
-                        System.out.println("tempSelectChk : " + tempClassName);
+                        log.info("tempSelectChk : " + tempClassName);
 
-                        System.out.println("조건에 맞춰서 제품 조회");
+                        log.info("조건에 맞춰서 제품 조회");
                         // 조건에 맞춰서 제품 id 조회
                         List<Long> products = productServiceImpl.findAllProductId(skuNo, productName,
                                 brandName, maker, tempClassName);
 
 
-                        System.out.println("제품 조회 완료");
+                        log.info("제품 조회 완료");
 
                         // id 데이터들을 뽑아옴
                         List<Long> tmpId = inspectServiceImpl.findInspect(products, beforeDate, afterDate);
 
-                        System.out.println("Service 조회 완료");
+                        log.info("Service 조회 완료");
 
                         inspectSelectCnt = tmpId.size();
 

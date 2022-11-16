@@ -7,6 +7,7 @@ import com.vue_spring.demo.Repository.SalesProductComponentRepository;
 import com.vue_spring.demo.Repository.SalesRepository;
 import com.vue_spring.demo.model.Sales;
 import com.vue_spring.demo.model.SalesProductComponent;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 import org.springframework.stereotype.Service;
@@ -17,7 +18,7 @@ import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 
-
+@Slf4j
 @Repository
 @Service
 public class SalesServiceImpl implements SalesService {
@@ -44,7 +45,7 @@ public class SalesServiceImpl implements SalesService {
 
      // 신규 기획상품, 구성품 추가
     public Boolean insertSalesProduct(SalesProductComponentDTO salesProductComponentDTO){
-        System.out.println("신규 기획상품, 구성품 추가 서비스 : " + salesProductComponentDTO);
+        log.info("신규 기획상품, 구성품 추가 서비스 : " + salesProductComponentDTO);
 
         long componentNumber = 1;
         int size = salesProductComponentDTO.getComponentProduct().size();
@@ -75,7 +76,7 @@ public class SalesServiceImpl implements SalesService {
 
     // 기획상품, 구성품 수정
     public Boolean updateSalesProduct(SalesProductComponentDTO salesProductComponentDTO){
-        System.out.println("신규 기획상품, 구성품 추가 서비스 : " + salesProductComponentDTO);
+        log.info("신규 기획상품, 구성품 추가 서비스 : " + salesProductComponentDTO);
 
         // 기존에 등록된 데이터 삭제.
         // 업데이트 하지 않고 삭제 이유는 데이터가 구성품 sku 기준으로 수정하더라도 기존 구성품이 완전 바뀌거나, 추가되는 경우, 삭제되는 경우가 있기 때문
@@ -122,7 +123,7 @@ public class SalesServiceImpl implements SalesService {
     public Optional<List<SalesProductComponent>> findSalesProduct(String skuNo,
                                                                   String productName, String componentSkuNo, String componentProductName){
 
-        System.out.println("salesServiceImpl 판매 구성품 조회");
+        log.info("salesServiceImpl 판매 구성품 조회");
 
         return (Optional<List<SalesProductComponent>>) salesProductComponentRepository
                 .findBySkuNoContainingAndProductNameContainingAndComponentSkuNoContainingAndComponentProductNameContainingIgnoreCase(
@@ -132,18 +133,18 @@ public class SalesServiceImpl implements SalesService {
 
     // 구성품 삭제하기
     public Boolean deleteProductComponent(String skuNo){
-        System.out.println("구성품 삭제 서비스: " + skuNo);
+        log.info("구성품 삭제 서비스: " + skuNo);
 
         // 제조사 조회 확인
         boolean check = checkProductComponentSkuNo(skuNo);
 
         // 조회된 데이터 없을 경우
         if(!check){
-            System.out.println("데이터 없음. 삭제 불가");
+            log.info("데이터 없음. 삭제 불가");
             return false;
         }
         else{
-            System.out.println("데이터 있음. 삭제 진행.");
+            log.info("데이터 있음. 삭제 진행.");
             salesProductComponentRepository.deleteBySkuNo(skuNo);
             return true;
         }
@@ -151,7 +152,7 @@ public class SalesServiceImpl implements SalesService {
 
     // 판매량 추가
     public Boolean insertSales(SalesDTO salesDTO){
-        System.out.println("판매량 추가 서비스 : " + salesDTO);
+        log.info("판매량 추가 서비스 : " + salesDTO);
 
         int size = salesDTO.getSalesData().size();
 
@@ -179,15 +180,15 @@ public class SalesServiceImpl implements SalesService {
     // 판매량 조회. 조건에 따른 검색 진행
     public Optional<List<SalesDAO>> selectSales(String skuNo, String productName, String comFlag, Date findDate){
 
-        System.out.println("판매량 조회 서비스");
-        System.out.println("skuNo : " + skuNo );
-        System.out.println("productName : " + productName );
-        System.out.println("findDate : " + findDate );
+        log.info("판매량 조회 서비스");
+        log.info("skuNo : " + skuNo );
+        log.info("productName : " + productName );
+        log.info("findDate : " + findDate );
 
         SimpleDateFormat SimpleDateFormat = new SimpleDateFormat("yyyy");
         String date =SimpleDateFormat.format(findDate);
 
-        System.out.println("date : " + date );
+        log.info("date : " + date );
         boolean checkCom = Boolean.parseBoolean(comFlag);
 
         // 분류 검색 구분에 따른 조회 방법을 다르게 함
@@ -206,15 +207,15 @@ public class SalesServiceImpl implements SalesService {
     // 월별 판매량 조회(수정 및 삭제를 위함)
     public Optional<List<Sales>> selectMonthSales(String skuNo, String productName, Date findDate){
 
-        System.out.println("월별 판매량 조회 서비스");
-        System.out.println("skuNo : " + skuNo );
-        System.out.println("productName : " + productName );
-        System.out.println("findDate : " + findDate );
+        log.info("월별 판매량 조회 서비스");
+        log.info("skuNo : " + skuNo );
+        log.info("productName : " + productName );
+        log.info("findDate : " + findDate );
 
         SimpleDateFormat SimpleDateFormat = new SimpleDateFormat("yyyy-MM-dd");
         String date =SimpleDateFormat.format(findDate);
 
-        System.out.println("date : " + date );
+        log.info("date : " + date );
 
         // 월별 판매량 조회(수정 및 삭제를 위함)
         return (Optional<List<Sales>>) salesRepository
@@ -223,7 +224,7 @@ public class SalesServiceImpl implements SalesService {
 
     // 월별 판매량 수정
     public Boolean updateMonthSales(SalesDTO salesDTO){
-        System.out.println("월별 판매량 수정 서비스 : " + salesDTO);
+        log.info("월별 판매량 수정 서비스 : " + salesDTO);
 
         int size = salesDTO.getSalesData().size();
 
@@ -251,20 +252,20 @@ public class SalesServiceImpl implements SalesService {
 
     // 월별 판매량 삭제하기
     public Boolean deleteMonthSales(Long[] listIds){
-        System.out.println("월별 판매량 삭제 서비스: ");
+        log.info("월별 판매량 삭제 서비스: ");
 
         // 데이터 조회(검증)
         boolean check = checkMonthSalesData(listIds[0]);
 
-        System.out.println("check : " + check);
+        log.info("check : " + check);
 
         // 조회된 데이터 없을 경우
         if(!check){
-            System.out.println("데이터 없음. 삭제 불가");
+            log.info("데이터 없음. 삭제 불가");
             return false;
         }
         else{
-            System.out.println("데이터 있음. 삭제 진행.");
+            log.info("데이터 있음. 삭제 진행.");
             salesRepository.deleteByIds(listIds);
             return true;
         }

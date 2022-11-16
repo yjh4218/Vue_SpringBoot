@@ -1,7 +1,6 @@
 package com.vue_spring.demo.Repository;
 
 import com.vue_spring.demo.model.ProductChangeReply;
-import com.vue_spring.demo.model.ProductImage;
 import org.apache.ibatis.annotations.Param;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;

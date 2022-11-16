@@ -2,22 +2,19 @@ package com.vue_spring.demo.model;
 
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.fasterxml.jackson.annotation.JsonManagedReference;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
-import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.hibernate.annotations.CreationTimestamp;
 
 import javax.persistence.*;
 import java.sql.Timestamp;
-import java.util.Optional;
 
 @Entity
-@Table(name = "product_image")
+@Table(name = "product_file")
 @NoArgsConstructor
 @AllArgsConstructor
-public class ProductImage {
+public class ProductFile {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY) // auto_increment
@@ -31,25 +28,25 @@ public class ProductImage {
 
     // 파일 원본명
     @Column(nullable = true)
-    private String imgFileName;
+    private String fileName;
 
     // 파일 저장 경로
     @Column(nullable = true)
-    private String imgFilePath;
+    private String filePath;
 
     // 파일 사이즈
     @Column(nullable = true)
-    private Long imgFileSize;
+    private Long fileSize;
 
     // 데이터 입력, 수정 시간
     @CreationTimestamp
     private Timestamp createDate;
 
     @Builder
-    public ProductImage(String imgFileName, String imgFilePath, Long imgFileSize){
-        this.imgFileName = imgFileName;
-        this.imgFilePath = imgFilePath;
-        this.imgFileSize = imgFileSize;
+    public ProductFile(String fileName, String filePath, Long fileSize){
+        this.fileName = fileName;
+        this.filePath = filePath;
+        this.fileSize = fileSize;
     }
 
     public Long getId() {
@@ -68,28 +65,28 @@ public class ProductImage {
         this.product = product;
     }
 
-    public String getImgFileName() {
-        return imgFileName;
+    public String getFileName() {
+        return fileName;
     }
 
-    public void setImgFileName(String imgFileName) {
-        this.imgFileName = imgFileName;
+    public void setFileName(String fileName) {
+        this.fileName = fileName;
     }
 
-    public String getImgFilePath() {
-        return imgFilePath;
+    public String getFilePath() {
+        return filePath;
     }
 
-    public void setImgFilePath(String imgFilePath) {
-        this.imgFilePath = imgFilePath;
+    public void setFilePath(String filePath) {
+        this.filePath = filePath;
     }
 
-    public Long getImgFileSize() {
-        return imgFileSize;
+    public Long getFileSize() {
+        return fileSize;
     }
 
-    public void setImgFileSize(Long imgFileSize) {
-        this.imgFileSize = imgFileSize;
+    public void setFileSize(Long fileSize) {
+        this.fileSize = fileSize;
     }
 
     public Timestamp getCreateDate() {

@@ -25,8 +25,8 @@ public class MakerController {
     // 제조사 추가하기
     @PostMapping("/insertMaker")
     public ResponseDto<Integer> insertMaker(@RequestBody MakerDTO makerDTO) {
-        System.out.println("Controller 접근됨. /insertMaker");
-        System.out.println(makerDTO);
+        log.info("Controller 접근됨. /insertMaker");
+        log.info("makerDTO : " + makerDTO);
 
         Maker maker = Maker.builder()
                 .makerName(makerDTO.getMakerName())
@@ -35,6 +35,8 @@ public class MakerController {
                 .process(makerDTO.getProcess())
                 .importProduct(makerDTO.getImportProduct())
                 .sales(makerDTO.getSales())
+                .makerInfo(makerDTO.getMakerInfo())
+                .makerScore(makerDTO.getMakerScore())
                 .makerPerson(makerDTO.getMakerPerson())
                 .makerPhone(makerDTO.getMakerPhone())
                 .makerEmail(makerDTO.getMakerEmail())
@@ -54,8 +56,8 @@ public class MakerController {
     // 제조사 수정하기
     @PutMapping("/updateMaker")
     public ResponseDto<Integer> updateMaker(@RequestBody MakerDTO makerDTO) {
-        System.out.println("Controller 접근됨. /updateMaker");
-//        System.out.println(maker.getId());
+        log.info("Controller 접근됨. /updateMaker");
+//        log.info(maker.getId());
 
         Maker maker = Maker.builder()
                 .id(makerDTO.getId())
@@ -65,6 +67,8 @@ public class MakerController {
                 .process(makerDTO.getProcess())
                 .importProduct(makerDTO.getImportProduct())
                 .sales(makerDTO.getSales())
+                .makerInfo(makerDTO.getMakerInfo())
+                .makerScore(makerDTO.getMakerScore())
                 .makerPerson(makerDTO.getMakerPerson())
                 .makerPhone(makerDTO.getMakerPhone())
                 .makerEmail(makerDTO.getMakerEmail())
@@ -84,12 +88,12 @@ public class MakerController {
     // 제조사 삭제하기
     @DeleteMapping("/deleteMaker")
     public ResponseDto<Integer> deleteMaker(@RequestParam(value = "id", required = false, defaultValue = "") long id) {
-        System.out.println("Controller 접근됨. /deleteMaker");
-        System.out.println(id);
+        log.info("Controller 접근됨. /deleteMaker");
+        log.info("id : " + id);
 
         boolean check = makerServicImpl.deleteMaker(id);
 
-        System.out.println("check : " + check );
+        log.info("check : " + check );
 
         int data = 0;
 
@@ -111,27 +115,27 @@ public class MakerController {
 
         List<String> tempType = new ArrayList<>();
 
-        System.out.println("Controller 접근됨. /selectMakers");
-        System.out.println("makerName : " + makerName + ", makerAddress : " + makerAddress +
+        log.info("Controller 접근됨. /selectMakers");
+        log.info("makerName : " + makerName + ", makerAddress : " + makerAddress +
                 ", makerPerson : " + makerPerson + ", makerPhone : " + makerPhone );
 
 
         for(int i = 0; i< className.size(); i++){
             try {
-                System.out.println("selectChk : " + URLDecoder.decode(className.get(i), "UTF-8"));
+                log.info("selectChk : " + URLDecoder.decode(className.get(i), "UTF-8"));
                 tempType.add(URLDecoder.decode(className.get(i), "UTF-8"));
             } catch (UnsupportedEncodingException e) {
                 e.printStackTrace();
             }
         }
 
-        System.out.println("tempType : " + tempType );
+        log.info("tempType : " + tempType );
 
         Set<String> tempClassName = new HashSet<>(tempType);
-        System.out.println("tempSelectChk : " + tempClassName );
+        log.info("tempSelectChk : " + tempClassName );
         Optional<List<Maker>> makerList = (Optional<List<Maker>>) makerServicImpl.findMaker(makerName,
                 makerAddress, makerPerson, makerPhone, tempClassName);
-        System.out.println("Service 조회 완료");
+        log.info("Service 조회 완료");
 
         log.info("newProduct : {}", newProduct);
 
@@ -152,8 +156,8 @@ public class MakerController {
     // 제품 변경 리플 수정하기
     @PutMapping("/updateMakerReply")
     public ResponseDto<Integer> updateProductReply(@RequestBody ReplyDTO productReplyDTO) throws Exception {
-        System.out.println("Controller 접근됨. /updateProductReply");
-        System.out.println(productReplyDTO);
+        log.info("Controller 접근됨. /updateProductReply");
+        log.info("productReplyDTO : " + productReplyDTO);
 
         int data = 0;
 

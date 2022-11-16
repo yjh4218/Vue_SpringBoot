@@ -30,6 +30,8 @@ public interface MakerAuditFileRepository extends JpaRepository<MakerAuditFile, 
         @Query(nativeQuery = true, value = "SELECT * FROM maker_audit_file WHERE maker_name LIKE %:makerName% AND maker_address LIKE %:makerAddress% AND maker_person LIKE %:makerPerson% AND maker_phone LIKE %:makerPhone% order by class_name desc")
         Optional<List<MakerAuditFile>> findByMakerNameContainingAndMakerAddressContainingAndMakerPersonContainingAndMakerPhoneContainingIgnoreCase(
                 String makerName, String makerAddress, String makerPerson, String makerPhone);
+
+        Optional<List<MakerAuditFile>> findByMakerAuditId(Long makerId);
 //
 //        // sku-no로 조회
 //        Product findBySkuNo(String SkuNo);

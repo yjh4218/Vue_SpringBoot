@@ -44,6 +44,10 @@ public class Maker {
     @Column(nullable = true, length = 100)
     private Integer sales;
 
+    // 제조사 평가점수
+    @Column(nullable = true, length = 3)
+    private Integer makerScore;
+
     // 거래처 담당자
     @Column(nullable = true, length = 100)
     private String makerPerson;
@@ -57,8 +61,12 @@ public class Maker {
     private String makerEmail;
 
     // 비고
-    @Column(nullable = true, length = 500)
+    @Lob
     private String note;
+
+    // 제조사 정보
+    @Lob
+    private String makerInfo;
 
     // 제조사 변경 내역
     @OneToMany(
@@ -104,7 +112,7 @@ public class Maker {
     }
 
     @Builder
-    public Maker(Long id, String makerName, String makerAddress, String className, String process, String importProduct, Integer sales, String makerPerson, String makerPhone, String makerEmail, String note) {
+    public Maker(Long id, String makerName, String makerAddress, String className, String process, String importProduct, Integer sales, Integer makerScore, String makerPerson, String makerPhone, String makerEmail, String note, String makerInfo) {
         this.id = id;
         this.makerName = makerName;
         this.makerAddress = makerAddress;
@@ -112,10 +120,12 @@ public class Maker {
         this.process = process;
         this.importProduct = importProduct;
         this.sales = sales;
+        this.makerScore = makerScore;
         this.makerPerson = makerPerson;
         this.makerPhone = makerPhone;
         this.makerEmail = makerEmail;
         this.note = note;
+        this.makerInfo = makerInfo;
     }
 
     public Long getId() {
@@ -228,5 +238,21 @@ public class Maker {
 
     public void setCreateDate(Timestamp createDate) {
         this.createDate = createDate;
+    }
+
+    public Integer getMakerScore() {
+        return makerScore;
+    }
+
+    public void setMakerScore(Integer makerScore) {
+        this.makerScore = makerScore;
+    }
+
+    public String getMakerInfo() {
+        return makerInfo;
+    }
+
+    public void setMakerInfo(String makerInfo) {
+        this.makerInfo = makerInfo;
     }
 }

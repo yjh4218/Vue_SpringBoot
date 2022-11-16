@@ -17,8 +17,9 @@ public interface MakerAuditService {
 //    public Optional<List<MakerAudit>> findMaker(String skuNo, String productName,
 //                                                String brandName, String maker, Set<String> tempClassName);
 //
-        public Boolean insertMaker(MakerAudit makerAudit, List<MultipartFile> fileData, Long makerId);
+        public Boolean insertMakerAudit(MakerAudit makerAudit, List<MultipartFile> fileData, Long makerId);
 //
+public Boolean updateMakerAudit(MakerAudit makerAudit, List<MultipartFile> fileData, Long makerId, List<Long> fileId);
 //    public Boolean updateMaker(MakerAudit makerAudit, String makerChangeContent);
 //
 //    public Boolean checkId(long makerId);
