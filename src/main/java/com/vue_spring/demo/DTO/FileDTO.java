@@ -15,9 +15,7 @@ public class FileDTO {
 
     private String fileName;
 
-    private String fileInPath;
-
-    private String fileOutPath;
+    private String filePath;
 
     private long fileSize;
 
@@ -37,20 +35,12 @@ public class FileDTO {
         this.fileName = fileName;
     }
 
-    public String getFileInPath() {
-        return fileInPath;
+    public String getFilePath() {
+        return filePath;
     }
 
-    public void setFileInPath(String fileInPath) {
-        this.fileInPath = fileInPath;
-    }
-
-    public String getFileOutPath() {
-        return fileOutPath;
-    }
-
-    public void setFileOutPath(String fileOutPath) {
-        this.fileOutPath = fileOutPath;
+    public void setFilePath(String filePath) {
+        this.filePath = filePath;
     }
 
     public long getFileSize() {

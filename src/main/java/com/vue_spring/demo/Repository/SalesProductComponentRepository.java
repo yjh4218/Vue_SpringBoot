@@ -18,26 +18,19 @@ import java.util.Set;
 @Transactional(readOnly = false)
 public interface SalesProductComponentRepository extends JpaRepository<SalesProductComponent, Long> {
 
-        // 제품 조회(분류 포함)
-//        @Query(nativeQuery = true, value = "SELECT * FROM MAKER WHERE maker_name LIKE %:makerName% AND maker_address LIKE %:makerAddress% AND maker_person LIKE %:makerPerson% AND maker_phone LIKE %:makerPhone% AND business_type IN (:businessType)")
-//        Optional<List<Maker>> findByMakerNameContainingAndMakerAddressContainingAndMakerPersonContainingAndMakerPhoneContainingIgnoreCaseAndtempBusinessType(
-//                @Param("makerName") String makerName,
-//                @Param("makerAddress") String makerAddress,
-//                @Param("makerPerson") String makerPerson,
-//                @Param("makerPhone") String makerPhone,
-//                @Param("businessType")  Set<String> businessType
-//        );
-////
     // 제품 조회(분류 제외)
     Optional<List<SalesProductComponent>> findBySkuNoContainingAndProductNameContainingAndComponentSkuNoContainingAndComponentProductNameContainingIgnoreCase(
-            String skuNo,String productName, String componentSkuNo, String componentProductName);
+            @Param("skuNo") String skuNo,
+            @Param("productName") String productName,
+            @Param("componentSkuNo") String componentSkuNo,
+            @Param("componentProductName") String componentProductName);
 
-    Boolean existsBySkuNo(String skuNo);
+    Boolean existsBySkuNo(@Param("skuNo") String skuNo);
 
     // sku-no로 삭제
     @Modifying
-    @Query("delete from SalesProductComponent where sku_no = ?1")
-    void deleteBySkuNo(String skuNo);
+    @Query("delete from SalesProductComponent where sku_no = :skuNo")
+    void deleteBySkuNo(@Param("skuNo") String skuNo);
 
     @Modifying
     @Query(nativeQuery = true, value = "update sales_product_component set \n" +

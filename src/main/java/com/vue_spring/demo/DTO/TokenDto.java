@@ -10,6 +10,7 @@ import lombok.*;
 @Builder
 public class TokenDto {
 
+    private String email;
     private String grantType;
     private String accessToken;
     private String refreshToken;

@@ -11,14 +11,8 @@ import java.util.Set;
 
 @Service
 public interface ProductService {
-
-//    public List<Product> findProductAll();
-
-//    public Optional<List<Product>> findProduct(String sku_no, String productName,
-//                                               String brandName, String maker, Set<String> tempSelectChk, String page, long productCurseId);
-//
-    public Optional<List<Product>> findProduct(String sku_no, String productName,
-                                               String brandName, String maker, Set<String> tempSelectChk);
+    public List<Product> findProduct(String sku_no, String productName,
+                                     String brandName, String maker, Set<String> tempSelectChk, Set<String> tempOperation);
 
     public Optional<List<Product>> findCurseProduct(Long[] productCurseId);
 

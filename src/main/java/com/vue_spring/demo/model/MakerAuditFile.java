@@ -32,11 +32,7 @@ public class MakerAuditFile {
 
     // 파일 저장 경로
     @Column(nullable = true)
-    private String fileOutPath;
-
-    // 파일 저장 경로
-    @Column(nullable = true)
-    private String fileInPath;
+    private String filePath;
 
     // 파일 사이즈
     @Column(nullable = true)
@@ -47,10 +43,9 @@ public class MakerAuditFile {
     private Timestamp createDate;
 
     @Builder
-    public MakerAuditFile(String fileName, String fileOutPath, String fileInPath, Long fileSize) {
+    public MakerAuditFile(String fileName, String filePath, Long fileSize) {
         this.fileName = fileName;
-        this.fileOutPath = fileOutPath;
-        this.fileInPath = fileInPath;
+        this.filePath = filePath;
         this.fileSize = fileSize;
     }
 
@@ -78,20 +73,12 @@ public class MakerAuditFile {
         this.fileName = fileName;
     }
 
-    public String getFileOutPath() {
-        return fileOutPath;
+    public String getFilePath() {
+        return filePath;
     }
 
-    public void setFileOutPath(String fileOutPath) {
-        this.fileOutPath = fileOutPath;
-    }
-
-    public String getFileInPath() {
-        return fileInPath;
-    }
-
-    public void setFileInPath(String fileInPath) {
-        this.fileInPath = fileInPath;
+    public void setFilePath(String filePath) {
+        this.filePath = filePath;
     }
 
     public Long getFileSize() {

@@ -46,36 +46,25 @@ public class FileHandler {
             // 파일을 저장할 세부 경로 지정
 //            String inPath = "vue_front\\src\\assets\\fileData" + File.separator + current_date;
 
-            String inPath = "vue_front\\public\\fileData" + File.separator + current_date;
+//            String inPath = "vue_front\\public\\fileData" + File.separator + current_date;
 
-            String outPath = "E:\\fileData\\" + current_date;
+//            String path = "E:\\fileData\\" + current_date;
 
             // 서버 파일용
-//            String path = "C:\\QCFolder\\fileData\\" + current_date;
+            String path = "C:\\QCFolder\\fileData\\" + current_date;
 
 //            String path = "vue_front" + File.separator + "src" + File.separator + "assets" + File.separator + "images" + File.separator + current_date;
-            File outFile = new File(outPath);
-            File inFile = new File(inPath);
+            File file = new File(path);
 
             // 디렉터리가 존재하지 않을 경우
             log.info("파일 디렉토리 확인");
-            if(!outFile.exists()) {
-                boolean wasSuccessful = outFile.mkdirs();
+            if(!file.exists()) {
+                boolean wasSuccessful = file.mkdirs();
 
                 // 디렉터리 생성에 실패했을 경우
                 if(!wasSuccessful)
                     System.out.println("file: was not successful");
             }
-
-            log.info("파일 디렉토리 확인");
-            if(!inFile.exists()) {
-                boolean wasSuccessful = inFile.mkdirs();
-
-                // 디렉터리 생성에 실패했을 경우
-                if(!wasSuccessful)
-                    System.out.println("file: was not successful");
-            }
-
 
             // 다중 파일 처리
             for(MultipartFile multipartFile : multipartFiles) {
@@ -138,16 +127,14 @@ public class FileHandler {
                 // 파일 DTO 생성
                 FileDTO fileDTO = FileDTO.builder()
                         .fileName(multipartFile.getOriginalFilename())
-                        .fileOutPath(outPath + File.separator + new_file_name)
-                        .fileInPath(inPath + File.separator + new_file_name)
+                        .filePath(path + File.separator + new_file_name)
                         .fileSize(multipartFile.getSize())
                         .build();
 
                 if(t instanceof ProductFile){
                     ProductFile fileData = ProductFile.builder()
                             .fileName(fileDTO.getFileName())
-                            .fileInPath(fileDTO.getFileInPath())
-                            .fileOutPath(fileDTO.getFileOutPath())
+                            .filePath(fileDTO.getFilePath())
                             .fileSize(fileDTO.getFileSize())
                             .build();
 
@@ -155,24 +142,21 @@ public class FileHandler {
                 } else if(t instanceof InspectImage){
                     InspectImage fileData = InspectImage.builder()
                             .imgFileName(fileDTO.getFileName())
-                            .imgFileInPath(fileDTO.getFileInPath())
-                            .imgFileOutPath(fileDTO.getFileOutPath())
+                            .imgFilePath(fileDTO.getFilePath())
                             .imgFileSize(fileDTO.getFileSize())
                             .build();
                     fileList.add((T) fileData);
                 } else if(t instanceof ClaimImage){
                     ClaimImage fileData = ClaimImage.builder()
                             .imgFileName(fileDTO.getFileName())
-                            .imgFileInPath(fileDTO.getFileInPath())
-                            .imgFileOutPath(fileDTO.getFileOutPath())
+                            .imgFilePath(fileDTO.getFilePath())
                             .imgFileSize(fileDTO.getFileSize())
                             .build();
                     fileList.add((T) fileData);
                 } else if(t instanceof MakerAuditFile){
                     MakerAuditFile fileData = MakerAuditFile.builder()
                             .fileName(fileDTO.getFileName())
-                            .fileInPath(fileDTO.getFileInPath())
-                            .fileOutPath(fileDTO.getFileOutPath())
+                            .filePath(fileDTO.getFilePath())
                             .fileSize(fileDTO.getFileSize())
                             .build();
                     fileList.add((T) fileData);
@@ -181,18 +165,13 @@ public class FileHandler {
                 log.info("파일 데이터 저장");
                 // 업로드 한 파일 데이터를 지정한 파일에 저장
 //                file = new File(absolutePath + path + File.separator + new_file_name);
-                outFile = new File(  outPath +  "\\" + new_file_name);
-                multipartFile.transferTo(outFile);
+                file = new File(  path +  "\\" + new_file_name);
+                multipartFile.transferTo(file);
 
                 // 파일 권한 설정(쓰기, 읽기)
-                outFile.setWritable(true);
-                outFile.setReadable(true);
+                file.setWritable(true);
+                file.setReadable(true);
 
-                inFile = new File(  inPath +  "\\" + new_file_name);
-                Files.copy(outFile.toPath(), inFile.toPath(), StandardCopyOption.REPLACE_EXISTING);
-                // 파일 권한 설정(쓰기, 읽기)
-                inFile.setWritable(true);
-                inFile.setReadable(true);
             }
         }
         return fileList;

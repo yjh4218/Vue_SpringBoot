@@ -141,15 +141,14 @@ public class ProductServiceImpl implements ProductService {
                 // DB에 사진정보 추가한 상태로 다시 저장
                 productRepository.save(productSel);
 
-                // 저장 성공
-                check = true;
             }
             // 이미지 파일이 없을 경우 검수 내용만 저장
             else{
                 productRepository.save(product);
-                // 저장 성공
-                check = true;
             }
+
+            // 저장 성공
+            check = true;
         }catch (Exception e){
             log.info(e.getMessage());
             //저장 실패
@@ -204,9 +203,7 @@ public class ProductServiceImpl implements ProductService {
                 // 사용자가 모든 파일 삭제했을 경우
                 if(fileId == null){
                     for (ProductFile tmpFile : findFileData) {
-                        File file = new File(tmpFile.getFileInPath());
-                        file.delete();
-                        file = new File(tmpFile.getFileOutPath());
+                        File file = new File(tmpFile.getFilePath());
                         file.delete();
 
                         // DB의 파일 삭제
@@ -236,9 +233,7 @@ public class ProductServiceImpl implements ProductService {
                             // 경로에 있는 파일 삭제
                             log.info("사용자가 삭제한 이미지 삭제");
                             log.info("tmpFile : {}", tmpFile);
-                            File file = new File(tmpFile.getFileInPath());
-                            file.delete();
-                            file = new File(tmpFile.getFileOutPath());
+                            File file = new File(tmpFile.getFilePath());
                             file.delete();
 
                             // DB의 파일 삭제
@@ -292,7 +287,6 @@ public class ProductServiceImpl implements ProductService {
             check=false;
         }
 
-
         return check;
     }
 
@@ -335,9 +329,7 @@ public class ProductServiceImpl implements ProductService {
                 Optional<List<ProductFile>> deleteImg = productFileRepository.findByProductId(id);
                 // 경로에 지정된 파일 삭제
                 for(ProductFile image : deleteImg.get()){
-                    File file = new File(image.getFileInPath());
-                    file.delete();
-                    file = new File(image.getFileOutPath());
+                    File file = new File(image.getFilePath());
                     file.delete();
                 }
                 // DB의 파일 삭제
@@ -437,42 +429,65 @@ public class ProductServiceImpl implements ProductService {
 
 
     // 처음 조회 시 진행.
-    public Optional<List<Product>> findProduct(String skuNo, String productName,
-                                               String brandName, String maker, Set<String> tempClassName) {
+    public List<Product> findProduct(String skuNo, String productName,
+                                     String brandName, String maker,
+                                     Set<String> tempClassName, Set<String> tempOperation) {
 
-        log.info("ProductServicrImpl");
+        log.info("ProductServiceImpl : findProduct");
         log.info("productName : " + productName );
-        log.info("tempSelectChk : " + tempClassName );
+        log.info("tempSelectClass : " + tempClassName );
+        log.info("tempSelectOper : " + tempOperation );
+        log.info("tempSelectClassSize : " + tempClassName.size() );
+        log.info("tempSelectOperSize : " + tempOperation.size() );
 
-        if(tempClassName.size() < 1){
-            // 분류 조회 하지 않을 경우
-            return (Optional<List<Product>>) productRepository.findByProductListFirst(
-                    skuNo, productName, brandName, maker);
-        } else{
-            log.info("제품분류 있음.");
-            // 분류 조회할 경우
-            return (Optional<List<Product>>) productRepository.findByProductListAndClassNameFirst(
-                    skuNo, productName, brandName, maker, tempClassName);
+        // 제품분류, 운영여부 분류 조회 존재
+        if(tempClassName.size() > 0 && tempOperation.size() > 0){
+            return productRepository.findByProductListClassOperFirst(skuNo, productName, brandName, maker,tempClassName,tempOperation).orElseGet(null);
         }
+        // 제품분류 조회만 존재
+        else if(tempClassName.size() > 0 && tempOperation.size() == 0){
+            return productRepository.findByProductListClassFirst(skuNo, productName, brandName, maker, tempClassName).orElseGet(null);
+        }
+        // 운영여부 분류 조회 존재
+        else if(tempClassName.size() == 0 && tempOperation.size() > 0){
+            return productRepository.findByProductListOperFirst(skuNo, productName, brandName, maker, tempOperation).orElseGet(null);
+        }
+        // 분류조회, 운영여부 조회가 존재하지 않을 경우
+        else{
+            return productRepository.findByProductListFirst(skuNo, productName, brandName, maker).orElseGet(null);
+        }
+
     }
 
     // excel 다운용
-    public Optional<List<Product>> findProductExcel(String skuNo, String productName,
-                                               String brandName, String maker, Set<String> tempClassName) {
+    public List<Product> findProductExcel(String skuNo, String productName,
+                                               String brandName, String maker, Set<String> tempClassName, Set<String> tempOperation) {
 
-        log.info("ProductServicrImpl");
+        log.info("ProductServiceImpl : findProductExcel" );
         log.info("productName : " + productName );
         log.info("tempSelectChk : " + tempClassName );
+        log.info("tempSelectClassSize : " + tempClassName.size() );
+        log.info("tempSelectOperSize : " + tempOperation.size() );
 
-        if(tempClassName.size() < 1){
-            // 분류 조회 하지 않을 경우
-            return (Optional<List<Product>>) productRepository.findByProductListExcel(
-                    skuNo, productName, brandName, maker);
-        } else{
-            log.info("제품분류 있음.");
-            // 분류 조회할 경우
-            return (Optional<List<Product>>) productRepository.findByProductListAndClassNameExcel(
-                    skuNo, productName, brandName, maker, tempClassName);
+        // 제품분류, 운영여부 분류 조회 존재
+        if(tempClassName.size() > 0 && tempOperation.size() > 0){
+            log.info("제품분류, 운영여부 분류 조회 존재");
+            return productRepository.findByProductClassOperExcel(skuNo, productName, brandName, maker,tempClassName,tempOperation).orElseGet(null);
+        }
+        // 제품분류 조회만 존재
+        else if(tempClassName.size() > 0 && tempOperation.size() == 0){
+            log.info("제품 분류 조회 존재");
+            return productRepository.findByProductClassExcel(skuNo, productName, brandName, maker, tempClassName).orElseGet(null);
+        }
+        // 운영여부 분류 조회 존재
+        else if(tempClassName.size() == 0 && tempOperation.size() > 0){
+            log.info("운영여부 분류 조회 존재");
+            return productRepository.findByProductOperExcel(skuNo, productName, brandName, maker, tempOperation).orElseGet(null);
+        }
+        // 분류조회, 운영여부 조회가 존재하지 않을 경우
+        else{
+            log.info("분류조회, 운영여부 조회가 존재하지 않을 경우");
+            return productRepository.findByProductListExcel(skuNo, productName, brandName, maker).orElseGet(null);
         }
     }
 
@@ -523,7 +538,7 @@ public class ProductServiceImpl implements ProductService {
 
     // 검색 제품 Id 모두 조회
     public List<Long> findSelectId(String skuNo, String productName,
-                                     String brandName, String maker, Set<String> tempClassName) {
+                                     String brandName, String maker, Set<String> tempClassName, Set<String>  tempOperation) {
 
         log.info("ProductServiceImpl, findSelectId");
 
@@ -535,7 +550,7 @@ public class ProductServiceImpl implements ProductService {
             log.info("제품분류 있음.");
             // 분류 조회할 경우
             return productRepository.findByIdClassName(
-                    skuNo, productName, brandName, maker, tempClassName);
+                    skuNo, productName, brandName, maker, tempClassName, tempOperation);
         }
     }
 

@@ -34,11 +34,7 @@ public class InspectImage {
 
     // 파일 저장 경로
     @Column(nullable = true)
-    private String imgFileOutPath;
-
-    // 파일 저장 경로
-    @Column(nullable = true)
-    private String imgFileInPath;
+    private String imgFilePath;
 
     // 파일 사이즈
     @Column(nullable = true)
@@ -49,10 +45,9 @@ public class InspectImage {
     private Timestamp createDate;
 
     @Builder
-    public InspectImage(String imgFileName, String imgFileOutPath, String imgFileInPath, Long imgFileSize) {
+    public InspectImage(String imgFileName, String imgFilePath, Long imgFileSize) {
         this.imgFileName = imgFileName;
-        this.imgFileOutPath = imgFileOutPath;
-        this.imgFileInPath = imgFileInPath;
+        this.imgFilePath = imgFilePath;
         this.imgFileSize = imgFileSize;
     }
 
@@ -80,20 +75,12 @@ public class InspectImage {
         this.imgFileName = imgFileName;
     }
 
-    public String getImgFileOutPath() {
-        return imgFileOutPath;
+    public String getImgFilePath() {
+        return imgFilePath;
     }
 
-    public void setImgFileOutPath(String imgFileOutPath) {
-        this.imgFileOutPath = imgFileOutPath;
-    }
-
-    public String getImgFileInPath() {
-        return imgFileInPath;
-    }
-
-    public void setImgFileInPath(String imgFileInPath) {
-        this.imgFileInPath = imgFileInPath;
+    public void setImgFilePath(String imgFilePath) {
+        this.imgFilePath = imgFilePath;
     }
 
     public Long getImgFileSize() {

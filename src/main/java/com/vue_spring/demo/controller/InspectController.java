@@ -53,26 +53,38 @@ public class InspectController {
                         // 기존에 등록된 검수 내용 있는지 확인
                         boolean checkSelectInspect = inspectServiceImpl.checkInspect(tempProduct, inspect.getInspectDate());
 
-                        // 기존에 등록된 검수 내용 없으면 생성 및 저장
-                        if(!checkSelectInspect){
+                        inspect.setProduct(tempProduct);
+                        log.info("tempProduct : " + tempProduct);
 
-                                inspect.setProduct(tempProduct);
-                                log.info("tempProduct : " + tempProduct);
+                        Boolean check = inspectServiceImpl.insertInspect(inspect, imgFiles);
 
-                                Boolean check = inspectServiceImpl.insertInspect(inspect, imgFiles);
+                        log.info("check : " + check);
 
-                                log.info("check : " + check);
+                        // 저장 성공
+                        if(check) data=1;
 
-                                // 저장 성공
-                                if(check) data=1;
-
-                                // 저장 실패
-                                else data=0;
-                        }
-                        // 기존에 등록된 검수 내용 있으면 생성 불가.
-                        else {
-                                data = 2;
-                        }
+                        // 저장 실패
+                        else data=0;
+//                        // 기존에 등록된 검수 내용 없으면 생성 및 저장
+//                        if(!checkSelectInspect){
+//
+//                                inspect.setProduct(tempProduct);
+//                                log.info("tempProduct : " + tempProduct);
+//
+//                                Boolean check = inspectServiceImpl.insertInspect(inspect, imgFiles);
+//
+//                                log.info("check : " + check);
+//
+//                                // 저장 성공
+//                                if(check) data=1;
+//
+//                                // 저장 실패
+//                                else data=0;
+//                        }
+//                        // 기존에 등록된 검수 내용 있으면 생성 불가.
+//                        else {
+//                                data = 2;
+//                        }
                 }
 
                 log.info("data : " + data);
@@ -203,6 +215,7 @@ public class InspectController {
                         .build();
         }
 
+        // 검수 조회
         @GetMapping("/selectInspects")
         public ResponseDAO<List<Inspect>> selectInspect(
                 @RequestParam(value = "skuNo", required = false, defaultValue = "") String skuNo,
@@ -292,44 +305,46 @@ public class InspectController {
                         List<Long> products = productServiceImpl.findAllProductId(skuNo, productName,
                                 brandName, maker, tempClassName);
 
-
                         log.info("제품 조회 완료");
 
                         // id 데이터들을 뽑아옴
                         List<Long> tmpId = inspectServiceImpl.findInspect(products, beforeDate, afterDate);
 
-                        log.info("Service 조회 완료");
+                        log.info("Service 조회 완료 : {}", tmpId);
 
-                        inspectSelectCnt = tmpId.size();
+                        if(tmpId.size() > 0){
+                                inspectSelectCnt = tmpId.size();
 
-                        len = tmpId.size();
-                        last = len - 1;
+                                len = tmpId.size();
+                                last = len - 1;
 
-                        // 15개씩 정리해서 데이터를 넘김
-                        for (int i = 0; i < len; i++) {
-                                if (cnt != 15) {
-                                        cnt++;
-                                        listId.add(tmpId.get(i));
-                                } else {
-                                        pageListId.add(listId);
-                                        listId = new ArrayList<>();
-                                        i--;
-                                        cnt = 0;
+                                // 15개씩 정리해서 데이터를 넘김
+                                for (int i = 0; i < len; i++) {
+                                        if (cnt != 15) {
+                                                cnt++;
+                                                listId.add(tmpId.get(i));
+                                        } else {
+                                                pageListId.add(listId);
+                                                listId = new ArrayList<>();
+                                                i--;
+                                                cnt = 0;
+                                        }
+
+                                        if (i == last) {
+                                                pageListId.add(listId);
+                                        }
                                 }
 
-                                if (i == last) {
-                                        pageListId.add(listId);
+                                Long[] result = new Long[pageListId.get(0).size()];
+                                for (int i = 0; i < pageListId.get(0).size(); i++) {
+                                        result[i] = pageListId.get(0).get(i);
                                 }
+
+                                // 첫 번째 페이지 조회
+                                inspect = inspectServiceImpl.findInspect(result);
+                        } else{
+                                inspectSelectCnt = -1;
                         }
-
-                        Long[] result = new Long[pageListId.get(0).size()];
-                        for (int i = 0; i < pageListId.get(0).size(); i++) {
-                                result[i] = pageListId.get(0).get(i);
-                        }
-
-                        // 첫 번째 페이지 조회
-                        inspect = inspectServiceImpl.findInspect(result);
-
                 }
                 return ResponseDAO.<List<Inspect>>builder()
                         .data(inspect)
@@ -348,5 +363,25 @@ public class InspectController {
                 return ResponseDAO.<List<Inspect>>builder()
                         .data(inspect)
                         .build();
+        }
+
+
+        // 직전 등록 조회
+        @GetMapping("/selectInspectReg")
+        public ResponseDAO<Inspect> selectInspectReg(
+                @RequestParam(value = "skuNo", defaultValue = "") String skuNo,
+                @RequestParam(value = "productId", defaultValue = "") Long productId
+        ) {
+
+                log.info("직전 입고 검수 데이터 확인 : {},{}", skuNo, productId);
+                List<String> tempClass = new ArrayList<>();
+
+                // 첫 번째 페이지 조회
+                Optional<Inspect> inspect = inspectServiceImpl.findInspectReg(productId);
+
+                return ResponseDAO.<Inspect>builder()
+                        .data(inspect)
+                        .build();
+
         }
 }

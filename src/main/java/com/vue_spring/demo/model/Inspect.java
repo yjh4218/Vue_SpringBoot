@@ -55,51 +55,55 @@ public class Inspect {
     private Float moisture;
 
     // 성상
-    @Column(nullable = true, length = 100)
+    @Column(nullable = true, length = 500)
     private String appearance;
 
     // 검수 내용
-    @Column(nullable = true, length = 300)
+    @Column(nullable = true, length = 500)
     private String inspectContent;
 
     // 색상
-    @Column(nullable = true, length = 300)
+    @Column(nullable = true, length = 500)
     private String color;
 
+    // 관능
+    @Column(nullable = true, length = 500)
+    private String sensuality;
+
     // 크기
-    @Column(nullable = true, length = 300)
+    @Column(nullable = true, length = 500)
     private String size;
 
     // 파손여부
-    @Column(nullable = true, length = 300)
+    @Column(nullable = true, length = 500)
     private String damage;
 
     // 마감상태
-    @Column(nullable = true, length = 300)
+    @Column(nullable = true, length = 500)
     private String finishState;
 
     // 작동여부
-    @Column(nullable = true, length = 300)
+    @Column(nullable = true, length = 500)
     private String checkWork;
 
     // 사용성
-    @Column(nullable = true, length = 300)
+    @Column(nullable = true, length = 500)
     private String usability;
 
     // 중량
-    @Column(nullable = true, length = 300)
+    @Column(nullable = true, length = 500)
     private String weight;
 
     // 포장상태
-    @Column(nullable = true, length = 300)
+    @Column(nullable = true, length = 500)
     private String checkPacking;
 
     // 이물/이취
-    @Column(nullable = true, length = 300)
+    @Column(nullable = true, length = 500)
     private String foreignBody;
 
     // 특이사항
-    @Column(nullable = true, length = 300)
+    @Column(nullable = true, length = 500)
     private String specialReport;
 
 //     파일 원본명
@@ -294,5 +298,13 @@ public class Inspect {
 
     public void setAppearance(String appearance) {
         this.appearance = appearance;
+    }
+
+    public String getSensuality() {
+        return sensuality;
+    }
+
+    public void setSensuality(String sensuality) {
+        this.sensuality = sensuality;
     }
 }

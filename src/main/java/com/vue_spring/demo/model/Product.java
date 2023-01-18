@@ -47,6 +47,10 @@ public class Product {
     @Column(nullable = false, length = 100)
     private String className;
 
+    // 운영여부
+    @Column(nullable = false, length = 100)
+    private String operation;
+
     // 보관방법
     @Column(nullable = false, length = 100)
     private String storMethod;
@@ -105,6 +109,7 @@ public class Product {
     // 비고
     @Column(nullable = true, length = 500)
     private String note;
+
 
 
     // 제품 변경내역
@@ -195,6 +200,14 @@ public class Product {
 
     public void setClassName(String className) {
         this.className = className;
+    }
+
+    public String getOperation() {
+        return operation;
+    }
+
+    public void setOperation(String operation) {
+        this.operation = operation;
     }
 
     public String getStorMethod() {

@@ -130,11 +130,13 @@ public class ProductController {
                 @RequestParam(value = "brandName", required = false, defaultValue = "") String brandName,
                 @RequestParam(value = "maker", required = false, defaultValue = "") String maker,
                 @RequestParam(value = "className", required = false, defaultValue = "") List<String> className,
+                @RequestParam(value = "operation", required = false, defaultValue = "") List<String> operation,
                 @RequestParam(value = "downExcel", required = false, defaultValue = "") String downExcel) {
 
 //                @RequestParam(value = "page", defaultValue = "") String page,
 //
                 List<String> tempClass = new ArrayList<>();
+                List<String> tempOper = new ArrayList<>();
 
                 log.info("Controller 접근됨. /selectProducts");
                 log.info("skuNo : " + skuNo + ", productName : " + productName + ", brandName : " + brandName + ", maker : " + maker );
@@ -150,32 +152,46 @@ public class ProductController {
                         }
                 }
 
+                // 운영여부 디코딩
+                for(int i = 0; i< operation.size(); i++){
+                        try {
+                                log.info("selectOpr : " + URLDecoder.decode(operation.get(i), "UTF-8"));
+                                tempOper.add(URLDecoder.decode(operation.get(i), "UTF-8"));
+                        } catch (UnsupportedEncodingException e) {
+                                e.printStackTrace();
+                        }
+                }
                 log.info("tempChk : " + tempClass );
+                log.info("tempOper : " + tempOper );
 
                 long start = System.currentTimeMillis();
                 log.info("@@@ Service 시작");
 
                 Set<String> tempClassName = new HashSet<>(tempClass);
-                log.info("tempSelectChk : " + tempClassName );
+                Set<String> tempOperation = new HashSet<>(tempOper);
+                log.info("tempSelectClass : " + tempClassName );
+                log.info("tempSelectOper : " + tempOperation );
+                log.info("downExcel : " + downExcel );
 
                 // excel 다운 일경우
                 if(downExcel.equals("excel")){
 
                         // excel 다운
-                        Optional<List<Product>> products = (Optional<List<Product>>) productServiceImpl.findProductExcel(
-                                skuNo, productName,brandName, maker, tempClassName);
+                        List<Product> products = productServiceImpl.findProductExcel(
+                                skuNo, productName,brandName, maker, tempClassName, tempOperation);
 
                         // log.info(products);
                         return ResponseDAO.<List<Product>>builder()
-                                .data(products)
+                                .data(Optional.ofNullable(products))
                                 .build();
                 }
 
                 // 제품 조회 일 경우
                 else{
                         // 처음 15번만 조회
-                        Optional<List<Product>> products = (Optional<List<Product>>) productServiceImpl.findProduct(
-                                skuNo, productName,brandName, maker, tempClassName);
+                        log.info("처음 15번만 조회");
+                        List<Product> products = productServiceImpl.findProduct(
+                                skuNo, productName,brandName, maker, tempClassName, tempOperation);
 
                         // 제품 개수 조회, id 리스트 조회
                         int productSelectCnt = 0;
@@ -184,7 +200,7 @@ public class ProductController {
 
                         // id들 모두 조회
                         List<Long> tmpId = new ArrayList<>();
-                        tmpId = productServiceImpl.findSelectId(skuNo, productName,brandName, maker, tempClassName);
+                        tmpId = productServiceImpl.findSelectId(skuNo, productName,brandName, maker, tempClassName, tempOperation);
                         // 처음 조회 시 진행(총 검색 수량 확인. vue의 페이지 처리를 위함)
                         productSelectCnt = tmpId.size();
 
@@ -215,7 +231,7 @@ public class ProductController {
 
                         // log.info(products);
                         return ResponseDAO.<List<Product>>builder()
-                                .data(products)
+                                .data(Optional.ofNullable(products))
                                 .selectCnt(productSelectCnt)
                                 .idList(pageListId)
                                 .build();

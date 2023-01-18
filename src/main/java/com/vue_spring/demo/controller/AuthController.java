@@ -41,8 +41,11 @@ public class AuthController {
         return ResponseEntity.ok(authService.login(memberRequestDto));
     }
 
+    // 토큰 재발급 기능
     @PostMapping("/reissue")
-    public ResponseEntity<?> reissue(@RequestBody TokenRequestDto tokenRequestDto, Errors errors) {
+    public ResponseEntity<?> reissue(@Validated @RequestBody TokenRequestDto tokenRequestDto, Errors errors) {
+        log.info("AccessToken : " + tokenRequestDto.getAccessToken());
+        log.info("RefreshToken : " + tokenRequestDto.getRefreshToken());
         // validation check
         if (errors.hasErrors()) {
             return response.invalidFields(Helper.refineErrors(errors));
@@ -51,7 +54,9 @@ public class AuthController {
     }
 
     @PostMapping("/logout")
-    public ResponseEntity<?> logout(@Validated TokenRequestDto tokenRequestDto, Errors errors) {
+    public ResponseEntity<?> logout(@Validated @RequestBody TokenRequestDto tokenRequestDto, Errors errors) {
+        log.info("AccessToken : " + tokenRequestDto.getAccessToken());
+        log.info("RefreshToken : " + tokenRequestDto.getRefreshToken());
         // validation check
         if (errors.hasErrors()) {
             return response.invalidFields(Helper.refineErrors(errors));

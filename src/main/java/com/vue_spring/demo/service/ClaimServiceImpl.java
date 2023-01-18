@@ -133,9 +133,7 @@ public class ClaimServiceImpl implements ClaimService {
                         // 경로에 있는 파일 삭제
                         log.info("사용자가 삭제한 이미지 삭제");
                         log.info("image : ", image);
-                        File file = new File(image.getImgFileInPath());
-                        file.delete();
-                        file = new File(image.getImgFileOutPath());
+                        File file = new File(image.getImgFilePath());
                         file.delete();
 
                         // DB의 파일 삭제
@@ -217,9 +215,7 @@ public class ClaimServiceImpl implements ClaimService {
                 Optional<List<ClaimImage>> deleteImg = claimImageRepository.findByClaimId(id);
                 // 경로에 지정된 파일 삭제
                 for(ClaimImage image : deleteImg.get()){
-                    File file = new File(image.getImgFileInPath());
-                    file.delete();
-                    file = new File(image.getImgFileOutPath());
+                    File file = new File(image.getImgFilePath());
                     file.delete();
                 }
                 // DB의 파일 삭제

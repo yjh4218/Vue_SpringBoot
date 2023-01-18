@@ -56,6 +56,8 @@ public class InspectServiceImpl implements InspectService {
             // 검수 데이터 저장 DB에 저장
             Long id = inspectRepository.save(inspect).getId();
 
+            log.info("id : {}",id );
+
             // 이미지 파일이 있을 때만 실행함.
             if(!inspectList.isEmpty()) {
 
@@ -75,10 +77,10 @@ public class InspectServiceImpl implements InspectService {
                 }
                 // DB에 사진정보 추가한 상태로 다시 저장
                 inspectRepository.save(saveInspect);
-
-                // 저장 성공
-                check = true;
             }
+
+            // 저장 성공
+            check = true;
 
         }catch (Exception e){
             log.info(e.getMessage());
@@ -107,9 +109,7 @@ public class InspectServiceImpl implements InspectService {
                 // 사용자가 모든 파일 삭제했을 경우
                 if(imgId == null){
                     for (InspectImage image : exiImg.get()) {
-                        File file = new File(image.getImgFileInPath());
-                        file.delete();
-                        file = new File(image.getImgFileOutPath());
+                        File file = new File(image.getImgFilePath());
                         file.delete();
 
                         // DB의 파일 삭제
@@ -136,9 +136,7 @@ public class InspectServiceImpl implements InspectService {
                             // 경로에 있는 파일 삭제
                             log.info("사용자가 삭제한 이미지 삭제");
                             log.info("image : {}",image);
-                            File file = new File(image.getImgFileInPath());
-                            file.delete();
-                            file = new File(image.getImgFileOutPath());
+                            File file = new File(image.getImgFilePath());
                             file.delete();
 
                             // DB의 파일 삭제
@@ -215,15 +213,13 @@ public class InspectServiceImpl implements InspectService {
                 Optional<List<InspectImage>> deleteImg = inspectImageRepository.findByInspectId(id);
                 // 경로에 지정된 파일 삭제
                 for(InspectImage image : deleteImg.get()){
-                    File file = new File(image.getImgFileInPath());
-                    file.delete();
-                    file = new File(image.getImgFileOutPath());
+                    File file = new File(image.getImgFilePath());
                     file.delete();
                 }
                 // DB의 파일 삭제
                 inspectImageRepository.deleteByInspectId(id);
-                inspectRepository.deleteById(id);
             }
+            inspectRepository.deleteById(id);
 
             return true;
         }
@@ -256,7 +252,7 @@ public class InspectServiceImpl implements InspectService {
         for(int i = 0; i< productId.size(); i++){
             // Inspect 테이블에 조회 및 저장
             log.info("Inspect 테이블에 값이 있다면 id 값들 가져옴 저장");
-            List<Long> tmpInspectList = inspectRepository.findByProductIdInspectList(productId.get(i), beforeDate, afterDate);
+            List<Long> tmpInspectList = inspectRepository.findByProductIdInspectList(productId.get(i), beforeDate, afterDate).orElseGet(null);
 
             for(int j = 0; j < tmpInspectList.size(); j++){
                 inspectList.add(tmpInspectList.get(j));
@@ -298,10 +294,10 @@ public class InspectServiceImpl implements InspectService {
         return (Optional<Inspect>) inspectRepository.findById(id);
     }
 
-    // 검색양 조회
-//    public Long findSelectInspectCnt(Date beforeDate, Date afterDate){
-//
-//    }
+    // 직전등록 검수 검색(엑셀용)
+    public Optional<Inspect> findInspectReg(Long productId) {
+        return inspectRepository.findByInspectReg(productId);
+    }
 
     // 검수 있는지 확인
     public Boolean checkInspect(long id){

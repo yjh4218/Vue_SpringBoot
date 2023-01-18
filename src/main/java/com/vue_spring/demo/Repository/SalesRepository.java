@@ -20,43 +20,6 @@ import java.util.Set;
 public interface SalesRepository extends JpaRepository<Sales, Long> {
 
     // 판매량 집계
-//    @Query(nativeQuery = true, value ="select p.sku_No as skuNo, p.product_Name as productName" +
-//            ", ROUND(SUM(case when date_format(s.sales_month, '%Y%m')= 202201 then s.SALES_VOLUMN else 0 end)) as Jan" +
-//            ", ROUND(SUM(case when date_format(s.sales_month, '%Y%m')= 202202 then s.SALES_VOLUMN else 0 end)) as Feb" +
-//            ", ROUND(SUM(case when date_format(s.sales_month, '%Y%m')= 202203 then s.SALES_VOLUMN else 0 end)) as Mar" +
-//            ", ROUND(SUM(case when date_format(s.sales_month, '%Y%m')= 202204 then s.SALES_VOLUMN else 0 end)) as Apr" +
-//            ", ROUND(SUM(case when date_format(s.sales_month, '%Y%m')= 202205 then s.SALES_VOLUMN else 0 end)) as May" +
-//            ", ROUND(SUM(case when date_format(s.sales_month, '%Y%m')= 202206 then s.SALES_VOLUMN else 0 end)) as Jun" +
-//            ", ROUND(SUM(case when date_format(s.sales_month, '%Y%m')= 202207 then s.SALES_VOLUMN else 0 end)) as Jul" +
-//            ", ROUND(SUM(case when date_format(s.sales_month, '%Y%m')= 202208 then s.SALES_VOLUMN else 0 end)) as Aug" +
-//            ", ROUND(SUM(case when date_format(s.sales_month, '%Y%m')= 202209 then s.SALES_VOLUMN else 0 end)) as Sep" +
-//            ", ROUND(SUM(case when date_format(s.sales_month, '%Y%m')= 202210 then s.SALES_VOLUMN else 0 end)) as Oct" +
-//            ", ROUND(SUM(case when date_format(s.sales_month, '%Y%m')= 202211 then s.SALES_VOLUMN else 0 end)) as Nov" +
-//            ", ROUND(SUM(case when date_format(s.sales_month, '%Y%m')= 202212 then s.SALES_VOLUMN else 0 end)) as December" +
-//            " from sales_product_component p left outer join sales s on p.sku_no = s.sku_No " +
-//            " group by s.sku_No")
-//    Optional<List<SalesDAO>> findBySkuNo();
-
-    // 구성품 판매량 집계
-//        @Query(nativeQuery = true, value ="select p.component_sku_no as skuNo, p.component_product_name as productName" +
-//            ", ROUND(SUM(case when date_format(s.sales_month, '%Y%m')= 202201 then s.SALES_VOLUMN * p.component_quantity else 0 end)) as Jan" +
-//            ", ROUND(SUM(case when date_format(s.sales_month, '%Y%m')= 202202 then s.SALES_VOLUMN * p.component_quantity else 0 end)) as Feb" +
-//            ", ROUND(SUM(case when date_format(s.sales_month, '%Y%m')= 202203 then s.SALES_VOLUMN * p.component_quantity else 0 end)) as Mar" +
-//            ", ROUND(SUM(case when date_format(s.sales_month, '%Y%m')= 202204 then s.SALES_VOLUMN * p.component_quantity else 0 end)) as Apr" +
-//            ", ROUND(SUM(case when date_format(s.sales_month, '%Y%m')= 202205 then s.SALES_VOLUMN * p.component_quantity else 0 end)) as May" +
-//            ", ROUND(SUM(case when date_format(s.sales_month, '%Y%m')= 202206 then s.SALES_VOLUMN * p.component_quantity else 0 end)) as Jun" +
-//            ", ROUND(SUM(case when date_format(s.sales_month, '%Y%m')= 202207 then s.SALES_VOLUMN * p.component_quantity else 0 end)) as Jul" +
-//            ", ROUND(SUM(case when date_format(s.sales_month, '%Y%m')= 202208 then s.SALES_VOLUMN * p.component_quantity else 0 end)) as Aug" +
-//            ", ROUND(SUM(case when date_format(s.sales_month, '%Y%m')= 202209 then s.SALES_VOLUMN * p.component_quantity else 0 end)) as Sep" +
-//            ", ROUND(SUM(case when date_format(s.sales_month, '%Y%m')= 202210 then s.SALES_VOLUMN * p.component_quantity else 0 end)) as Oct" +
-//            ", ROUND(SUM(case when date_format(s.sales_month, '%Y%m')= 202211 then s.SALES_VOLUMN * p.component_quantity else 0 end)) as Nov" +
-//            ", ROUND(SUM(case when date_format(s.sales_month, '%Y%m')= 202212 then s.SALES_VOLUMN * p.component_quantity else 0 end)) as December" +
-//            " from sales_product_component p left outer join sales s on p.sku_no = s.sku_No " +
-//            " group by p.component_sku_no")
-//    Optional<List<SalesDAO>> findBySkuNo();
-
-
-    // 판매량 집계
     @Query(nativeQuery = true, value ="select p.sku_No as skuNo, p.product_Name as productName" +
             ", ROUND(SUM(case when date_format(s.sales_month, '%Y-%m')= concat(:findDate, '-01') then s.SALES_VOLUMN else 0 end)) as Jan" +
             ", ROUND(SUM(case when date_format(s.sales_month, '%Y-%m')= concat(:findDate, '-02') then s.SALES_VOLUMN else 0 end)) as Feb" +

@@ -18,13 +18,32 @@ import java.util.Set;
 public interface ProductRepository extends JpaRepository<Product, Long> {
 
         // 제품 조회(분류 포함) - 처음 15개 조회
+        @Query(nativeQuery = true, value = "SELECT DISTINCT * FROM PRODUCT WHERE sku_no LIKE %:skuNo% AND product_name LIKE %:productName% AND brand_name LIKE %:brandName% AND maker LIKE %:maker% AND class_name IN (:className) AND operation IN (:operation) order by id asc limit 15")
+        Optional<List<Product>> findByProductListClassOperFirst(
+                @Param("skuNo")String skuNo,
+                @Param("productName")String productName,
+                @Param("brandName")String brandName,
+                @Param("maker")String maker,
+                @Param("className")  Set<String> className,
+                @Param("operation") Set<String> operation
+        );
+
         @Query(nativeQuery = true, value = "SELECT DISTINCT * FROM PRODUCT WHERE sku_no LIKE %:skuNo% AND product_name LIKE %:productName% AND brand_name LIKE %:brandName% AND maker LIKE %:maker% AND class_name IN (:className) order by id asc limit 15")
-        Optional<List<Product>> findByProductListAndClassNameFirst(
+        Optional<List<Product>> findByProductListClassFirst(
                 @Param("skuNo")String skuNo,
                 @Param("productName")String productName,
                 @Param("brandName")String brandName,
                 @Param("maker")String maker,
                 @Param("className")  Set<String> className
+        );
+
+        @Query(nativeQuery = true, value = "SELECT DISTINCT * FROM PRODUCT WHERE sku_no LIKE %:skuNo% AND product_name LIKE %:productName% AND brand_name LIKE %:brandName% AND maker LIKE %:maker%  AND operation IN (:operation) order by id asc limit 15")
+        Optional<List<Product>> findByProductListOperFirst(
+                @Param("skuNo")String skuNo,
+                @Param("productName")String productName,
+                @Param("brandName")String brandName,
+                @Param("maker")String maker,
+                @Param("operation") Set<String> operation
         );
 
         // 제품 조회(분류 제외) - 처음 15개 조회
@@ -36,28 +55,6 @@ public interface ProductRepository extends JpaRepository<Product, Long> {
                 @Param("brandName")String brandName,
                 @Param("maker")String maker
         );
-
-        // 제품 조회(분류 포함) - 커서에 맞춰 15개 조회
-//        @Query(nativeQuery = true, value = "SELECT DISTINCT * FROM PRODUCT WHERE id >= :productCurseId sku_no LIKE %:skuNo% AND product_name LIKE %:productName% AND brand_name LIKE %:brandName% AND maker LIKE %:maker% AND class_name IN (:className) order by id asc limit 15")
-//        Optional<List<Product>> findByProductListAndClassNameCurse(
-//                @Param("skuNo")String skuNo,
-//                @Param("productName")String productName,
-//                @Param("brandName")String brandName,
-//                @Param("maker")String maker,
-//                @Param("className")  Set<String> className,
-//                @Param("productCurseId") long productCurseId
-//        );
-//
-//        // 제품 조회(분류 제외) - 커서에 맞춰 15개 조회
-//        @Transactional(readOnly = true)
-//        @Query(nativeQuery = true, value = "SELECT DISTINCT * FROM PRODUCT WHERE id >= :productCurseId AND sku_no LIKE %:skuNo% AND product_name LIKE %:productName% AND brand_name LIKE %:brandName% AND maker LIKE %:maker% order by id asc limit 15")
-//        Optional<List<Product>> findByProductListCurse(
-//                @Param("skuNo")String skuNo,
-//                @Param("productName")String productName,
-//                @Param("brandName")String brandName,
-//                @Param("maker")String maker,
-//                @Param("productCurseId") long productCurseId
-//        );
 
         // 제품 조회(분류 제외) - 커서에 맞춰 15개 조회
         @Transactional(readOnly = true)
@@ -86,14 +83,35 @@ public interface ProductRepository extends JpaRepository<Product, Long> {
                 @Param("maker")String maker
         );
 
-        // 제품 조회(분류 포함) - 모두 조회(엑셀용)
-        @Query(nativeQuery = true, value = "SELECT DISTINCT * FROM PRODUCT WHERE sku_no LIKE %:skuNo% AND product_name LIKE %:productName% AND brand_name LIKE %:brandName% AND maker LIKE %:maker% AND class_name IN (:className)")
-        Optional<List<Product>>  findByProductListAndClassNameExcel(
+        // 제품 조회(운영여부, 제품분류 포함) - 모두 조회(엑셀용)
+        @Query(nativeQuery = true, value = "SELECT DISTINCT * FROM PRODUCT WHERE sku_no LIKE %:skuNo% AND product_name LIKE %:productName% AND brand_name LIKE %:brandName% AND maker LIKE %:maker% AND class_name IN (:className) AND operation IN (:operation)")
+        Optional<List<Product>>  findByProductClassOperExcel(
                 @Param("skuNo")String skuNo,
                 @Param("productName")String productName,
                 @Param("brandName")String brandName,
                 @Param("maker")String maker,
-                @Param("className")  Set<String> className
+                @Param("className") Set<String> className,
+                @Param("operation") Set<String> operation
+        );
+
+        // 제품 조회(제품 분류 포함) - 모두 조회(엑셀용)
+        @Query(nativeQuery = true, value = "SELECT DISTINCT * FROM PRODUCT WHERE sku_no LIKE %:skuNo% AND product_name LIKE %:productName% AND brand_name LIKE %:brandName% AND maker LIKE %:maker% AND class_name IN (:className)")
+        Optional<List<Product>>  findByProductClassExcel(
+                @Param("skuNo")String skuNo,
+                @Param("productName")String productName,
+                @Param("brandName")String brandName,
+                @Param("maker")String maker,
+                @Param("className") Set<String> className
+        );
+
+        // 제품 조회(운영여부 분류 포함) - 모두 조회(엑셀용)
+        @Query(nativeQuery = true, value = "SELECT DISTINCT * FROM PRODUCT WHERE sku_no LIKE %:skuNo% AND product_name LIKE %:productName% AND brand_name LIKE %:brandName% AND maker LIKE %:maker% AND operation IN (:operation)")
+        Optional<List<Product>>  findByProductOperExcel(
+                @Param("skuNo")String skuNo,
+                @Param("productName")String productName,
+                @Param("brandName")String brandName,
+                @Param("maker")String maker,
+                @Param("operation") Set<String> operation
         );
 
         // 제품 조회(분류 제외) - 모두 조회(엑셀용)
@@ -105,15 +123,6 @@ public interface ProductRepository extends JpaRepository<Product, Long> {
                 @Param("brandName")String brandName,
                 @Param("maker")String maker
         );
-
-        // 제품 조회(분류 제외) - test
-//        @Transactional(readOnly = true)
-//        @Query(nativeQuery = true, value = "select distinct p.* from Product p")
-//        Optional<List<Product>> findByProductList();
-
-
-        // sku-no로 조회
-        Product findBySkuNo(String SkuNo);
 
         // 제품 검색 수량 확인- 분류 없음
         @Transactional(readOnly = true)
@@ -136,13 +145,14 @@ public interface ProductRepository extends JpaRepository<Product, Long> {
         );
 
         // 제품 id 모두 조회(분류포함)
-        @Query(nativeQuery = true, value = "SELECT DISTINCT id FROM PRODUCT WHERE sku_no LIKE %:skuNo% AND product_name LIKE %:productName% AND brand_name LIKE %:brandName% AND maker LIKE %:maker% AND class_name IN (:className)")
+        @Query(nativeQuery = true, value = "SELECT DISTINCT id FROM PRODUCT WHERE sku_no LIKE %:skuNo% AND product_name LIKE %:productName% AND brand_name LIKE %:brandName% AND maker LIKE %:maker% AND class_name IN (:className)  AND operation IN (:operation)")
         List<Long> findByIdClassName(
                 @Param("skuNo")String skuNo,
                 @Param("productName")String productName,
                 @Param("brandName")String brandName,
                 @Param("maker")String maker,
-                @Param("className")  Set<String> className
+                @Param("className")  Set<String> className,
+                @Param("operation") Set<String> operation
         );
 
         // 제품 id 모두 조회 - 분류 없음
@@ -158,7 +168,7 @@ public interface ProductRepository extends JpaRepository<Product, Long> {
         // sku-no로 삭제
         @Modifying
         @Query("delete from Product where sku_no = ?1")
-        void deleteBySkuNo(String SkuNo);
+        void deleteBySkuNo(@Param("skuNo") String SkuNo);
 
         // sku-no 중복 검사
         Boolean existsBySkuNo(String SkuNo);

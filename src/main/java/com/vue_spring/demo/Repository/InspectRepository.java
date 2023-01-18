@@ -26,7 +26,7 @@ public interface InspectRepository extends JpaRepository<Inspect, Long> {
     Boolean deleteByProductId(Long productId);
 
     // 검수 조회(분류 포함) - 처음 15개 조회
-    @Query(nativeQuery = true, value = "SELECT DISTINCT * FROM INSPECT WHERE inspect_date BETWEEN :beforeDate AND :afterDate order by id asc limit 15")
+    @Query(nativeQuery = true, value = "SELECT DISTINCT * FROM INSPECT WHERE inspect_date BETWEEN :beforeDate AND :afterDate order by inspect_date limit 15")
     Optional<List<Inspect>> findByInspectListAndClassNameFirst(
             @Param("beforeDate")Date beforeDate,
             @Param("afterDate") Date afterDate
@@ -34,7 +34,7 @@ public interface InspectRepository extends JpaRepository<Inspect, Long> {
 
     // 검수 id 모두 조회 - 분류 없음
     @Transactional(readOnly = true)
-    @Query(nativeQuery = true, value = "SELECT DISTINCT id FROM INSPECT WHERE inspect_date BETWEEN :beforeDate AND :afterDate")
+    @Query(nativeQuery = true, value = "SELECT DISTINCT id, inspect_date FROM INSPECT WHERE inspect_date BETWEEN :beforeDate AND :afterDate order by inspect_date")
     List<Long> findById(
             @Param("beforeDate")Date beforeDate,
             @Param("afterDate") Date afterDate
@@ -50,18 +50,69 @@ public interface InspectRepository extends JpaRepository<Inspect, Long> {
 
     // product에 맞는 id 값들 전부 조회
     @Query(nativeQuery = true, value = "SELECT DISTINCT id FROM INSPECT WHERE product_id = :productId and inspect_date BETWEEN :beforeDate AND :afterDate")
-    List<Long> findByProductIdInspectList(Long productId, Date beforeDate, Date afterDate);
+    Optional<List<Long>> findByProductIdInspectList(
+            @Param("productId") Long productId,
+            @Param("beforeDate") Date beforeDate,
+            @Param("afterDate") Date afterDate);
 
-//    @Query(nativeQuery = true, value = "SELECT id FROM INSPECT WHERE product_id = :productId")
     Optional<List<Inspect>> findByProductId(Long productId);
 
     // 날짜에 맞는 모든 데이터 조회(엑셀용)
-    @Query(nativeQuery = true, value = "select distinct p.sku_no as skuNo, p.product_name as productName, i.decide_result as decideResult, i.inspect_content as inspectContent, i.inspect_date as inspectDate, i.lot_date as lotDate, i.moisture as moisture, i.note as note, i.special_report as specialReport from product p join inspect i where p.id = i.product_id and inspect_date BETWEEN :beforeDate AND :afterDate")
-    Optional<List<InspectExcelInterfaceDAO>> findByInspectDateBetween(Date beforeDate, Date afterDate);
+    @Query(nativeQuery = true, value = "select distinct p.sku_no as skuNo, \n" +
+            "p.product_name as productName, \n" +
+            "p.class_name as className, \n" +
+            "i.appearance as appearance, \n" +
+            "i.check_packing as checkPacking, \n" +
+            "i.check_work as checkWork, \n" +
+            "i.color as color, \n" +
+            "i.damage as damage,\n" +
+            "i.decide_result as decideResult,\n" +
+            "i.finish_state as finishState,\n" +
+            "i.foreign_body as foreignBody,\n" +
+            "i.inspect_content as inspectContent,\n" +
+            "i.inspect_date as inspectDate,\n" +
+            "i.lot_date as lotDate,\n" +
+            "i.moisture as moisture,\n" +
+            "i.size as size,\n" +
+            "i.special_report as specialReport,\n" +
+            "i.usability as usability,\n" +
+            "i.sensuality as sensuality,\n" +
+            "i.weight as weight\n" +
+            "from product p join inspect i where p.id = i.product_id and inspect_date BETWEEN :beforeDate AND :afterDate")
+    Optional<List<InspectExcelInterfaceDAO>> findByInspectDateBetween(
+            @Param("beforeDate")Date beforeDate,
+            @Param("afterDate") Date afterDate);
 
     // 날짜와 product에 맞는 id 값들 전부 조회(엑셀용)
-    @Query(nativeQuery = true, value = "select distinct p.sku_no as skuNo, p.product_name as productName, i.decide_result as decideResult, i.inspect_content as inspectContent, i.inspect_date as inspectDate, i.lot_date as lotDate, i.moisture as moisture, i.note as note, i.special_report as specialReport from product p join inspect i where p.id = i.product_id and product_id in (:productId) and inspect_date BETWEEN :beforeDate AND :afterDate")
-    Optional<List<InspectExcelInterfaceDAO>> findByProductInspectList(List<Long> productId, Date beforeDate, Date afterDate);
+    @Query(nativeQuery = true, value = "select distinct p.sku_no as skuNo, \n" +
+            "p.product_name as productName, \n" +
+            "p.class_name as className, \n" +
+            "i.appearance as appearance, \n" +
+            "i.check_packing as checkPacking, \n" +
+            "i.check_work as checkWork, \n" +
+            "i.color as color, \n" +
+            "i.damage as damage,\n" +
+            "i.decide_result as decideResult,\n" +
+            "i.finish_state as finishState,\n" +
+            "i.foreign_body as foreignBody,\n" +
+            "i.inspect_content as inspectContent,\n" +
+            "i.inspect_date as inspectDate,\n" +
+            "i.lot_date as lotDate,\n" +
+            "i.moisture as moisture,\n" +
+            "i.size as size,\n" +
+            "i.special_report as specialReport,\n" +
+            "i.usability as usability,\n" +
+            "i.sensuality as sensuality,\n" +
+            "i.weight as weight\n" +
+            "from product p join inspect i where p.id = i.product_id and product_id in (:productId) and inspect_date BETWEEN :beforeDate AND :afterDate")
+    Optional<List<InspectExcelInterfaceDAO>> findByProductInspectList(
+            @Param("productId") List<Long> productId,
+            @Param("beforeDate")Date beforeDate,
+            @Param("afterDate") Date afterDate);
+
+    // 직전등록 검수 조회
+    @Query(nativeQuery = true, value = "select * from inspect where product_id = :productId order by product_id desc limit 1;")
+    Optional<Inspect> findByInspectReg(@Param("productId") Long productId);
 
 
 }

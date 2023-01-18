@@ -48,35 +48,37 @@ public class AuthService {
     @Transactional
     public ResponseEntity<?> login(MemberRequestDto memberRequestDto) {
 
-        System.out.println("AuthService login");
-        System.out.println(memberRequestDto.getEmail());
+        log.info("AuthService login");
+        log.info(memberRequestDto.getEmail());
 
         if (memberRepository.findByEmail(memberRequestDto.getEmail()).orElse(null) == null) {
             return response.fail("해당하는 유저가 존재하지 않습니다.", HttpStatus.BAD_REQUEST);
         }
 
-        System.out.println("AuthService login 접속됨");
+        log.info("AuthService login 접속됨");
         // 1. Login ID/PW 를 기반으로 AuthenticationToken 생성
         UsernamePasswordAuthenticationToken authenticationToken = memberRequestDto.toAuthentication();
 
-        System.out.println("1");
+        log.info("1");
 
         // 2. 실제로 검증 (사용자 비밀번호 체크) 이 이루어지는 부분
         //    authenticate 메서드가 실행이 될 때 CustomUserDetailsService 에서 만들었던 loadUserByUsername 메서드가 실행됨
         Authentication authentication = authenticationManagerBuilder.getObject().authenticate(authenticationToken);
 
-        System.out.println("2");
+        log.info("2");
         // 3. 인증 정보를 기반으로 JWT 토큰 생성
+        Member member = memberRepository.findByEmail(memberRequestDto.getEmail()).get();
         TokenDto tokenDto = tokenProvider.generateTokenDto(authentication);
-        tokenDto.setRole(memberRepository.findByEmail(memberRequestDto.getEmail()).get().getRole());
+        tokenDto.setEmail(member.getEmail());
+        tokenDto.setRole(member.getRole());
 
-        System.out.println("3");
+        log.info("3");
         // 4. RefreshToken 저장
         RefreshToken refreshToken = RefreshToken.builder()
                 .key(authentication.getName())
                 .value(tokenDto.getRefreshToken())
                 .build();
-        System.out.println("4");
+        log.info("4");
 
         redisTemplate.opsForValue()
                 .set("RT:" + authentication.getName(), tokenDto.getRefreshToken(), tokenDto.getAccessTokenExpiresIn(), TimeUnit.MILLISECONDS);
@@ -85,7 +87,8 @@ public class AuthService {
 //                .set("RT:" + authentication.getName(), refreshToken, tokenDto.getAccessTokenExpiresIn(), TimeUnit.MILLISECONDS);
 
 
-        System.out.println("5");
+        log.info("5");
+        log.info("tokenDto : ",tokenDto);
 //        refreshTokenRepository.save(refreshToken);
         // 5. 토큰 발급
         return response.success(tokenDto, "로그인에 성공했습니다.", HttpStatus.OK);
