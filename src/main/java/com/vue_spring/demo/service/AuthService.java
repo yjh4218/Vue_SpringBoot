@@ -69,7 +69,7 @@ public class AuthService {
         // 3. 인증 정보를 기반으로 JWT 토큰 생성
         Member member = memberRepository.findByEmail(memberRequestDto.getEmail()).get();
         TokenDto tokenDto = tokenProvider.generateTokenDto(authentication);
-        tokenDto.setEmail(member.getEmail());
+//        tokenDto.setEmail(member.getEmail());
         tokenDto.setRole(member.getRole());
 
         log.info("3");

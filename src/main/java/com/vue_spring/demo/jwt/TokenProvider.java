@@ -93,6 +93,28 @@ public class TokenProvider {
         return new UsernamePasswordAuthenticationToken(principal, "", authorities);
     }
 
+    // JWT 토큰을 복호화하여 토큰에 들어 있는 정보를 꺼냅니다.
+    // Access Token 에만 유저 정보를 담기 때문에 명시적으로 accessToken 을 파라미터로 받게 했습니다.
+    public Authentication getAuthenticationRe(String refreshToken) {
+        // 토큰 복호화
+        Claims claims = parseClaims(refreshToken);
+
+//        if (claims.get(AUTHORITIES_KEY) == null) {
+//            throw new RuntimeException("권한 정보가 없는 토큰입니다.");
+//        }
+
+        // 클레임에서 권한 정보 가져오기
+        Collection<? extends GrantedAuthority> authorities =
+                Arrays.stream(claims.get(AUTHORITIES_KEY).toString().split(","))
+                        .map(SimpleGrantedAuthority::new)
+                        .collect(Collectors.toList());
+
+        // UserDetails 객체를 만들어서 Authentication 리턴
+        UserDetails principal = new User(claims.getSubject(), "", authorities);
+
+        return new UsernamePasswordAuthenticationToken(principal, "", authorities);
+    }
+
     // 토큰 정보를 검증합니다.
     public boolean validateToken(String token) {
         try {
